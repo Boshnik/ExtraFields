@@ -119,8 +119,7 @@ Ext.extend(ExtraFields.window.CreateUserField, MODx.Window, {
         }];
     },
 
-    loadDropZones: function () {
-    }
+
 
 });
 Ext.reg('extrauser-field-window-create', ExtraFields.window.CreateUserField);
@@ -152,8 +151,7 @@ Ext.extend(ExtraFields.window.UpdateUserField, MODx.Window, {
         return ExtraFields.window.CreateUserField.prototype.getFields.call(this, config);
     },
 
-    loadDropZones: function () {
-    }
+
 
 });
 Ext.reg('extrauser-field-window-update', ExtraFields.window.UpdateUserField);

@@ -23,7 +23,7 @@ ExtraFields.grid.Fields = function (config) {
         listeners: {
             rowDblClick: function (grid, rowIndex, e) {
                 var row = grid.store.getAt(rowIndex);
-                this.updateItem(grid, e, row);
+                this.updateField(grid, e, row);
             },
             render:{
                 scope: this,
@@ -147,7 +147,7 @@ Ext.extend(ExtraFields.grid.Fields, MODx.grid.Grid, {
         });
     },
 
-    createItem: function (btn, e) {
+    createResourceTab: function (btn, e) {
         var w = MODx.load({
             xtype: 'extrameta-field-window-create',
             id: Ext.id(),
@@ -164,7 +164,7 @@ Ext.extend(ExtraFields.grid.Fields, MODx.grid.Grid, {
         w.show(e.target);
     },
 
-    updateItem: function (btn, e, row) {
+    updateField: function (btn, e, row) {
         if (typeof(row) != 'undefined') {
             this.menu.record = row.data;
         }
@@ -277,7 +277,7 @@ Ext.extend(ExtraFields.grid.Fields, MODx.grid.Grid, {
     getTopBar: function () {
         return [{
             text: '<i class="icon icon-plus"></i>&nbsp;' + _('extrameta_field_create'),
-            handler: this.createItem,
+            handler: this.createResourceTab,
             scope: this
         }, '->', {
             xtype: 'extrafields-field-search',

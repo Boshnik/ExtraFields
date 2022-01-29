@@ -26,4 +26,11 @@
         <aggregate alias="Field" class="ExtraMetaField" local="fieldtype" foreign="id" cardinality="one" owner="foreign" />
     </object>
 
+    <object class="ExtraResourceTab" table="extraresource_tabs" extends="xPDOSimpleObject">
+        <field key="name" dbtype="varchar" precision="100" phptype="string" null="false" default=""/>
+        <field key="index" dbtype="tinyint" precision="1" phptype="integer" attributes="unsigned" null="true" default="0"/>
+        <field key="rank" dbtype="tinyint" precision="1" phptype="integer" attributes="unsigned" null="true" default="0"/>
+        <field key="active" dbtype="tinyint" precision="1" phptype="boolean" null="true" default="1"/>
+    </object>
+
 </model>

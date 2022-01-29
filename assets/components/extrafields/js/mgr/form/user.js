@@ -1,7 +1,7 @@
 Ext.ComponentMgr.onAvailable('modx-user-tabs', function() {
     let column = this.items[0].items[0].items;
     if (ExtraFields.userfields) {
-        ExtraFields.userfields.forEach(function(field){
+        ExtraFields.userfields.forEach(function(field) {
 
             let xtype = {
                 xtype: field.xtype,

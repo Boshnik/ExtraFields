@@ -1,8 +1,8 @@
 <?php
 
-class ExtraUserFieldGetListProcessor extends modObjectGetListProcessor
+class ExtraResourceTabGetListProcessor extends modObjectGetListProcessor
 {
-    public $classKey = ExtraUserField::class;
+    public $classKey = ExtraResourceTab::class;
     public $objectType = 'extrafields';
     public $defaultSortField = 'id';
     public $defaultSortDirection = 'DESC';
@@ -54,17 +54,13 @@ class ExtraUserFieldGetListProcessor extends modObjectGetListProcessor
         $array = $object->toArray();
         $array['actions'] = [];
 
-        if ($field = $object->getOne('Field')) {
-            $array['fieldtype'] = $field->get('name');
-        }
-
         // Edit
         $array['actions'][] = [
             'cls' => '',
             'icon' => 'icon icon-edit',
-            'title' => $this->modx->lexicon('extrauser_field_update'),
-            //'multiple' => $this->modx->lexicon('extrauser_fields_update'),
-            'action' => 'updateUserField',
+            'title' => $this->modx->lexicon('extraresource_tab_update'),
+            //'multiple' => $this->modx->lexicon('extraresource_tabs_update'),
+            'action' => 'updateResourceTab',
             'button' => true,
             'menu' => true,
         ];
@@ -73,8 +69,8 @@ class ExtraUserFieldGetListProcessor extends modObjectGetListProcessor
             $array['actions'][] = [
                 'cls' => '',
                 'icon' => 'icon icon-power-off action-green',
-                'title' => $this->modx->lexicon('extrauser_field_enable'),
-                'multiple' => $this->modx->lexicon('extrauser_fields_enable'),
+                'title' => $this->modx->lexicon('extraresource_tab_enable'),
+                'multiple' => $this->modx->lexicon('extraresource_tabs_enable'),
                 'action' => 'enableItem',
                 'button' => true,
                 'menu' => true,
@@ -83,8 +79,8 @@ class ExtraUserFieldGetListProcessor extends modObjectGetListProcessor
             $array['actions'][] = [
                 'cls' => '',
                 'icon' => 'icon icon-power-off action-gray',
-                'title' => $this->modx->lexicon('extrauser_field_disable'),
-                'multiple' => $this->modx->lexicon('extrauser_fields_disable'),
+                'title' => $this->modx->lexicon('extraresource_tab_disable'),
+                'multiple' => $this->modx->lexicon('extraresource_tabs_disable'),
                 'action' => 'disableItem',
                 'button' => true,
                 'menu' => true,
@@ -95,8 +91,8 @@ class ExtraUserFieldGetListProcessor extends modObjectGetListProcessor
         $array['actions'][] = [
             'cls' => '',
             'icon' => 'icon icon-trash-o action-red',
-            'title' => $this->modx->lexicon('extrauser_field_remove'),
-            'multiple' => $this->modx->lexicon('extrauser_fields_remove'),
+            'title' => $this->modx->lexicon('extraresource_tab_remove'),
+            'multiple' => $this->modx->lexicon('extraresource_tabs_remove'),
             'action' => 'removeItem',
             'button' => true,
             'menu' => true,
@@ -107,4 +103,4 @@ class ExtraUserFieldGetListProcessor extends modObjectGetListProcessor
 
 }
 
-return 'ExtraUserFieldGetListProcessor';
+return 'ExtraResourceTabGetListProcessor';

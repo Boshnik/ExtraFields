@@ -1,7 +1,7 @@
-ExtraFields.grid.UserFields = function (config) {
+ExtraFields.grid.ResourceTabs = function (config) {
     config = config || {};
     if (!config.id) {
-        config.id = 'extrauser-grid-fields';
+        config.id = 'extraresource-grid-tabs';
     }
     Ext.applyIf(config, {
         url: ExtraFields.config.connectorUrl,
@@ -10,20 +10,20 @@ ExtraFields.grid.UserFields = function (config) {
         tbar: this.getTopBar(config),
         sm: new Ext.grid.RowSelectionModel({ singleSelect:false }),
         baseParams: {
-            action: 'mgr/user/getlist',
+            action: 'mgr/resource/tab/getlist',
             sort: 'rank',
             dir: 'asc',
         },
         stateful: true,
         stateId: config.id,
-        ddGroup: 'extrauser-grid-statusDD',
-        ddAction: 'mgr/user/sort',
+        ddGroup: 'extraresource-grid-statusDD',
+        ddAction: 'mgr/resource/tab/sort',
         enableDragDrop: true,
         multi_select: true,
         listeners: {
             rowDblClick: function (grid, rowIndex, e) {
                 var row = grid.store.getAt(rowIndex);
-                this.updateUserField(grid, e, row);
+                this.updateResourceTab(grid, e, row);
             },
             render:{
                 scope: this,
@@ -98,7 +98,7 @@ ExtraFields.grid.UserFields = function (config) {
         remoteSort: true,
         autoHeight: true,
     });
-    ExtraFields.grid.UserFields.superclass.constructor.call(this, config);
+    ExtraFields.grid.ResourceTabs.superclass.constructor.call(this, config);
 
     // Clear selection on grid refresh
     this.store.on('load', function () {
@@ -107,7 +107,7 @@ ExtraFields.grid.UserFields = function (config) {
         }
     }, this);
 };
-Ext.extend(ExtraFields.grid.UserFields, MODx.grid.Grid, {
+Ext.extend(ExtraFields.grid.ResourceTabs, MODx.grid.Grid, {
     windows: {},
 
     getMenu: function (grid, rowIndex) {
@@ -127,7 +127,7 @@ Ext.extend(ExtraFields.grid.UserFields, MODx.grid.Grid, {
         MODx.Ajax.request({
             url: ExtraFields.config.connectorUrl,
             params: {
-                action: 'mgr/user/multiple',
+                action: 'mgr/resource/tab/multiple',
                 method: method,
                 ids: Ext.util.JSON.encode(ids),
             },
@@ -147,9 +147,9 @@ Ext.extend(ExtraFields.grid.UserFields, MODx.grid.Grid, {
         });
     },
 
-    createUserField: function (btn, e) {
+    createResourceTab: function (btn, e) {
         var w = MODx.load({
-            xtype: 'extrauser-field-window-create',
+            xtype: 'extraresource-tab-window-create',
             id: Ext.id(),
             listeners: {
                 success: {
@@ -164,7 +164,7 @@ Ext.extend(ExtraFields.grid.UserFields, MODx.grid.Grid, {
         w.show(e.target);
     },
 
-    updateUserField: function (btn, e, row) {
+    updateResourceTab: function (btn, e, row) {
         if (typeof(row) != 'undefined') {
             this.menu.record = row.data;
         }
@@ -176,14 +176,14 @@ Ext.extend(ExtraFields.grid.UserFields, MODx.grid.Grid, {
         MODx.Ajax.request({
             url: this.config.url,
             params: {
-                action: 'mgr/user/get',
+                action: 'mgr/resource/tab/get',
                 id: id
             },
             listeners: {
                 success: {
                     fn: function (r) {
                         var w = MODx.load({
-                            xtype: 'extrauser-field-window-update',
+                            xtype: 'extraresource-tab-window-update',
                             id: Ext.id(),
                             record: r,
                             listeners: {
@@ -207,10 +207,10 @@ Ext.extend(ExtraFields.grid.UserFields, MODx.grid.Grid, {
         var ids = this._getSelectedIds();
 
         Ext.MessageBox.confirm(
-            _('extrauser_field_remove_title'),
+            _('extraresource_tab_remove_title'),
             ids.length > 1
-                ? _('extrauser_fields_remove_confirm')
-                : _('extrauser_field_remove_confirm'),
+                ? _('extraresource_tabs_remove_confirm')
+                : _('extraresource_tab_remove_confirm'),
             function (val) {
                 if (val == 'yes') {
                     this.multipleAction('remove');
@@ -228,32 +228,27 @@ Ext.extend(ExtraFields.grid.UserFields, MODx.grid.Grid, {
     },
 
     getFields: function () {
-        return ['id', 'name', 'label', 'fieldtype', 'active', 'actions'];
+        return ['id', 'name', 'index', 'active', 'actions'];
     },
 
     getColumns: function () {
         return [{
-            header: _('extrauser_field_id'),
+            header: _('extraresource_tab_id'),
             dataIndex: 'id',
             sortable: true,
             width: 70
         }, {
-            header: _('extrauser_field_name'),
+            header: _('extraresource_tab_name'),
             dataIndex: 'name',
             sortable: true,
-            width: 150,
+            width: 300,
         }, {
-            header: _('extrauser_field_label'),
-            dataIndex: 'label',
+            header: _('extraresource_tab_index'),
+            dataIndex: 'index',
             sortable: false,
-            width: 150,
+            width: 100,
         }, {
-            header: _('extrauser_field_fieldtype'),
-            dataIndex: 'fieldtype',
-            sortable: false,
-            width: 150,
-        }, {
-            header: _('extrauser_field_active'),
+            header: _('extraresource_tab_active'),
             dataIndex: 'active',
             renderer: ExtraFields.utils.renderBoolean,
             sortable: true,
@@ -270,7 +265,7 @@ Ext.extend(ExtraFields.grid.UserFields, MODx.grid.Grid, {
 
     getTopBar: function () {
         return [{
-            text: '<i class="icon icon-plus"></i>&nbsp;' + _('extrauser_field_create'),
+            text: '<i class="icon icon-plus"></i>&nbsp;' + _('extraresource_tab_create'),
             handler: this.createResourceTab,
             scope: this
         }, '->', {
@@ -335,4 +330,4 @@ Ext.extend(ExtraFields.grid.UserFields, MODx.grid.Grid, {
         this.getBottomToolbar().changePage(1);
     },
 });
-Ext.reg('extrauser-grid-fields', ExtraFields.grid.UserFields);
+Ext.reg('extraresource-grid-tabs', ExtraFields.grid.ResourceTabs);

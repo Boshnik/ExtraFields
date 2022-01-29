@@ -90,8 +90,7 @@ Ext.extend(ExtraFields.window.CreateField, MODx.Window, {
         }];
     },
 
-    loadDropZones: function () {
-    }
+
 
 });
 Ext.reg('extrameta-field-window-create', ExtraFields.window.CreateField);
@@ -123,8 +122,7 @@ Ext.extend(ExtraFields.window.UpdateField, MODx.Window, {
         return ExtraFields.window.CreateField.prototype.getFields.call(this, config);
     },
 
-    loadDropZones: function () {
-    }
+
 
 });
 Ext.reg('extrameta-field-window-update', ExtraFields.window.UpdateField);

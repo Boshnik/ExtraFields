@@ -5,6 +5,7 @@ return [
         'file' => 'extrauserfields',
         'description' => '',
         'events' => [
+            'OnDocFormPrerender' => [],
             'OnUserFormPrerender' => [],
             'OnMODXInit' => [],
         ],

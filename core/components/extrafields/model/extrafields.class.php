@@ -132,15 +132,31 @@ class ExtraFields
     public function getUserColumns()
     {
         $usercolumns = [];
-        $userFields = $this->modx->getIterator(ExtraUserField::class, ['active' => 1]);
-        foreach ($userFields as $userfield) {
-            $field = $userfield->getOne('Field');
-            $usercolumns[] = array_merge($field->toArray(), $userfield->toArray(),[
+        $rows = $this->modx->getIterator(ExtraUserField::class, ['active' => 1]);
+        foreach ($rows as $row) {
+            $field = $row->getOne('Field');
+            $usercolumns[] = array_merge($field->toArray(), $row->toArray(),[
                 'xtype' => $field->get('name')
             ]);
         }
 
         return $usercolumns;
+    }
+
+
+    /**
+     * Получаем поля с таблицы ExtraResourceTab
+     * @return array
+     */
+    public function getResourceTabs()
+    {
+        $resourcetabs = [];
+        $rows = $this->modx->getIterator(ExtraResourceTab::class, ['active' => 1]);
+        foreach ($rows as $row) {
+            $resourcetabs[] = $row->toArray();
+        }
+
+        return $resourcetabs;
     }
 
 

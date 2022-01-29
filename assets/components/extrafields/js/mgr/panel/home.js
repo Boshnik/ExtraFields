@@ -24,6 +24,16 @@ ExtraFields.panel.Home = function (config) {
                 };
             },
             items: [{
+                title: _('extraresource_tabs'),
+                layout: 'anchor',
+                items: [{
+                    html: _('extrafields_intro_msg'),
+                    cls: 'panel-desc extrafields-panel-desc',
+                }, {
+                    xtype: 'extraresource-grid-tabs',
+                    cls: 'main-wrapper',
+                }]
+            }, {
                 title: _('extrauser_fields'),
                 layout: 'anchor',
                 items: [{

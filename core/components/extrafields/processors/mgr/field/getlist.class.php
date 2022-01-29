@@ -74,7 +74,7 @@ class ExtraMetaFieldGetListProcessor extends modObjectGetListProcessor
             'icon' => 'icon icon-edit',
             'title' => $this->modx->lexicon('extrameta_field_update'),
             //'multiple' => $this->modx->lexicon('extrameta_fields_update'),
-            'action' => 'updateItem',
+            'action' => 'updateField',
             'button' => true,
             'menu' => true,
         ];
