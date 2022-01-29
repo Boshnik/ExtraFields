@@ -25,7 +25,7 @@ $fields = [
         'precision' => 10,
         'attributes' => 'unsigned',
         'phptype' => 'integer',
-        'null' => true,
+        'null' => false,
         'default' => 0,
     ],
     'xcheckbox' => [
@@ -33,7 +33,7 @@ $fields = [
         'precision' => 1,
         'attributes' => 'unsigned',
         'phptype' => 'integer',
-        'null' => true,
+        'null' => false,
         'default' => 0,
     ],
     'combo-boolean' => [
@@ -44,21 +44,35 @@ $fields = [
         'null' => false,
         'default' => 0,
     ],
+    'xdatetime' => [
+        'dbtype' => 'int',
+        'precision' => 20,
+        'phptype' => 'timestamp',
+        'null' => false,
+        'default' => 0,
+    ],
     'datefield' => [
         'dbtype' => 'int',
         'precision' => 20,
-        'phptype' => 'date',
+        'phptype' => 'timestamp',
+        'null' => false,
+        'default' => 0,
+    ],
+    'timefield' => [
+        'dbtype' => 'varchar',
+        'precision' => '100',
+        'phptype' => 'string',
         'null' => true,
         'default' => null,
     ],
-    'timefield' => [
+    'displayfield' => [
         'dbtype' => 'varchar',
         'precision' => '255',
         'phptype' => 'string',
         'null' => true,
         'default' => null,
     ],
-    'displayfield' => [
+    'readonly' => [
         'dbtype' => 'varchar',
         'precision' => '255',
         'phptype' => 'string',
@@ -80,11 +94,11 @@ if ($transport->xpdo) {
 
             foreach ($fields as $name => $field) {
 
-                if ($modx->getCount('ExtraMetaField', ['name' => $name])) {
+                if ($modx->getCount(ExtraMetaField::class, ['name' => $name])) {
                     continue;
                 }
 
-                $row = $modx->newObject('ExtraMetaField', ['name' => $name]);
+                $row = $modx->newObject(ExtraMetaField::class, ['name' => $name]);
                 $row->fromArray($field);
                 $row->save();
             }

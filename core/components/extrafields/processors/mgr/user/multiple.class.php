@@ -1,6 +1,6 @@
 <?php
 
-class ExtraMetaFieldMultipleProcessor extends modProcessor
+class ExtraUserFieldMultipleProcessor extends modProcessor
 {
 
     /**
@@ -21,7 +21,7 @@ class ExtraMetaFieldMultipleProcessor extends modProcessor
 
         foreach ($ids as $id) {
             /** @var modProcessorResponse $response */
-            $response = $extrafields->runProcessor('mgr/field/' . $method, ['id' => $id]);
+            $response = $extrafields->runProcessor('mgr/user/' . $method, ['id' => $id]);
             if ($response->isError()) {
                 return $response->getResponse();
             }
@@ -32,4 +32,4 @@ class ExtraMetaFieldMultipleProcessor extends modProcessor
 
 }
 
-return 'ExtraMetaFieldMultipleProcessor';
+return 'ExtraUserFieldMultipleProcessor';

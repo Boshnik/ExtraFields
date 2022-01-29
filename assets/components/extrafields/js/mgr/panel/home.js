@@ -3,12 +3,6 @@ ExtraFields.panel.Home = function (config) {
     Ext.apply(config, {
         baseCls: 'modx-formpanel',
         layout: 'anchor',
-        /*
-         stateful: true,
-         stateId: 'extrafields-panel-home',
-         stateEvents: ['tabchange'],
-         getState:function() {return {activeTab:this.items.indexOf(this.getActiveTab())};},
-         */
         hideMode: 'offsets',
         items: [{
             html: '<h2>' + _('extrafields') + '</h2>',
@@ -20,7 +14,26 @@ ExtraFields.panel.Home = function (config) {
             border: true,
             hideMode: 'offsets',
             cls: 'extrafields-tab-panel',
+            id: 'extrafields-panel-tabs',
+            stateful: true,
+            stateId: 'extrafields-panel-home',
+            stateEvents: ['tabchange'],
+            getState: function () {
+                return {
+                    activeTab: this.items.indexOf(this.getActiveTab())
+                };
+            },
             items: [{
+                title: _('extrauser_fields'),
+                layout: 'anchor',
+                items: [{
+                    html: _('extrafields_intro_msg'),
+                    cls: 'panel-desc extrafields-panel-desc',
+                }, {
+                    xtype: 'extrauser-grid-fields',
+                    cls: 'main-wrapper',
+                }]
+            }, {
                 title: _('extrameta_fields'),
                 layout: 'anchor',
                 items: [{

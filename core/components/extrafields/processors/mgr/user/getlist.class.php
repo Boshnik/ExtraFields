@@ -1,8 +1,8 @@
 <?php
 
-class ExtraMetaFieldGetListProcessor extends modObjectGetListProcessor
+class ExtraUserFieldGetListProcessor extends modObjectGetListProcessor
 {
-    public $classKey = ExtraMetaField::class;
+    public $classKey = ExtraUserField::class;
     public $objectType = 'extrafields';
     public $defaultSortField = 'id';
     public $defaultSortDirection = 'DESC';
@@ -40,10 +40,6 @@ class ExtraMetaFieldGetListProcessor extends modObjectGetListProcessor
             ]);
         }
 
-        if ($this->getProperty('combo')) {
-            $c->select('id,name');
-        }
-
         return $c;
     }
 
@@ -55,25 +51,19 @@ class ExtraMetaFieldGetListProcessor extends modObjectGetListProcessor
      */
     public function prepareRow(xPDOObject $object)
     {
-
-        if ($this->getProperty('combo')) {
-            $array = array(
-                'id' => $object->get('id'),
-                'name' => $object->get('name'),
-            );
-
-            return $array;
-        }
-
         $array = $object->toArray();
         $array['actions'] = [];
+
+        if ($field = $object->getOne('Field')) {
+            $array['fieldtype'] = $field->get('name');
+        }
 
         // Edit
         $array['actions'][] = [
             'cls' => '',
             'icon' => 'icon icon-edit',
-            'title' => $this->modx->lexicon('extrameta_field_update'),
-            //'multiple' => $this->modx->lexicon('extrameta_fields_update'),
+            'title' => $this->modx->lexicon('extrauser_field_update'),
+            //'multiple' => $this->modx->lexicon('extrauser_fields_update'),
             'action' => 'updateItem',
             'button' => true,
             'menu' => true,
@@ -83,8 +73,8 @@ class ExtraMetaFieldGetListProcessor extends modObjectGetListProcessor
             $array['actions'][] = [
                 'cls' => '',
                 'icon' => 'icon icon-power-off action-green',
-                'title' => $this->modx->lexicon('extrameta_field_enable'),
-                'multiple' => $this->modx->lexicon('extrameta_fields_enable'),
+                'title' => $this->modx->lexicon('extrauser_field_enable'),
+                'multiple' => $this->modx->lexicon('extrauser_fields_enable'),
                 'action' => 'enableItem',
                 'button' => true,
                 'menu' => true,
@@ -93,8 +83,8 @@ class ExtraMetaFieldGetListProcessor extends modObjectGetListProcessor
             $array['actions'][] = [
                 'cls' => '',
                 'icon' => 'icon icon-power-off action-gray',
-                'title' => $this->modx->lexicon('extrameta_field_disable'),
-                'multiple' => $this->modx->lexicon('extrameta_fields_disable'),
+                'title' => $this->modx->lexicon('extrauser_field_disable'),
+                'multiple' => $this->modx->lexicon('extrauser_fields_disable'),
                 'action' => 'disableItem',
                 'button' => true,
                 'menu' => true,
@@ -105,8 +95,8 @@ class ExtraMetaFieldGetListProcessor extends modObjectGetListProcessor
         $array['actions'][] = [
             'cls' => '',
             'icon' => 'icon icon-trash-o action-red',
-            'title' => $this->modx->lexicon('extrameta_field_remove'),
-            'multiple' => $this->modx->lexicon('extrameta_fields_remove'),
+            'title' => $this->modx->lexicon('extrauser_field_remove'),
+            'multiple' => $this->modx->lexicon('extrauser_fields_remove'),
             'action' => 'removeItem',
             'button' => true,
             'menu' => true,
@@ -117,4 +107,4 @@ class ExtraMetaFieldGetListProcessor extends modObjectGetListProcessor
 
 }
 
-return 'ExtraMetaFieldGetListProcessor';
+return 'ExtraUserFieldGetListProcessor';

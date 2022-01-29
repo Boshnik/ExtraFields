@@ -47,7 +47,11 @@ class ExtraFieldsHomeManagerController extends modExtraManagerController
         $this->addJavascript($jsUrl . 'misc/utils.js');
         $this->addJavascript($jsUrl . 'misc/combo.js');
 
-        // Item
+        // User
+        $this->addJavascript($jsUrl . 'widgets/user/grid.js');
+        $this->addJavascript($jsUrl . 'widgets/user/windows.js');
+
+        // Field
         $this->addJavascript($jsUrl . 'widgets/field/grid.js');
         $this->addJavascript($jsUrl . 'widgets/field/windows.js');
 

@@ -1,5 +1,6 @@
 <?php
 include_once 'field.inc.php';
+include_once 'user.inc.php';
 
 $_lang['extrafields'] = 'ExtraFields';
 $_lang['extrafields_menu_desc'] = 'Extra fields.';

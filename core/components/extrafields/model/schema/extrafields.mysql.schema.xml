@@ -8,9 +8,22 @@
         <field key="precision" dbtype="varchar" precision="100" phptype="string" null="false" default="255"/>
         <field key="phptype" dbtype="varchar" precision="100" phptype="string" null="false" default="string"/>
         <field key="null" dbtype="tinyint" precision="1" phptype="boolean" null="true" default="1"/>
-        <field key="default" dbtype="varchar" precision="100" phptype="string" null="false" default=""/>
+        <field key="default" dbtype="varchar" precision="100" phptype="string" null="true" default=""/>
         <field key="rank" dbtype="tinyint" precision="1" phptype="integer" attributes="unsigned" null="true" default="0"/>
         <field key="active" dbtype="tinyint" precision="1" phptype="boolean" null="true" default="1"/>
+    </object>
+
+    <object class="ExtraUserField" table="extrauser_fields" extends="xPDOSimpleObject">
+        <field key="name" dbtype="varchar" precision="100" phptype="string" null="false" default=""/>
+        <field key="label" dbtype="varchar" precision="100" phptype="string" null="false" default=""/>
+        <field key="position" dbtype="varchar" precision="100" phptype="string" null="false" default=""/>
+        <field key="index" dbtype="tinyint" precision="1" phptype="integer" attributes="unsigned" null="false" default="0"/>
+        <field key="fieldtype" dbtype="varchar" precision="100" phptype="string" null="false" default=""/>
+        <field key="required" dbtype="tinyint" precision="1" phptype="boolean" null="true" default="0"/>
+        <field key="rank" dbtype="tinyint" precision="1" phptype="integer" attributes="unsigned" null="true" default="0"/>
+        <field key="active" dbtype="tinyint" precision="1" phptype="boolean" null="true" default="1"/>
+
+        <aggregate alias="Field" class="ExtraMetaField" local="fieldtype" foreign="id" cardinality="one" owner="foreign" />
     </object>
 
 </model>

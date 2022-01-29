@@ -19,14 +19,6 @@ class ExtraMetaFieldRemoveProcessor extends modObjectRemoveProcessor
 
         return parent::initialize();
     }
-    
-    /**
-     * @return bool|string
-     */
-    public function beforeRemove()
-    {
-        return parent::beforeRemove();
-    }
 
 }
 
