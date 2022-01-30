@@ -102,7 +102,7 @@ ExtraFields.form.Boshnik = Ext.extend(Ext.Toolbar.TextItem, {
 
             this.el.on('click', () => {
                 var btnOKText = Ext.Msg.buttonText.ok;
-                Ext.Msg.buttonText.ok = 'DONATE';
+                Ext.Msg.buttonText.ok = '<i class="icon icon-coffee"></i> buy me a coffee';
                 Ext.Msg.show({
                     title: _('extrafields') + ' ' + ExtraFields.config.version,
                     msg: msg,
