@@ -84,3 +84,40 @@ ExtraFields.combo.GetList = function (config) {
 };
 Ext.extend(ExtraFields.combo.GetList,MODx.combo.ComboBox);
 Ext.reg('extrafields-combo-getlist',ExtraFields.combo.GetList);
+
+ExtraFields.form.Boshnik = Ext.extend(Ext.Toolbar.TextItem, {
+    baseCls: 'boshnik',
+    listeners: {
+        afterrender: function () {
+            this.getEl().addClass(this.baseCls);
+            var msg = '<div class="wrapper"><div class="col">';
+            msg += '<img src="'+ExtraFields.config.assetsUrl+'img/boshnik.jpg" alt="Boshnik" width="60" height="60"/>'
+            msg += '</div><div class="col">';
+            msg += '<p><b>Email:</b> Superboshnik@ya.ru</p>';
+            msg += '<p><b>Telegram:</b> <a href="https://t.me/Boshnik" target="_blank">@Boshnik</a></p>';
+            msg += '<p><b>GitHub:</b> <a href="https://github.com/Boshnik" target="_blank">Boshnik</a></p>';
+            msg += '</div>';
+            msg += '<br><p class="col-12">&copy; '+ new Date().getFullYear() +' <a href="https://boshnik.com" target="_blank">boshnik.com</a></p>'
+            msg += '</div>';
+
+            this.el.on('click', () => {
+                var btnOKText = Ext.Msg.buttonText.ok;
+                Ext.Msg.buttonText.ok = 'DONATE';
+                Ext.Msg.show({
+                    title: _('extrafields') + ' ' + ExtraFields.config.version,
+                    msg: msg,
+                    buttons: Ext.Msg.OKCANCEL,
+                    fn: function(btn) {
+                        if (btn == 'ok') {
+                            window.open('https://yoomoney.ru/to/410011655323883', '_blank');
+                        }
+                    },
+                    cls: 'boshnik-window',
+                    width: 300
+                });
+                Ext.Msg.buttonText.ok = btnOKText;
+            })
+        }
+    },
+});
+Ext.reg("boshnik", ExtraFields.form.Boshnik);

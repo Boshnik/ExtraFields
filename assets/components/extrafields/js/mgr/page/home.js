@@ -4,6 +4,16 @@ ExtraFields.page.Home = function (config) {
         components: [{
             xtype: 'extrafields-panel-home',
             renderTo: 'extrafields-panel-home-div'
+        }],
+        buttons: [{
+            xtype: 'boshnik',
+            text: '<img src="'+ExtraFields.config.assetsUrl+'img/boshnik.jpg" width="50" height="50"/> BOSHNIK',
+        }, {
+            xtype: 'button',
+            text: '<i class="icon icon-cog"></i> ' + _('extrafields_btn_admin'),
+            handler: function () {
+                MODx.loadPage('admin', 'namespace=extrafields');
+            }
         }]
     });
     ExtraFields.page.Home.superclass.constructor.call(this, config);

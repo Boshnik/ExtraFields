@@ -10,14 +10,14 @@ ExtraFields.grid.UserFields = function (config) {
         tbar: this.getTopBar(config),
         sm: new Ext.grid.RowSelectionModel({ singleSelect:false }),
         baseParams: {
-            action: 'mgr/user/getlist',
+            action: 'mgr/user/field/getlist',
             sort: 'rank',
             dir: 'asc',
         },
         stateful: true,
         stateId: config.id,
         ddGroup: 'extrauser-grid-statusDD',
-        ddAction: 'mgr/user/sort',
+        ddAction: 'mgr/user/field/sort',
         enableDragDrop: true,
         multi_select: true,
         listeners: {
@@ -127,7 +127,7 @@ Ext.extend(ExtraFields.grid.UserFields, MODx.grid.Grid, {
         MODx.Ajax.request({
             url: ExtraFields.config.connectorUrl,
             params: {
-                action: 'mgr/user/multiple',
+                action: 'mgr/user/field/multiple',
                 method: method,
                 ids: Ext.util.JSON.encode(ids),
             },
@@ -176,7 +176,7 @@ Ext.extend(ExtraFields.grid.UserFields, MODx.grid.Grid, {
         MODx.Ajax.request({
             url: this.config.url,
             params: {
-                action: 'mgr/user/get',
+                action: 'mgr/user/field/get',
                 id: id
             },
             listeners: {

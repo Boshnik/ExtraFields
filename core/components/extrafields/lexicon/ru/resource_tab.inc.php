@@ -1,6 +1,6 @@
 <?php
 
-$_lang['extraresource_tabs'] = 'Вкладки';
+$_lang['extraresource_tabs'] = 'Вкладки ресурса';
 $_lang['extraresource_tab_id'] = 'Id';
 $_lang['extraresource_tab_name'] = 'Название';
 $_lang['extraresource_tab_index'] = 'Позиция';

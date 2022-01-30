@@ -8,7 +8,7 @@ ExtraFields.window.CreateUserField = function (config) {
         width: 550,
         autoHeight: true,
         url: ExtraFields.config.connectorUrl,
-        action: 'mgr/user/create',
+        action: 'mgr/user/field/create',
         fields: this.getFields(config),
         keys: [{
             key: Ext.EventObject.ENTER, shift: true, fn: function () {
@@ -138,7 +138,7 @@ ExtraFields.window.UpdateUserField = function (config) {
         width: 550,
         autoHeight: true,
         url: ExtraFields.config.connectorUrl,
-        action: 'mgr/user/update',
+        action: 'mgr/user/field/update',
         fields: this.getFields(config),
         keys: [{
             key: Ext.EventObject.ENTER, shift: true, fn: function () {

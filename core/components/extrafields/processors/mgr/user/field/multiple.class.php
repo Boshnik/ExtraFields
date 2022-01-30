@@ -21,7 +21,7 @@ class ExtraUserFieldMultipleProcessor extends modProcessor
 
         foreach ($ids as $id) {
             /** @var modProcessorResponse $response */
-            $response = $extrafields->runProcessor('mgr/user/' . $method, ['id' => $id]);
+            $response = $extrafields->runProcessor('mgr/user/field/' . $method, ['id' => $id]);
             if ($response->isError()) {
                 return $response->getResponse();
             }

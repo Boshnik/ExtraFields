@@ -1,10 +1,10 @@
 <?php
 
 /**
- * The home manager controller for ExtraFields.
+ * The admin manager controller for ExtraFields.
  *
  */
-class ExtraFieldsHomeManagerController extends modExtraManagerController
+class ExtraFieldsAdminManagerController extends modExtraManagerController
 {
     /** @var ExtraFields $extrafields */
     public $extrafields;
@@ -47,21 +47,21 @@ class ExtraFieldsHomeManagerController extends modExtraManagerController
         $this->addJavascript($jsUrl . 'misc/utils.js');
         $this->addJavascript($jsUrl . 'misc/combo.js');
 
-        // Resource field
-        $this->addJavascript($jsUrl . 'widgets/resource/field/grid.js');
-        $this->addJavascript($jsUrl . 'widgets/resource/field/windows.js');
+        // Resource tab
+        $this->addJavascript($jsUrl . 'widgets/resource/tab/grid.js');
+        $this->addJavascript($jsUrl . 'widgets/resource/tab/windows.js');
 
-        // User
-        $this->addJavascript($jsUrl . 'widgets/user/grid.js');
-        $this->addJavascript($jsUrl . 'widgets/user/windows.js');
+        // Field
+        $this->addJavascript($jsUrl . 'widgets/field/grid.js');
+        $this->addJavascript($jsUrl . 'widgets/field/windows.js');
 
-        $this->addJavascript($jsUrl . 'panel/home.js');
-        $this->addJavascript($jsUrl . 'page/home.js');
+        $this->addJavascript($jsUrl . 'panel/admin.js');
+        $this->addJavascript($jsUrl . 'page/admin.js');
 
         $this->addHtml('<script>
             Ext.onReady(() => {
                 ExtraFields.config = ' . json_encode($this->extrafields->config) . ';
-                MODx.load({ xtype: "extrafields-page-home"});
+                MODx.load({ xtype: "extrafields-page-admin"});
             });
         </script>');
 
@@ -74,7 +74,7 @@ class ExtraFieldsHomeManagerController extends modExtraManagerController
      */
     public function getTemplateFile()
     {
-        $this->content .= '<div id="extrafields-panel-home-div"></div>';
+        $this->content .= '<div id="extrafields-panel-admin-div"></div>';
 
         return '';
     }

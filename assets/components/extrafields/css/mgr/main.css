@@ -109,3 +109,46 @@ a.extrafields-btn.disabled, fieldset[disabled] a.extrafields-btn { pointer-event
 }
 .x-window-maximized .x-window-body { height: calc(100vh - 100px) !important; }
 .x-form-field-trigger-wrap { width: 99% !important }
+#modx-action-buttons { right: 15px; }
+
+/* Developer */
+.boshnik {
+    display: flex !important;
+    align-items: center;
+    font-size: .75rem !important;
+    letter-spacing: 1px;
+    opacity: .4;
+    cursor: pointer;
+    transition: .3s;
+}
+.boshnik:hover {
+    opacity: 1;
+}
+.boshnik img {
+    display: inline-block;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    padding: 0 10px;
+}
+.boshnik-window .x-window-body {
+    padding-bottom: 0;
+}
+.boshnik-window .wrapper {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+}
+.boshnik-window .col {
+    width: auto;
+    padding: 5px;
+}
+.boshnik-window .col-12 {
+    width: 100%;
+    text-align: center;
+    margin-top: 20px;
+}
+.boshnik-window img {
+    border-radius: 50%;
+}

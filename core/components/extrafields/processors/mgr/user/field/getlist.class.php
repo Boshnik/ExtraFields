@@ -36,7 +36,7 @@ class ExtraUserFieldGetListProcessor extends modObjectGetListProcessor
         if ($query) {
             $c->where([
                 'name:LIKE' => "%{$query}%",
-                'OR:description:LIKE' => "%{$query}%",
+                'OR:label:LIKE' => "%{$query}%",
             ]);
         }
 

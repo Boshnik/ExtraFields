@@ -1,6 +1,6 @@
 <?php
 
-$_lang['extraresource_tabs'] = 'Tabs';
+$_lang['extraresource_tabs'] = 'Resource tabs';
 $_lang['extraresource_tab_id'] = 'Id';
 $_lang['extraresource_tab_name'] = 'Name';
 $_lang['extraresource_tab_index'] = 'Position';
