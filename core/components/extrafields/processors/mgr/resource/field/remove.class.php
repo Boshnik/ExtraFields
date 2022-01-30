@@ -1,8 +1,8 @@
 <?php
 
-class ExtraUserFieldRemoveProcessor extends modObjectRemoveProcessor
+class ExtraResourceFieldRemoveProcessor extends modObjectRemoveProcessor
 {
-    public $classKey = ExtraUserField::class;
+    public $classKey = ExtraResourceField::class;
     public $objectType = 'extrafields';
     public $languageTopics = ['extrafields'];
     //public $permission = 'remove';
@@ -24,16 +24,17 @@ class ExtraUserFieldRemoveProcessor extends modObjectRemoveProcessor
         return parent::initialize();
     }
 
+
     /**
      * @return bool
      */
     public function afterRemove()
     {
-        $this->extrafields->removeTableColumn($this->object, modUserProfile::class);
+        $this->extrafields->removeTableColumn($this->object, modResource::class);
 
         return true;
     }
 
 }
 
-return 'ExtraUserFieldRemoveProcessor';
+return 'ExtraResourceFieldRemoveProcessor';

@@ -90,8 +90,6 @@ Ext.extend(ExtraFields.window.CreateField, MODx.Window, {
         }];
     },
 
-
-
 });
 Ext.reg('extrameta-field-window-create', ExtraFields.window.CreateField);
 
@@ -121,8 +119,6 @@ Ext.extend(ExtraFields.window.UpdateField, MODx.Window, {
     getFields: function (config) {
         return ExtraFields.window.CreateField.prototype.getFields.call(this, config);
     },
-
-
 
 });
 Ext.reg('extrameta-field-window-update', ExtraFields.window.UpdateField);

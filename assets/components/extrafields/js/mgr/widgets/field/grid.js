@@ -147,7 +147,7 @@ Ext.extend(ExtraFields.grid.Fields, MODx.grid.Grid, {
         });
     },
 
-    createResourceTab: function (btn, e) {
+    createField: function (btn, e) {
         var w = MODx.load({
             xtype: 'extrameta-field-window-create',
             id: Ext.id(),
@@ -277,7 +277,7 @@ Ext.extend(ExtraFields.grid.Fields, MODx.grid.Grid, {
     getTopBar: function () {
         return [{
             text: '<i class="icon icon-plus"></i>&nbsp;' + _('extrameta_field_create'),
-            handler: this.createResourceTab,
+            handler: this.createField,
             scope: this
         }, '->', {
             xtype: 'extrafields-field-search',

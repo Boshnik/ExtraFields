@@ -1,6 +1,6 @@
 <?php
 
-$_lang['extrauser_fields'] = 'Пользователь';
+$_lang['extrauser_fields'] = 'Поля пользователя';
 $_lang['extrauser_field_id'] = 'Id';
 $_lang['extrauser_field_name'] = 'Имя поля (name)';
 $_lang['extrauser_field_label'] = 'Название поля (label)';

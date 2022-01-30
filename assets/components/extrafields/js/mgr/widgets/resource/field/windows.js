@@ -1,14 +1,14 @@
-ExtraFields.window.CreateUserField = function (config) {
+ExtraFields.window.CreateResourceField = function (config) {
     config = config || {};
     if (!config.id) {
-        config.id = 'extrauser-field-window-create';
+        config.id = 'extraresource-field-window-create';
     }
     Ext.applyIf(config, {
-        title: _('extrauser_field_create'),
+        title: _('extraresource_field_create'),
         width: 550,
         autoHeight: true,
         url: ExtraFields.config.connectorUrl,
-        action: 'mgr/user/create',
+        action: 'mgr/resource/field/create',
         fields: this.getFields(config),
         keys: [{
             key: Ext.EventObject.ENTER, shift: true, fn: function () {
@@ -16,9 +16,9 @@ ExtraFields.window.CreateUserField = function (config) {
             }, scope: this
         }]
     });
-    ExtraFields.window.CreateUserField.superclass.constructor.call(this, config);
+    ExtraFields.window.CreateResourceField.superclass.constructor.call(this, config);
 };
-Ext.extend(ExtraFields.window.CreateUserField, MODx.Window, {
+Ext.extend(ExtraFields.window.CreateResourceField, MODx.Window, {
 
     getFields: function (config) {
         return [{
@@ -35,7 +35,7 @@ Ext.extend(ExtraFields.window.CreateUserField, MODx.Window, {
                 items:[{
                     xtype: 'textfield',
                     readOnly: !!config.record,
-                    fieldLabel: _('extrauser_field_name'),
+                    fieldLabel: _('extraresource_field_name'),
                     name: 'name',
                     id: config.id + '-name',
                     anchor: '99%',
@@ -48,7 +48,7 @@ Ext.extend(ExtraFields.window.CreateUserField, MODx.Window, {
                 defaults: {msgTarget: 'under'},
                 items:[{
                     xtype: 'textfield',
-                    fieldLabel: _('extrauser_field_label'),
+                    fieldLabel: _('extraresource_field_label'),
                     name: 'label',
                     id: config.id + '-label',
                     anchor: '99%',
@@ -63,13 +63,18 @@ Ext.extend(ExtraFields.window.CreateUserField, MODx.Window, {
                 width: '100%',
                 defaults: {msgTarget: 'under'},
                 items: [{
-                    xtype: 'extrafields-combo-positions',
-                    fieldLabel: _('extrauser_field_position'),
+                    xtype: 'extrafields-combo-getlist',
+                    fieldLabel: _('extraresource_field_position'),
                     name: 'position',
-                    hiddenName: 'position',
                     id: config.id + '-position',
                     anchor: '99%',
                     allowBlank: false,
+                    baseParams: {
+                        action: 'mgr/resource/tab/getlist',
+                        sort: 'rank',
+                        dir: 'asc',
+                        combo: 1,
+                    }
                 }]
             }, {
                 columnWidth: .2,
@@ -80,7 +85,7 @@ Ext.extend(ExtraFields.window.CreateUserField, MODx.Window, {
                     xtype: 'numberfield',
                     inputType: 'number',
                     cls: 'x-form-text',
-                    fieldLabel: _('extrauser_field_index'),
+                    fieldLabel: _('extraresource_field_index'),
                     name: 'index',
                     id: config.id + '-index',
                     anchor: '99%',
@@ -95,7 +100,7 @@ Ext.extend(ExtraFields.window.CreateUserField, MODx.Window, {
                 defaults: {msgTarget: 'under'},
                 items: [{
                     xtype: 'extrafields-combo-getlist',
-                    fieldLabel: _('extrauser_field_fieldtype'),
+                    fieldLabel: _('extraresource_field_fieldtype'),
                     name: 'fieldtype',
                     id: config.id + '-fieldtype',
                     anchor: '99%',
@@ -110,14 +115,14 @@ Ext.extend(ExtraFields.window.CreateUserField, MODx.Window, {
             }]
         }, {
             xtype: 'xcheckbox',
-            boxLabel: _('extrauser_field_required'),
+            boxLabel: _('extraresource_field_required'),
             name: 'required',
             id: config.id + '-required',
             anchor: '99%',
             checked: false,
         }, {
             xtype: 'xcheckbox',
-            boxLabel: _('extrauser_field_active'),
+            boxLabel: _('extraresource_field_active'),
             name: 'active',
             id: config.id + '-active',
             checked: true,
@@ -125,20 +130,20 @@ Ext.extend(ExtraFields.window.CreateUserField, MODx.Window, {
     },
 
 });
-Ext.reg('extrauser-field-window-create', ExtraFields.window.CreateUserField);
+Ext.reg('extraresource-field-window-create', ExtraFields.window.CreateResourceField);
 
 
-ExtraFields.window.UpdateUserField = function (config) {
+ExtraFields.window.UpdateResourceField = function (config) {
     config = config || {};
     if (!config.id) {
-        config.id = 'extrauser-field-window-update';
+        config.id = 'extraresource-field-window-update';
     }
     Ext.applyIf(config, {
-        title: _('extrauser_field_update'),
+        title: _('extraresource_field_update'),
         width: 550,
         autoHeight: true,
         url: ExtraFields.config.connectorUrl,
-        action: 'mgr/user/update',
+        action: 'mgr/resource/field/update',
         fields: this.getFields(config),
         keys: [{
             key: Ext.EventObject.ENTER, shift: true, fn: function () {
@@ -146,13 +151,13 @@ ExtraFields.window.UpdateUserField = function (config) {
             }, scope: this
         }]
     });
-    ExtraFields.window.UpdateUserField.superclass.constructor.call(this, config);
+    ExtraFields.window.UpdateResourceField.superclass.constructor.call(this, config);
 };
-Ext.extend(ExtraFields.window.UpdateUserField, MODx.Window, {
+Ext.extend(ExtraFields.window.UpdateResourceField, MODx.Window, {
 
     getFields: function (config) {
-        return ExtraFields.window.CreateUserField.prototype.getFields.call(this, config);
+        return ExtraFields.window.CreateResourceField.prototype.getFields.call(this, config);
     },
 
 });
-Ext.reg('extrauser-field-window-update', ExtraFields.window.UpdateUserField);
+Ext.reg('extraresource-field-window-update', ExtraFields.window.UpdateResourceField);

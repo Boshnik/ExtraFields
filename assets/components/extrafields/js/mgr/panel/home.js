@@ -34,6 +34,16 @@ ExtraFields.panel.Home = function (config) {
                     cls: 'main-wrapper',
                 }]
             }, {
+                title: _('extraresource_fields'),
+                layout: 'anchor',
+                items: [{
+                    html: _('extrafields_intro_msg'),
+                    cls: 'panel-desc extrafields-panel-desc',
+                }, {
+                    xtype: 'extraresource-grid-fields',
+                    cls: 'main-wrapper',
+                }]
+            }, {
                 title: _('extrauser_fields'),
                 layout: 'anchor',
                 items: [{

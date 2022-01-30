@@ -1,6 +1,6 @@
 <?php
 
-$_lang['extrauser_fields'] = 'Users';
+$_lang['extrauser_fields'] = 'User fields';
 $_lang['extrauser_field_id'] = 'Id';
 $_lang['extrauser_field_name'] = 'Field name';
 $_lang['extrauser_field_label'] = 'label field';

@@ -1,8 +1,8 @@
 <?php
 
-class ExtraResourceTabGetListProcessor extends modObjectGetListProcessor
+class ExtraResourceFieldGetListProcessor extends modObjectGetListProcessor
 {
-    public $classKey = ExtraResourceTab::class;
+    public $classKey = ExtraResourceField::class;
     public $objectType = 'extrafields';
     public $defaultSortField = 'id';
     public $defaultSortDirection = 'DESC';
@@ -40,10 +40,6 @@ class ExtraResourceTabGetListProcessor extends modObjectGetListProcessor
             ]);
         }
 
-        if ($this->getProperty('combo')) {
-            $c->select('id,name');
-        }
-
         return $c;
     }
 
@@ -55,25 +51,20 @@ class ExtraResourceTabGetListProcessor extends modObjectGetListProcessor
      */
     public function prepareRow(xPDOObject $object)
     {
-        if ($this->getProperty('combo')) {
-            $array = array(
-                'id' => $object->get('id'),
-                'name' => $object->get('name'),
-            );
-
-            return $array;
-        }
-
         $array = $object->toArray();
         $array['actions'] = [];
+
+        if ($field = $object->getOne('Field')) {
+            $array['fieldtype'] = $field->get('name');
+        }
 
         // Edit
         $array['actions'][] = [
             'cls' => '',
             'icon' => 'icon icon-edit',
-            'title' => $this->modx->lexicon('extraresource_tab_update'),
-            //'multiple' => $this->modx->lexicon('extraresource_tabs_update'),
-            'action' => 'updateResourceTab',
+            'title' => $this->modx->lexicon('extraresource_field_update'),
+            //'multiple' => $this->modx->lexicon('extraresource_fields_update'),
+            'action' => 'updateResourceField',
             'button' => true,
             'menu' => true,
         ];
@@ -82,8 +73,8 @@ class ExtraResourceTabGetListProcessor extends modObjectGetListProcessor
             $array['actions'][] = [
                 'cls' => '',
                 'icon' => 'icon icon-power-off action-green',
-                'title' => $this->modx->lexicon('extraresource_tab_enable'),
-                'multiple' => $this->modx->lexicon('extraresource_tabs_enable'),
+                'title' => $this->modx->lexicon('extraresource_field_enable'),
+                'multiple' => $this->modx->lexicon('extraresource_fields_enable'),
                 'action' => 'enableItem',
                 'button' => true,
                 'menu' => true,
@@ -92,8 +83,8 @@ class ExtraResourceTabGetListProcessor extends modObjectGetListProcessor
             $array['actions'][] = [
                 'cls' => '',
                 'icon' => 'icon icon-power-off action-gray',
-                'title' => $this->modx->lexicon('extraresource_tab_disable'),
-                'multiple' => $this->modx->lexicon('extraresource_tabs_disable'),
+                'title' => $this->modx->lexicon('extraresource_field_disable'),
+                'multiple' => $this->modx->lexicon('extraresource_fields_disable'),
                 'action' => 'disableItem',
                 'button' => true,
                 'menu' => true,
@@ -104,8 +95,8 @@ class ExtraResourceTabGetListProcessor extends modObjectGetListProcessor
         $array['actions'][] = [
             'cls' => '',
             'icon' => 'icon icon-trash-o action-red',
-            'title' => $this->modx->lexicon('extraresource_tab_remove'),
-            'multiple' => $this->modx->lexicon('extraresource_tabs_remove'),
+            'title' => $this->modx->lexicon('extraresource_field_remove'),
+            'multiple' => $this->modx->lexicon('extraresource_fields_remove'),
             'action' => 'removeItem',
             'button' => true,
             'menu' => true,
@@ -114,24 +105,6 @@ class ExtraResourceTabGetListProcessor extends modObjectGetListProcessor
         return $array;
     }
 
-
-    public function outputArray(array $array, $count = false)
-    {
-        if ($this->getProperty('combo')) {
-            $array = array_merge([
-                [
-                    'id' => 0,
-                    'name' => 'modx-resource-main-left'
-                ], [
-                    'id' => 9999,
-                    'name' => 'modx-resource-main-right'
-                ]
-            ], $array);
-        }
-
-        return parent::outputArray($array, $count);
-    }
-
 }
 
-return 'ExtraResourceTabGetListProcessor';
+return 'ExtraResourceFieldGetListProcessor';

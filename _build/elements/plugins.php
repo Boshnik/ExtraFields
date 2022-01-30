@@ -1,8 +1,8 @@
 <?php
 
 return [
-    'ExtraUserFields' => [
-        'file' => 'extrauserfields',
+    'ExtraFields' => [
+        'file' => 'extrafields',
         'description' => '',
         'events' => [
             'OnDocFormPrerender' => [],

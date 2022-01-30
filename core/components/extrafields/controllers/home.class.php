@@ -51,6 +51,10 @@ class ExtraFieldsHomeManagerController extends modExtraManagerController
         $this->addJavascript($jsUrl . 'widgets/resource/tab/grid.js');
         $this->addJavascript($jsUrl . 'widgets/resource/tab/windows.js');
 
+        // Resource field
+        $this->addJavascript($jsUrl . 'widgets/resource/field/grid.js');
+        $this->addJavascript($jsUrl . 'widgets/resource/field/windows.js');
+
         // User
         $this->addJavascript($jsUrl . 'widgets/user/grid.js');
         $this->addJavascript($jsUrl . 'widgets/user/windows.js');

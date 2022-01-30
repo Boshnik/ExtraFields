@@ -1,7 +1,7 @@
-ExtraFields.grid.UserFields = function (config) {
+ExtraFields.grid.ResourceFields = function (config) {
     config = config || {};
     if (!config.id) {
-        config.id = 'extrauser-grid-fields';
+        config.id = 'extraresource-grid-fields';
     }
     Ext.applyIf(config, {
         url: ExtraFields.config.connectorUrl,
@@ -10,20 +10,20 @@ ExtraFields.grid.UserFields = function (config) {
         tbar: this.getTopBar(config),
         sm: new Ext.grid.RowSelectionModel({ singleSelect:false }),
         baseParams: {
-            action: 'mgr/user/getlist',
+            action: 'mgr/resource/field/getlist',
             sort: 'rank',
             dir: 'asc',
         },
         stateful: true,
         stateId: config.id,
-        ddGroup: 'extrauser-grid-statusDD',
-        ddAction: 'mgr/user/sort',
+        ddGroup: 'extraresource-grid-statusDD',
+        ddAction: 'mgr/resource/field/sort',
         enableDragDrop: true,
         multi_select: true,
         listeners: {
             rowDblClick: function (grid, rowIndex, e) {
                 var row = grid.store.getAt(rowIndex);
-                this.updateUserField(grid, e, row);
+                this.updateResourceField(grid, e, row);
             },
             render:{
                 scope: this,
@@ -98,7 +98,7 @@ ExtraFields.grid.UserFields = function (config) {
         remoteSort: true,
         autoHeight: true,
     });
-    ExtraFields.grid.UserFields.superclass.constructor.call(this, config);
+    ExtraFields.grid.ResourceFields.superclass.constructor.call(this, config);
 
     // Clear selection on grid refresh
     this.store.on('load', function () {
@@ -107,7 +107,7 @@ ExtraFields.grid.UserFields = function (config) {
         }
     }, this);
 };
-Ext.extend(ExtraFields.grid.UserFields, MODx.grid.Grid, {
+Ext.extend(ExtraFields.grid.ResourceFields, MODx.grid.Grid, {
     windows: {},
 
     getMenu: function (grid, rowIndex) {
@@ -124,22 +124,25 @@ Ext.extend(ExtraFields.grid.UserFields, MODx.grid.Grid, {
         if (!ids.length) {
             return false;
         }
+        var el = this.getEl();
+        el.mask(_('loading'), 'x-mask-loading');
         MODx.Ajax.request({
             url: ExtraFields.config.connectorUrl,
             params: {
-                action: 'mgr/user/multiple',
+                action: 'mgr/resource/field/multiple',
                 method: method,
                 ids: Ext.util.JSON.encode(ids),
             },
             listeners: {
                 success: {
                     fn: function () {
-                        //noinspection JSUnresolvedFunction
+                        el.unmask();
                         this.refresh();
                     }, scope: this
                 },
                 failure: {
                     fn: function (response) {
+                        el.unmask();
                         MODx.msg.alert(_('error'), response.message);
                     }, scope: this
                 },
@@ -147,9 +150,9 @@ Ext.extend(ExtraFields.grid.UserFields, MODx.grid.Grid, {
         });
     },
 
-    createUserField: function (btn, e) {
+    createResourceField: function (btn, e) {
         var w = MODx.load({
-            xtype: 'extrauser-field-window-create',
+            xtype: 'extraresource-field-window-create',
             id: Ext.id(),
             listeners: {
                 success: {
@@ -164,7 +167,7 @@ Ext.extend(ExtraFields.grid.UserFields, MODx.grid.Grid, {
         w.show(e.target);
     },
 
-    updateUserField: function (btn, e, row) {
+    updateResourceField: function (btn, e, row) {
         if (typeof(row) != 'undefined') {
             this.menu.record = row.data;
         }
@@ -176,14 +179,14 @@ Ext.extend(ExtraFields.grid.UserFields, MODx.grid.Grid, {
         MODx.Ajax.request({
             url: this.config.url,
             params: {
-                action: 'mgr/user/get',
+                action: 'mgr/resource/field/get',
                 id: id
             },
             listeners: {
                 success: {
                     fn: function (r) {
                         var w = MODx.load({
-                            xtype: 'extrauser-field-window-update',
+                            xtype: 'extraresource-field-window-update',
                             id: Ext.id(),
                             record: r,
                             listeners: {
@@ -207,10 +210,10 @@ Ext.extend(ExtraFields.grid.UserFields, MODx.grid.Grid, {
         var ids = this._getSelectedIds();
 
         Ext.MessageBox.confirm(
-            _('extrauser_field_remove_title'),
+            _('extraresource_field_remove_title'),
             ids.length > 1
-                ? _('extrauser_fields_remove_confirm')
-                : _('extrauser_field_remove_confirm'),
+                ? _('extraresource_fields_remove_confirm')
+                : _('extraresource_field_remove_confirm'),
             function (val) {
                 if (val == 'yes') {
                     this.multipleAction('remove');
@@ -233,27 +236,27 @@ Ext.extend(ExtraFields.grid.UserFields, MODx.grid.Grid, {
 
     getColumns: function () {
         return [{
-            header: _('extrauser_field_id'),
+            header: _('extraresource_field_id'),
             dataIndex: 'id',
             sortable: true,
             width: 70
         }, {
-            header: _('extrauser_field_name'),
+            header: _('extraresource_field_name'),
             dataIndex: 'name',
             sortable: true,
-            width: 150,
+            width: 200,
         }, {
-            header: _('extrauser_field_label'),
+            header: _('extraresource_field_label'),
             dataIndex: 'label',
             sortable: false,
             width: 150,
         }, {
-            header: _('extrauser_field_fieldtype'),
+            header: _('extraresource_field_fieldtype'),
             dataIndex: 'fieldtype',
             sortable: false,
             width: 150,
         }, {
-            header: _('extrauser_field_active'),
+            header: _('extraresource_field_active'),
             dataIndex: 'active',
             renderer: ExtraFields.utils.renderBoolean,
             sortable: true,
@@ -270,8 +273,8 @@ Ext.extend(ExtraFields.grid.UserFields, MODx.grid.Grid, {
 
     getTopBar: function () {
         return [{
-            text: '<i class="icon icon-plus"></i>&nbsp;' + _('extrauser_field_create'),
-            handler: this.createUserField,
+            text: '<i class="icon icon-plus"></i>&nbsp;' + _('extraresource_field_create'),
+            handler: this.createResourceField,
             scope: this
         }, '->', {
             xtype: 'extrafields-field-search',
@@ -335,4 +338,4 @@ Ext.extend(ExtraFields.grid.UserFields, MODx.grid.Grid, {
         this.getBottomToolbar().changePage(1);
     },
 });
-Ext.reg('extrauser-grid-fields', ExtraFields.grid.UserFields);
+Ext.reg('extraresource-grid-fields', ExtraFields.grid.ResourceFields);

@@ -2,6 +2,7 @@
 include_once 'field.inc.php';
 include_once 'user.inc.php';
 include_once 'resource_tab.inc.php';
+include_once 'resource_field.inc.php';
 
 $_lang['extrafields'] = 'ExtraFields';
 $_lang['extrafields_menu_desc'] = 'Extra fields.';

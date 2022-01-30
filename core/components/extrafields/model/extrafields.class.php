@@ -103,17 +103,21 @@ class ExtraFields
 
 
     /**
-     * Проверяем название поля для пользователя
+     * Проверяем название поля
      * @param $name
      */
-    public function validationUserField($name)
+    public function validationField($name, $type = 'resource')
     {
+        $tables = [modResource::class];
+        if ($type == 'user') {
+            $tables = [modUser::class, modUserProfile::class];
+        }
+
         if (!preg_match("/^[a-z]/", $name)) {
-            $this->modx->error->addField('name', $this->modx->lexicon('extrauser_field_err_name_cyrillic'));
+            $this->modx->error->addField('name', $this->modx->lexicon("extra{$type}_field_err_name_cyrillic"));
         }
 
         $columns = [];
-        $tables = [modUser::class, modUserProfile::class];
         foreach ($tables as $table) {
             $q = $this->modx->prepare("DESCRIBE " . $this->modx->getTableName($table));
             $q->execute();
@@ -121,31 +125,34 @@ class ExtraFields
         }
 
         if (in_array($name, $columns)) {
-            $this->modx->error->addField('name', $this->modx->lexicon('extrauser_field_err_name_reserved'));
+            $this->modx->error->addField('name', $this->modx->lexicon("extra{$type}_field_err_name_reserved"));
         }
     }
 
+
     /**
-     * Получаем поля с таблиц ExtraMetaField и ExtraUserField
+     * Get table fields
      * @return array
      */
-    public function getUserColumns()
+    public function getTableFields($className)
     {
-        $usercolumns = [];
-        $rows = $this->modx->getIterator(ExtraUserField::class, ['active' => 1]);
+        $fields = [];
+        if (empty($className)) return $fields;
+
+        $rows = $this->modx->getIterator($className, ['active' => 1]);
         foreach ($rows as $row) {
             $field = $row->getOne('Field');
-            $usercolumns[] = array_merge($field->toArray(), $row->toArray(),[
+            $fields[] = array_merge($field->toArray(), $row->toArray(),[
                 'xtype' => $field->get('name')
             ]);
         }
 
-        return $usercolumns;
+        return $fields;
     }
 
 
     /**
-     * Получаем поля с таблицы ExtraResourceTab
+     * Getting fields from ExtraResourceTab table
      * @return array
      */
     public function getResourceTabs()
@@ -160,6 +167,81 @@ class ExtraFields
     }
 
 
+    /**
+     * Create a column in a table
+     * @param $object
+     * @param $className
+     */
+    public function createTableColumn($object, $className)
+    {
+        if ($sql = $this->getSQL($object, $className)) {
+            $this->modx->exec($sql);
+        }
+    }
+
+
+    /**
+     * Update a column in a table
+     * @param $object
+     * @param $className
+     */
+    public function updateTableColumn($object, $className)
+    {
+        if ($sql = $this->getSQL($object, $className, 'update')) {
+            $this->modx->exec($sql);
+        }
+    }
+
+
+    /**
+     * Remove a column in a table
+     * @param $object
+     * @param $className
+     */
+    public function removeTableColumn($object, $className)
+    {
+        if ($sql = $this->getSQL($object, $className, 'remove')) {
+            $this->modx->exec($sql);
+        }
+    }
+
+
+    /**
+     * @param $object
+     * @param $className
+     * @param string $mode
+     * @return false|string
+     */
+    public function getSQL($object, $className, $mode = 'create')
+    {
+        $table = $this->modx->getTableName($className);
+        $name = $object->get('name');
+
+        if (!$field = $object->getOne('Field')) {
+            return false;
+        }
+
+        $type = $field->get('dbtype');
+        if ($field->get('precision')) {
+            $type .= "({$field->get('precision')})";
+        }
+        $null = $field->get('null') ? 'NULL' : 'NOT NULL';
+        $default = empty($field->get('default')) ? "" : " DEFAULT $field->get('default')";
+
+        switch ($mode) {
+            case 'create':
+                $sql = "ALTER TABLE {$table} ADD `{$name}` {$type} {$null}{$default};";
+                break;
+            case 'update':
+                $sql = "ALTER TABLE {$table} MODIFY COLUMN `{$name}` {$type} {$null}{$default};";
+                break;
+            case 'remove':
+                $sql = "ALTER TABLE {$table} DROP COLUMN `{$name}`;";
+                break;
+        }
+
+        return $sql;
+    }
 
 
 }

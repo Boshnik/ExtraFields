@@ -33,4 +33,17 @@
         <field key="active" dbtype="tinyint" precision="1" phptype="boolean" null="true" default="1"/>
     </object>
 
+    <object class="ExtraResourceField" table="extraresource_fields" extends="xPDOSimpleObject">
+        <field key="name" dbtype="varchar" precision="100" phptype="string" null="false" default=""/>
+        <field key="label" dbtype="varchar" precision="100" phptype="string" null="false" default=""/>
+        <field key="position"  dbtype="tinyint" precision="1" phptype="integer" attributes="unsigned" null="false" default="0"/>
+        <field key="index" dbtype="tinyint" precision="1" phptype="integer" attributes="unsigned" null="false" default="0"/>
+        <field key="fieldtype" dbtype="varchar" precision="100" phptype="string" null="false" default=""/>
+        <field key="required" dbtype="tinyint" precision="1" phptype="boolean" null="true" default="0"/>
+        <field key="rank" dbtype="tinyint" precision="1" phptype="integer" attributes="unsigned" null="true" default="0"/>
+        <field key="active" dbtype="tinyint" precision="1" phptype="boolean" null="true" default="1"/>
+
+        <aggregate alias="Field" class="ExtraMetaField" local="fieldtype" foreign="id" cardinality="one" owner="foreign" />
+    </object>
+
 </model>

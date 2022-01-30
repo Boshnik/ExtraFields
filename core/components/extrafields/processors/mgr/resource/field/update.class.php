@@ -1,8 +1,8 @@
 <?php
 
-class ExtraUserFieldUpdateProcessor extends modObjectUpdateProcessor
+class ExtraResourceFieldUpdateProcessor extends modObjectUpdateProcessor
 {
-    public $classKey = ExtraUserField::class;
+    public $classKey = ExtraResourceField::class;
     public $objectType = 'extrafields';
     public $languageTopics = ['extrafields'];
     //public $permission = 'save';
@@ -33,13 +33,13 @@ class ExtraUserFieldUpdateProcessor extends modObjectUpdateProcessor
         $id = (int)$this->getProperty('id');
         $name = trim($this->getProperty('name'));
         if (empty($id)) {
-            return $this->modx->lexicon('extrauser_field_err_ns');
+            return $this->modx->lexicon('extraresource_field_err_ns');
         }
 
         if (empty($name)) {
-            $this->modx->error->addField('name', $this->modx->lexicon('extrauser_field_err_name'));
+            $this->modx->error->addField('name', $this->modx->lexicon('extraresource_field_err_name'));
         } elseif ($this->modx->getCount($this->classKey, ['name' => $name, 'id:!=' => $id])) {
-            $this->modx->error->addField('name', $this->modx->lexicon('extrauser_field_err_ae'));
+            $this->modx->error->addField('name', $this->modx->lexicon('extraresource_field_err_ae'));
         }
 
         return parent::beforeSet();
@@ -51,10 +51,10 @@ class ExtraUserFieldUpdateProcessor extends modObjectUpdateProcessor
      */
     public function afterSave()
     {
-        $this->extrafields->updateTableColumn($this->object, modUserProfile::class);
+        $this->extrafields->updateTableColumn($this->object, modResource::class);
 
         return true;
     }
 }
 
-return 'ExtraUserFieldUpdateProcessor';
+return 'ExtraResourceFieldUpdateProcessor';

@@ -1,7 +1,31 @@
 Ext.ComponentMgr.onAvailable('modx-resource-tabs', function() {
     let tabs = this.items;
+
+    tabs.forEach(function(tab) {
+        if (tab.id == 'modx-resource-settings') {
+            tab.items.forEach(function(field) {
+                if (field.id == 'modx-resource-main-columns') {
+                    let column = field.items;
+                    ExtraFields.resourcefields.forEach(function(field) {
+                        if (field.position == 0 || field.position == 9999) {
+                            if (field.position == 9999) field.position = 1;
+                            column[field.position].items.splice(field.index, 0, ExtraFields.getXtype(field))
+                        }
+                    })
+                }
+            })
+        }
+    })
+
     ExtraFields.resourcetabs.forEach(function(tab) {
-        console.log(tab);
+
+        let items = [];
+        ExtraFields.resourcefields.forEach(function(field) {
+            if (tab.id == field.position) {
+                items.push(ExtraFields.getXtype(field));
+            }
+        });
+
         tabs.splice(tab.index, 0, {
             title: tab.name,
             layout: 'form',
@@ -9,7 +33,13 @@ Ext.ComponentMgr.onAvailable('modx-resource-tabs', function() {
             cls: 'modx-resource-tab',
             id: 'modx-resource-extrafields-' + tab.id,
             hideMode: 'offsets',
-            items: []
+            items: {
+                layout: 'form',
+                labelAlign: 'top',
+                width: '100%',
+                items: items
+            }
         });
+
     });
 });

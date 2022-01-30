@@ -67,9 +67,10 @@ ExtraFields.combo.FieldPositions = function(config) {
 Ext.extend(ExtraFields.combo.FieldPositions, MODx.combo.ComboBox);
 Ext.reg('extrafields-combo-positions', ExtraFields.combo.FieldPositions);
 
-ExtraFields.combo.Fields = function (config) {
+ExtraFields.combo.GetList = function (config) {
     config = config || {};
     Ext.applyIf(config, {
+        hiddenName: config.name,
         displayField: 'name',
         valueField: 'id',
         editable: true,
@@ -78,14 +79,8 @@ ExtraFields.combo.Fields = function (config) {
         emptyText: _('empty'),
         mode: 'remote',
         url: ExtraFields.config.connectorUrl,
-        baseParams: {
-            action: 'mgr/field/getlist',
-            sort: 'rank',
-            dir: 'asc',
-            combo: 1,
-        }
     });
-    ExtraFields.combo.Fields.superclass.constructor.call(this, config);
+    ExtraFields.combo.GetList.superclass.constructor.call(this, config);
 };
-Ext.extend(ExtraFields.combo.Fields,MODx.combo.ComboBox);
-Ext.reg('extrafields-combo-fields',ExtraFields.combo.Fields);
+Ext.extend(ExtraFields.combo.GetList,MODx.combo.ComboBox);
+Ext.reg('extrafields-combo-getlist',ExtraFields.combo.GetList);
