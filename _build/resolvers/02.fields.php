@@ -44,13 +44,6 @@ $fields = [
         'null' => false,
         'default' => 0,
     ],
-    'xdatetime' => [
-        'dbtype' => 'int',
-        'precision' => 20,
-        'phptype' => 'timestamp',
-        'null' => false,
-        'default' => 0,
-    ],
     'datefield' => [
         'dbtype' => 'int',
         'precision' => 20,
@@ -64,6 +57,13 @@ $fields = [
         'phptype' => 'string',
         'null' => true,
         'default' => null,
+    ],
+    'xdatetime' => [
+        'dbtype' => 'int',
+        'precision' => 20,
+        'phptype' => 'timestamp',
+        'null' => false,
+        'default' => 0,
     ],
     'displayfield' => [
         'dbtype' => 'varchar',
