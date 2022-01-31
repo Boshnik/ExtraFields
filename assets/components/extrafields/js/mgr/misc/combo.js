@@ -47,7 +47,7 @@ Ext.extend(ExtraFields.combo.Search, Ext.form.TwinTriggerField, {
 Ext.reg('extrafields-combo-search', ExtraFields.combo.Search);
 Ext.reg('extrafields-field-search', ExtraFields.combo.Search);
 
-ExtraFields.combo.FieldPositions = function(config) {
+ExtraFields.combo.UserFieldPositions = function(config) {
     config = config || {};
     Ext.applyIf(config,{
         store: new Ext.data.ArrayStore({
@@ -62,10 +62,10 @@ ExtraFields.combo.FieldPositions = function(config) {
         displayField: 'display',
         valueField: 'value',
     });
-    ExtraFields.combo.FieldPositions.superclass.constructor.call(this,config);
+    ExtraFields.combo.UserFieldPositions.superclass.constructor.call(this,config);
 };
-Ext.extend(ExtraFields.combo.FieldPositions, MODx.combo.ComboBox);
-Ext.reg('extrafields-combo-positions', ExtraFields.combo.FieldPositions);
+Ext.extend(ExtraFields.combo.UserFieldPositions, MODx.combo.ComboBox);
+Ext.reg('extrauser-combo-position', ExtraFields.combo.UserFieldPositions);
 
 ExtraFields.combo.GetList = function (config) {
     config = config || {};

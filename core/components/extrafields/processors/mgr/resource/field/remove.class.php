@@ -19,7 +19,11 @@ class ExtraResourceFieldRemoveProcessor extends modObjectRemoveProcessor
         if (!$this->checkPermissions()) {
             return $this->failure($this->modx->lexicon('access_denied'));
         }
-        $this->extrafields = $this->modx->getService('extrafields', 'ExtraFields', MODX_CORE_PATH . 'components/extrafields/model/');
+        if ($this->modx->services instanceof Psr\Http\Client\ClientInterface) {
+            $this->extrafields = $this->modx->services->get('extrafields');
+        } else {
+            $this->extrafields = $this->modx->getService('extrafields', 'ExtraFields', MODX_CORE_PATH . 'components/extrafields/model/');
+        }
 
         return parent::initialize();
     }

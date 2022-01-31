@@ -17,7 +17,11 @@ class ExtraResourceTabMultipleProcessor extends modProcessor
         }
 
         /** @var ExtraFields $extrafields */
-        $extrafields = $this->modx->getService('extrafields', 'ExtraFields', MODX_CORE_PATH . 'components/extrafields/model/');
+        if ($this->modx->services instanceof Psr\Http\Client\ClientInterface) {
+            $extrafields = $this->modx->services->get('extrafields');
+        } else {
+            $extrafields = $this->modx->getService('extrafields', 'ExtraFields', MODX_CORE_PATH . 'components/extrafields/model/');
+        }
 
         foreach ($ids as $id) {
             /** @var modProcessorResponse $response */

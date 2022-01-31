@@ -63,7 +63,7 @@ Ext.extend(ExtraFields.window.CreateUserField, MODx.Window, {
                 width: '100%',
                 defaults: {msgTarget: 'under'},
                 items: [{
-                    xtype: 'extrafields-combo-positions',
+                    xtype: 'extrauser-combo-position',
                     fieldLabel: _('extrauser_field_position'),
                     name: 'position',
                     hiddenName: 'position',

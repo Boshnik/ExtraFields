@@ -45,7 +45,7 @@ Ext.extend(ExtraFields.window.CreateField, MODx.Window, {
                     name: 'precision',
                     id: config.id + '-precision',
                     anchor: '99%',
-                    allowBlank: false,
+                    allowBlank: true,
                 }, {
                     xtype: 'xcheckbox',
                     fieldLabel: _('extrameta_field_null'),

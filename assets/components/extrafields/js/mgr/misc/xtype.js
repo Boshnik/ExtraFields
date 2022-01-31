@@ -4,7 +4,7 @@ ExtraFields.getXtype = function (field) {
         xtype: field.xtype,
         fieldLabel: field.label,
         name: field.name,
-        id: 'modx-extrafields-' + field.name,
+        id: Ext.id(),
         anchor: '99%',
         allowBlank: !field.required,
     };
@@ -36,6 +36,11 @@ ExtraFields.getXtype = function (field) {
             });
             break;
 
+        case 'numberfield':
+            xtype.inputType = 'number',
+                xtype.cls = 'x-form-text';
+            break;
+
         case 'datefield':
             xtype.format = MODx.config.manager_date_format;
             break;
@@ -54,6 +59,16 @@ ExtraFields.getXtype = function (field) {
             xtype.readOnly = true;
             break;
 
+    }
+
+
+    if (ExtraFields.modxversion == 3) {
+        xtype = {
+            layout: 'form',
+            width:'100%',
+            cls: 'x-panel modx-resource-panel x-form-label-top',
+            items: [xtype]
+        };
     }
 
     return xtype;

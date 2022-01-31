@@ -1,0 +1,20 @@
+{
+  "name": "boshnik/extrafields",
+  "description": "Extrafields",
+  "authors": [
+    {
+      "name": "Aleksandr Huz",
+      "email": "Superboshnik@gmail.com",
+      "homepage": "https://github.com/Boshnik"
+    }
+  ],
+  "license": "GPL-2.0-or-later",
+  "require": {
+    "php": ">=7.2.5"
+  },
+  "autoload": {
+    "psr-4": {
+      "Boshnik\\ExtraFields\\": "src/"
+    }
+  }
+}

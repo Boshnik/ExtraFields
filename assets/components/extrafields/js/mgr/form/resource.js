@@ -7,9 +7,9 @@ Ext.ComponentMgr.onAvailable('modx-resource-tabs', function() {
                 if (field.id == 'modx-resource-main-columns') {
                     let column = field.items;
                     ExtraFields.resourcefields.forEach(function(field) {
-                        if (field.position == 0 || field.position == 9999) {
-                            if (field.position == 9999) field.position = 1;
-                            column[field.position].items.splice(field.index, 0, ExtraFields.getXtype(field))
+                        if (field.position == 0 || field.position == 255) {
+                            let position = field.position == 255 ? 1 : 0;
+                            column[position].items.splice(field.index, 0, ExtraFields.getXtype(field))
                         }
                     })
                 }

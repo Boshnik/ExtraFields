@@ -123,7 +123,7 @@ class ExtraResourceTabGetListProcessor extends modObjectGetListProcessor
                     'id' => 0,
                     'name' => 'modx-resource-main-left'
                 ], [
-                    'id' => 9999,
+                    'id' => 255,
                     'name' => 'modx-resource-main-right'
                 ]
             ], $array);

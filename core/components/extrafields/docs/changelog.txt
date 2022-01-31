@@ -1,5 +1,9 @@
-Список изменений
+Changelog
+
+1.1.0-pl
+==============
+ - Refactored to use PSR-4 autoload
 
 1.0.0-pl
 ==============
-- Первый релиз
+- First release

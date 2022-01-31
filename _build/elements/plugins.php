@@ -8,6 +8,7 @@ return [
             'OnDocFormPrerender' => [],
             'OnUserFormPrerender' => [],
             'OnMODXInit' => [],
+            'OnDocFormSave' => [],
         ],
     ],
 ];
