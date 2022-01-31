@@ -54,7 +54,7 @@ When a field is created, the corresponding column is added to the user_attribute
 Table of possible field types. To edit, go to the administration panel.
 Available fields:
  - [textfield](http://cdn.sencha.com/ext/gpl/3.4.1.1/docs/#!/api/Ext.form.TextField)
- - [textarea](http://cdn.sencha.com/ext/gpal/3.4.1.1/docs/#!/api/Ext.form.TextArea)
+ - [textarea](http://cdn.sencha.com/ext/gpl/3.4.1.1/docs/#!/api/Ext.form.TextArea)
  - richtext (textarea + editor)
  - [numberfield](http://cdn.sencha.com/ext/gpl/3.4.1.1/docs/#!/api/Ext.form.NumberField)
  - [xcheckbox](http://cdn.sencha.com/ext/gpl/3.4.1.1/docs/#!/api/Ext.form.Checkbox)

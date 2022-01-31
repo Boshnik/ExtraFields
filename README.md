@@ -54,7 +54,7 @@
 Таблица возможных типов полей. Для редактирование нужно перейти в панель администрирования.
 Доступные поля:
  - [textfield](http://cdn.sencha.com/ext/gpl/3.4.1.1/docs/#!/api/Ext.form.TextField)
- - [textarea](http://cdn.sencha.com/ext/gpal/3.4.1.1/docs/#!/api/Ext.form.TextArea)
+ - [textarea](http://cdn.sencha.com/ext/gpl/3.4.1.1/docs/#!/api/Ext.form.TextArea)
  - richtext (textarea + editor)
  - [numberfield](http://cdn.sencha.com/ext/gpl/3.4.1.1/docs/#!/api/Ext.form.NumberField)
  - [xcheckbox](http://cdn.sencha.com/ext/gpl/3.4.1.1/docs/#!/api/Ext.form.Checkbox)
