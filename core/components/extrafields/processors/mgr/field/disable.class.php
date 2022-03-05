@@ -2,8 +2,9 @@
 
 require_once(dirname(__FILE__) . '/update.class.php');
 
-class ExtraMetaFieldDisableProcessor extends ExtraMetaFieldUpdateProcessor
+class efFieldDisableProcessor extends efFieldUpdateProcessor
 {
+
     /**
      * @return bool
      */
@@ -17,4 +18,4 @@ class ExtraMetaFieldDisableProcessor extends ExtraMetaFieldUpdateProcessor
     }
 }
 
-return 'ExtraMetaFieldDisableProcessor';
+return 'efFieldDisableProcessor';

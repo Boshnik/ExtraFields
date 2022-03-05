@@ -1,9 +1,9 @@
 <?php
 
-class ExtraMetaFieldGetProcessor extends modObjectGetProcessor
+class efFieldGetProcessor extends modObjectGetProcessor
 {
-    public $classKey = ExtraMetaField::class;
-    public $objectType = 'extrafields';
+    public $classKey = efField::class;
+    public $objectType = 'ef_field';
     public $languageTopics = ['extrafields:default'];
     //public $permission = 'view';
 
@@ -25,4 +25,4 @@ class ExtraMetaFieldGetProcessor extends modObjectGetProcessor
 
 }
 
-return 'ExtraMetaFieldGetProcessor';
+return 'efFieldGetProcessor';

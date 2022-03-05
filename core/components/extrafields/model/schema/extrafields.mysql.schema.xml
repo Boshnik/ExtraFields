@@ -2,48 +2,85 @@
 <model package="extrafields" baseClass="xPDOObject" platform="mysql" defaultEngine="InnoDB" phpdoc-package="extrafields"
        version="1.1">
 
-    <object class="ExtraMetaField" table="extrameta_fields" extends="xPDOSimpleObject">
-        <field key="name" dbtype="varchar" precision="100" phptype="string" null="false" default=""/>
-        <field key="dbtype" dbtype="varchar" precision="100" phptype="string" null="false" default="varchar"/>
-        <field key="precision" dbtype="varchar" precision="100" phptype="string" null="false" default="255"/>
-        <field key="phptype" dbtype="varchar" precision="100" phptype="string" null="false" default="string"/>
-        <field key="null" dbtype="tinyint" precision="1" phptype="boolean" null="true" default="1"/>
-        <field key="default" dbtype="varchar" precision="100" phptype="string" null="true" default=""/>
-        <field key="rank" dbtype="tinyint" precision="1" phptype="integer" attributes="unsigned" null="true" default="0"/>
-        <field key="active" dbtype="tinyint" precision="1" phptype="boolean" null="true" default="1"/>
-    </object>
-
-    <object class="ExtraUserField" table="extrauser_fields" extends="xPDOSimpleObject">
-        <field key="name" dbtype="varchar" precision="100" phptype="string" null="false" default=""/>
-        <field key="label" dbtype="varchar" precision="100" phptype="string" null="false" default=""/>
-        <field key="position" dbtype="varchar" precision="100" phptype="string" null="false" default=""/>
-        <field key="index" dbtype="tinyint" precision="1" phptype="integer" attributes="unsigned" null="false" default="0"/>
-        <field key="fieldtype" dbtype="varchar" precision="100" phptype="string" null="false" default=""/>
-        <field key="required" dbtype="tinyint" precision="1" phptype="boolean" null="true" default="0"/>
-        <field key="rank" dbtype="tinyint" precision="1" phptype="integer" attributes="unsigned" null="true" default="0"/>
-        <field key="active" dbtype="tinyint" precision="1" phptype="boolean" null="true" default="1"/>
-
-        <aggregate alias="Field" class="ExtraMetaField" local="fieldtype" foreign="id" cardinality="one" owner="foreign" />
-    </object>
-
-    <object class="ExtraResourceTab" table="extraresource_tabs" extends="xPDOSimpleObject">
+    <object class="efTab" table="ef_tabs" extends="xPDOSimpleObject">
+        <field key="class_name" dbtype="varchar" precision="100" phptype="string" null="false" default=""/>
         <field key="name" dbtype="varchar" precision="100" phptype="string" null="false" default=""/>
         <field key="index" dbtype="tinyint" precision="1" phptype="integer" attributes="unsigned" null="true" default="0"/>
+        <field key="ab_templates" dbtype="varchar" precision="255" phptype="string" null="true" default=""/>
+        <field key="ab_parents" dbtype="varchar" precision="255" phptype="string" null="true" default=""/>
+        <field key="ab_resources" dbtype="varchar" precision="255" phptype="string" null="true" default=""/>
+        <field key="ab_user_group" dbtype="varchar" precision="255" phptype="string" null="true" default=""/>
+        <field key="ab_users" dbtype="varchar" precision="255" phptype="string" null="true" default=""/>
         <field key="rank" dbtype="tinyint" precision="1" phptype="integer" attributes="unsigned" null="true" default="0"/>
         <field key="active" dbtype="tinyint" precision="1" phptype="boolean" null="true" default="1"/>
+
+        <composite alias="Categories" class="efCategory" local="id" foreign="tab_id" cardinality="many" owner="local" />
+        <composite alias="Abs" class="efFieldAbs" local="id" foreign="tab_id" cardinality="many" owner="local" />
     </object>
 
-    <object class="ExtraResourceField" table="extraresource_fields" extends="xPDOSimpleObject">
+    <object class="efCategory" table="ef_categories" extends="xPDOSimpleObject">
+        <field key="tab_id" dbtype="tinyint" precision="1" phptype="integer" attributes="unsigned" null="true" default="0"/>
         <field key="name" dbtype="varchar" precision="100" phptype="string" null="false" default=""/>
-        <field key="label" dbtype="varchar" precision="100" phptype="string" null="false" default=""/>
-        <field key="position"  dbtype="tinyint" precision="1" phptype="integer" attributes="unsigned" null="false" default="0"/>
-        <field key="index" dbtype="tinyint" precision="1" phptype="integer" attributes="unsigned" null="false" default="0"/>
-        <field key="fieldtype" dbtype="varchar" precision="100" phptype="string" null="false" default=""/>
-        <field key="required" dbtype="tinyint" precision="1" phptype="boolean" null="true" default="0"/>
+        <field key="description" dbtype="varchar" precision="255" phptype="string" null="true" default=""/>
+        <field key="ab_templates" dbtype="varchar" precision="255" phptype="string" null="true" default=""/>
+        <field key="ab_parents" dbtype="varchar" precision="255" phptype="string" null="true" default=""/>
+        <field key="ab_resources" dbtype="varchar" precision="255" phptype="string" null="true" default=""/>
+        <field key="ab_user_group" dbtype="varchar" precision="255" phptype="string" null="true" default=""/>
+        <field key="ab_users" dbtype="varchar" precision="255" phptype="string" null="true" default=""/>
         <field key="rank" dbtype="tinyint" precision="1" phptype="integer" attributes="unsigned" null="true" default="0"/>
         <field key="active" dbtype="tinyint" precision="1" phptype="boolean" null="true" default="1"/>
 
-        <aggregate alias="Field" class="ExtraMetaField" local="fieldtype" foreign="id" cardinality="one" owner="foreign" />
+        <aggregate alias="Tab" class="efTab" local="tab_id" foreign="id" cardinality="one" owner="foreign" />
+        <composite alias="Abs" class="efFieldAbs" local="id" foreign="category_id" cardinality="many" owner="local" />
+    </object>
+
+    <object class="efField" table="ef_fields" extends="xPDOSimpleObject">
+        <field key="class_name" dbtype="varchar" precision="100" phptype="string" null="false" default=""/>
+        <field key="name" dbtype="varchar" precision="100" phptype="string" null="false" default=""/>
+        <field key="caption" dbtype="varchar" precision="100" phptype="string" null="false" default=""/>
+        <field key="type" dbtype="varchar" precision="100" phptype="string" null="false" default=""/>
+        <field key="help" dbtype="varchar" precision="255" phptype="string" null="false" default=""/>
+        <field key="values" dbtype="text" phptype="string" null="true" default=""/>
+        <field key="sort" dbtype="varchar" precision="100" phptype="string" null="false" default=""/>
+        <field key="dir" dbtype="varchar" precision="100" phptype="string" null="false" default=""/>
+        <field key="where" dbtype="text" phptype="string" null="true" default=""/>
+        <field key="number_allownegative" dbtype="tinyint" precision="1" phptype="boolean" null="true" default="1"/>
+        <field key="number_minvalue" dbtype="int" precision="10" phptype="integer" null="true" default="" />
+        <field key="number_maxvalue" dbtype="int" precision="10" phptype="integer" null="true" default="" />
+        <field key="columns" dbtype="tinyint" precision="1" attributes="unsigned" phptype="integer" null="true" default="1"/>
+        <field key="disabled_dates" dbtype="varchar" precision="100" phptype="string" null="false" default=""/>
+        <field key="disabled_days" dbtype="varchar" precision="100" phptype="string" null="false" default=""/>
+        <field key="hide_time" dbtype="tinyint" precision="1" phptype="boolean" null="true" default="0"/>
+        <field key="default" dbtype="varchar" precision="100" phptype="string" null="false" default=""/>
+        <field key="xtype" dbtype="varchar" precision="100" phptype="string" null="false" default=""/>
+        <field key="source" dbtype="smallint" precision="10" phptype="integer" attributes="unsigned" null="true" default="0"/>
+        <field key="source_path" dbtype="varchar" precision="100" phptype="string" null="true" default=""/>
+        <field key="required" dbtype="tinyint" precision="1" attributes="unsigned" phptype="boolean" null="true" default="1"/>
+        <field key="rank" dbtype="smallint" precision="10" phptype="integer" null="false" default="0" />
+        <field key="active" dbtype="tinyint" precision="1" attributes="unsigned" phptype="boolean" null="false" default="1" />
+
+        <composite alias="Abs" class="efFieldAbs" local="id" foreign="field_id" cardinality="many" owner="local" />
+    </object>
+
+
+    <object class="efFieldAbs" table="ef_field_abs" extends="xPDOSimpleObject">
+        <field key="field_id" dbtype="tinyint" precision="1" phptype="integer" attributes="unsigned" null="true" default="0"/>
+        <field key="tab_id" dbtype="tinyint" precision="1" phptype="integer" attributes="unsigned" null="true" default="0"/>
+        <field key="category_id" dbtype="tinyint" precision="1" phptype="integer" attributes="unsigned" null="false" default="0"/>
+        <field key="areas" dbtype="varchar" precision="100" phptype="string" null="false" default=""/>
+        <field key="index" dbtype="tinyint" precision="1" phptype="integer" attributes="unsigned" null="false" default="0"/>
+        <field key="caption" dbtype="varchar" precision="100" phptype="string" null="false" default=""/>
+        <field key="help" dbtype="varchar" precision="255" phptype="string" null="true" default=""/>
+        <field key="ab_templates" dbtype="varchar" precision="255" phptype="string" null="true" default=""/>
+        <field key="ab_parents" dbtype="varchar" precision="255" phptype="string" null="true" default=""/>
+        <field key="ab_resources" dbtype="varchar" precision="255" phptype="string" null="true" default=""/>
+        <field key="ab_user_group" dbtype="varchar" precision="255" phptype="string" null="true" default=""/>
+        <field key="ab_users" dbtype="varchar" precision="255" phptype="string" null="true" default=""/>
+        <field key="rank" dbtype="tinyint" precision="1" phptype="integer" attributes="unsigned" null="true" default="0"/>
+        <field key="active" dbtype="tinyint" precision="1" phptype="boolean" null="true" default="1"/>
+
+        <aggregate alias="Tab" class="efTab" local="tab_id" foreign="id" cardinality="one" owner="foreign" />
+        <aggregate alias="Category" class="efCategory" local="category_id" foreign="id" cardinality="one" owner="foreign" />
     </object>
 
 </model>

@@ -1,8 +1,8 @@
 <?php
 
-class ExtraMetaFieldSortProcessor extends modObjectProcessor
+class efFieldSortProcessor extends modObjectProcessor
 {
-    public $classKey = ExtraMetaField::class;
+    public $classKey = efField::class;
 
 
     /**
@@ -33,9 +33,9 @@ class ExtraMetaFieldSortProcessor extends modObjectProcessor
             return $this->failure();
         }
         foreach ($sources as $id) {
-            /** @var ExtraMetaField $source */
+            /** @var efField $source */
             $source = $this->modx->getObject($this->classKey, compact('id'));
-            /** @var ExtraMetaField $target */
+            /** @var efField $target */
             $target = $this->modx->getObject($this->classKey, array('id' => $this->getProperty('target')));
             $this->sort($source, $target);
         }
@@ -46,12 +46,12 @@ class ExtraMetaFieldSortProcessor extends modObjectProcessor
 
 
     /**
-     * @param ExtraMetaField $source
-     * @param ExtraMetaField $target
+     * @param efField $source
+     * @param efField $target
      *
      * @return array|string
      */
-    public function sort(ExtraMetaField $source, ExtraMetaField $target)
+    public function sort(efField $source, efField $target)
     {
         $c = $this->modx->newQuery($this->classKey);
         $c->command('UPDATE');
@@ -118,4 +118,4 @@ class ExtraMetaFieldSortProcessor extends modObjectProcessor
     }
 }
 
-return 'ExtraMetaFieldSortProcessor';
+return 'efFieldSortProcessor';

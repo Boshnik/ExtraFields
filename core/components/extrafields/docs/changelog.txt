@@ -1,5 +1,8 @@
 Changelog
 
+2.0.0-beta
+==============
+
 1.1.0-pl
 ==============
  - Refactored to use PSR-4 autoload

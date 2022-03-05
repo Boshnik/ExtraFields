@@ -1,6 +1,4 @@
 <?php
-// $config['update']['symlink'] = true; Удаляем рекурсивно все файлы из пакета и создает ссылки на рабочие файлы
-// $config['update']['symlink'] = false; Удаляем ссылку и копируем рабочие файлы обратно в пакет
 
 /** @var xPDOTransport $transport */
 /** @var array $options */
