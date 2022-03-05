@@ -27,7 +27,7 @@ class OnMODXInit extends Event
             }
             $map = $this->modx->map[$row['className']];
             foreach ($row['fields'] as $field) {
-                $meta = array_key_exists($field['type'], $FIELDMETA) ? $FIELDMETA[$field['type']] : $FIELDMETA['textfield'];
+                $meta = array_key_exists($field['type'], $FIELDMETA) ? $FIELDMETA[$field['type']] : $FIELDMETA['richtext'];
                 $map['fields'][$field['name']] = $meta['default'];
                 $map['fieldMeta'][$field['name']] = [
                     'dbtype' => $meta['dbtype'],

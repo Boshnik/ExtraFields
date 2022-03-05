@@ -60,7 +60,8 @@ $_lang['ef_combo_empty'] = 'Нажмите для выбора';
 $_lang['textfield'] = 'Текстовое поле';
 $_lang['xcheckbox'] = 'Флажок';
 $_lang['readonly'] = 'Только чтение';
-$_lang['ef-xtype'] = 'Xtype поле';
+$_lang['efxtype'] = 'Xtype поле';
+$_lang['ef_table'] = 'Таблица PageBlocks';
 
 $_lang['ef_accessibility'] = 'Доступность';
 $_lang['templates'] = 'Шаблоны';

@@ -55,6 +55,7 @@
         <field key="xtype" dbtype="varchar" precision="100" phptype="string" null="false" default=""/>
         <field key="source" dbtype="smallint" precision="10" phptype="integer" attributes="unsigned" null="true" default="0"/>
         <field key="source_path" dbtype="varchar" precision="100" phptype="string" null="true" default=""/>
+        <field key="table_id" dbtype="tinyint" precision="1" phptype="integer" attributes="unsigned" null="true" default="0"/>
         <field key="required" dbtype="tinyint" precision="1" attributes="unsigned" phptype="boolean" null="true" default="1"/>
         <field key="rank" dbtype="smallint" precision="10" phptype="integer" null="false" default="0" />
         <field key="active" dbtype="tinyint" precision="1" attributes="unsigned" phptype="boolean" null="false" default="1" />

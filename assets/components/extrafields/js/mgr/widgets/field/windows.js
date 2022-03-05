@@ -310,6 +310,20 @@ Ext.extend(ExtraFields.window.CreateField, ExtraFields.window.Default, {
                 }]
             }]
         }, {
+            xtype: 'ef-combo-getlist',
+            fieldLabel: _('ef_table'),
+            name: 'table_id',
+            id: config.id + '-table_id',
+            hidden: true,
+            allowBlank: true,
+            url: ExtraFields.config.pageblocks.connectorUrl,
+            baseParams: {
+                action: 'mgr/table/getlist',
+                sort: 'rank',
+                dir: 'asc',
+                combo: true,
+            }
+        }, {
             xtype: 'textfield',
             fieldLabel: _('resourcelist_where'),
             name: 'where',
@@ -409,6 +423,7 @@ Ext.extend(ExtraFields.window.CreateField, ExtraFields.window.Default, {
         let values_desc = Ext.getCmp(this.id + '-values-desc');
         let defaultfield = Ext.getCmp(this.id + '-default');
         let defaultfield_desc = Ext.getCmp(this.id + '-default-desc');
+        let table_id = Ext.getCmp(this.id + '-table_id');
         let where = Ext.getCmp(this.id + '-where');
         let where_desc = Ext.getCmp(this.id + '-where-desc');
         let sort = Ext.getCmp(this.id + '-sort');
@@ -429,6 +444,7 @@ Ext.extend(ExtraFields.window.CreateField, ExtraFields.window.Default, {
 
         values.hide();
         values_desc.hide();
+        table_id.hide();
         where.hide();
         where_desc.hide();
         sort.hide();
@@ -492,6 +508,9 @@ Ext.extend(ExtraFields.window.CreateField, ExtraFields.window.Default, {
                 disabled_dates.show();
                 disabled_days.show();
                 hide_time.show();
+                break;
+            case 'pageblocks':
+                table_id.show();
                 break;
             case 'efxtype':
                 custom_xtype.show();

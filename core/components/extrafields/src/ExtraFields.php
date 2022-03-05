@@ -142,6 +142,10 @@ class ExtraFields
             'is_admin' => $this->modx->user->isMember('Administrator'),
         ], $config);
 
+//        if ($pageblocks = $this->getPackage('PageBlocks')) {
+//            $this->config['pageblocks'] = $pageblocks->config;
+//        }
+
         $this->modx->addPackage($this->namespace, $this->config['modelPath']);
         $this->modx->lexicon->load("$this->namespace:default");
     }
@@ -183,6 +187,22 @@ class ExtraFields
             }
             $this->modx->controller->addHtml($onRichTextEditorInit);
         }
+    }
+
+
+    /**
+     * @param $packageName
+     * @return mixed
+     */
+    public function getPackage($packageName)
+    {
+        $namespace = strtolower($packageName);
+        if ($this->modx->services instanceof Psr\Http\Client\ClientInterface) {
+            $package = $this->modx->services->get($namespace);
+        } else {
+            $package = $this->modx->getService($namespace, $packageName, MODX_CORE_PATH . "components/{$namespace}/model/");
+        }
+        return $package;
     }
 
 
@@ -347,7 +367,7 @@ class ExtraFields
         $name = $object->name;
 
         $FIELDMETA = self::FIELDMETA;
-        $meta = array_key_exists($object->type, $FIELDMETA) ? $FIELDMETA[$object->type] : $FIELDMETA['textfield'];
+        $meta = array_key_exists($object->type, $FIELDMETA) ? $FIELDMETA[$object->type] : $FIELDMETA['richtext'];
 
         $type = $meta['dbtype'];
         if (isset($meta['precision'])) {

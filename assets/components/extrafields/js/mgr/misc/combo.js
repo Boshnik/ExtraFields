@@ -160,7 +160,7 @@ ExtraFields.combo.Types = function(config) {
         [_('date'),'xdatetime'],
         [_('readonly'),'readonly'],
         [_('hidden'),'hidden'],
-        [_('ef-xtype'),'efxtype']
+        [_('efxtype'),'efxtype']
     ];
 
     if (MODx.loadRTE) data.splice(2,0,[_('richtext'),'richtext']);
@@ -170,6 +170,10 @@ ExtraFields.combo.Types = function(config) {
 
     if (typeof ColorPicker == 'object') {
         data.splice(-4,0,['ColorPicker','colorpicker']);
+    }
+
+    if (ExtraFields.config.pageblocks) {
+        data.splice(-4,0,['PageBlocks','pageblocks']);
     }
 
     Ext.applyIf(config,{

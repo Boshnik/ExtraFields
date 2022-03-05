@@ -19,6 +19,18 @@ class OnBeforeDocFormSave extends Event
                     $value = implode('||', $resource->get($field['name']));
                     $resource->set($field['name'], $value);
                     break;
+                case 'pageblocks':
+                    $values = [];
+                    $results = $this->extrafields->getFetchAll('pbResourceTable', [
+                        'resource_id' => $resource->id,
+                        'table_id' => $field['table_id'],
+                        'field_name' => $field['name']
+                    ]);
+                    foreach ($results as $result) {
+                        $values[] = json_decode($result['values'], 1);
+                    }
+                    $resource->set($field['name'], json_encode($values, JSON_UNESCAPED_UNICODE));
+                    break;
             }
         }
 

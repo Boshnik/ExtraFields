@@ -234,6 +234,12 @@ ExtraFields.utils.getXtype = function (field) {
             }
             break;
 
+        case 'pageblocks':
+            xtype.xtype = 'pb-grid-resource-table';
+            xtype.table_id = field.table_id;
+            delete xtype.listeners;
+            break;
+
         case 'readonly':
             xtype.xtype = 'textfield';
             xtype.readOnly = true;
