@@ -9,12 +9,12 @@ class OnDocFormPrerender extends Event
 {
     public function run()
     {
-
         /** @var \modResource $resource */
-        $data = [];
-        if ($resource = $this->scriptProperties['resource']) {
-            $data = json_encode($resource->toArray(),1);
+        $resource = $this->scriptProperties['resource'];
+        if (!$resource) {
+            return true;
         }
+        $data = json_encode($resource->toArray(),1);
 
         $this->extrafields->loadRichTextEditor();
         $tabs = json_encode($this->extrafields->getTabs('modResource'),1);
@@ -36,11 +36,11 @@ class OnDocFormPrerender extends Event
         $config['class_name'] = 'modResource';
         $config = json_encode($config);
         $this->modx->controller->addHtml("<script>
-                ExtraFields.config = $config;
-                ExtraFields.tabs = $tabs;
-                ExtraFields.fields = $fields;
-                ExtraFields.modxversion = $this->modxversion;
-                ExtraFields.object = $data;
-            </script>");
+            ExtraFields.config = $config;
+            ExtraFields.tabs = $tabs;
+            ExtraFields.fields = $fields;
+            ExtraFields.modxversion = $this->modxversion;
+            ExtraFields.object = $data;
+        </script>");
     }
 }

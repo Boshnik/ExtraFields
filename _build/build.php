@@ -538,8 +538,8 @@ class ExtraFieldsPackage
         $versionSignature = explode('.', $sig[1]);
 
         /** @var modTransportPackage $package */
-        if (!$package = $this->modx->getObject(modTransportPackage::class, ['signature' => $signature])) {
-            $package = $this->modx->newObject(modTransportPackage::class);
+        if (!$package = $this->modx->getObject('transport.modTransportPackage', ['signature' => $signature])) {
+            $package = $this->modx->newObject('transport.modTransportPackage');
             $package->set('signature', $signature);
             $package->fromArray([
                 'created' => date('Y-m-d h:i:s'),

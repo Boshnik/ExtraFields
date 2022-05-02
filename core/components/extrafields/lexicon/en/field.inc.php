@@ -1,5 +1,6 @@
 <?php
 
+$_lang['ef_field_empty_type'] = 'You must select a field type.';
 $_lang['ef_field_err_name'] = 'You must provide a field name.';
 $_lang['ef_field_err_ae'] = 'A field with the same name already exists.';
 $_lang['ef_field_err_nf'] = 'Field not found.';

@@ -362,7 +362,9 @@ ExtraFields.combo.GetList = function (config) {
     ExtraFields.combo.GetList.superclass.constructor.call(this, config);
 
     setTimeout(() => {
-        config.store.load();
+        if (!config.hidden) {
+            config.store.load();
+        }
     }, 1000);
 };
 Ext.extend(ExtraFields.combo.GetList, MODx.combo.ComboBox);

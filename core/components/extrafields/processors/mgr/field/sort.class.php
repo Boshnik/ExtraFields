@@ -55,32 +55,32 @@ class efFieldSortProcessor extends modObjectProcessor
     {
         $c = $this->modx->newQuery($this->classKey);
         $c->command('UPDATE');
-        if ($source->get('rank') < $target->get('rank')) {
+        if ($source->get('colrank') < $target->get('colrank')) {
             $c->query['set']['menuindex'] = array(
                 'value' => '`menuindex` - 1',
                 'type' => false,
             );
             $c->andCondition(array(
-                'rank:<=' => $target->rank,
-                'rank:>' => $source->rank,
+                'colrank:<=' => $target->colrank,
+                'colrank:>' => $source->colrank,
             ));
             $c->andCondition(array(
-                'rank:>' => 0,
+                'colrank:>' => 0,
             ));
         } else {
-            $c->query['set']['rank'] = array(
-                'value' => '`rank` + 1',
+            $c->query['set']['colrank'] = array(
+                'value' => '`colrank` + 1',
                 'type' => false,
             );
             $c->andCondition(array(
-                'rank:>=' => $target->rank,
-                'rank:<' => $source->rank,
+                'colrank:>=' => $target->colrank,
+                'colrank:<' => $source->colrank,
             ));
         }
         $c->prepare();
         $c->stmt->execute();
 
-        $source->set('rank', $target->rank);
+        $source->set('colrank', $target->colrank);
         $source->save();
     }
 
@@ -92,8 +92,8 @@ class efFieldSortProcessor extends modObjectProcessor
     {
         // Check if need to update indexes
         $c = $this->modx->newQuery($this->classKey);
-        $c->groupby('rank');
-        $c->select('COUNT(rank) as idx');
+        $c->groupby('colrank');
+        $c->select('COUNT(colrank) as idx');
         $c->sortby('idx', 'DESC');
         $c->limit(1);
         if ($c->prepare() && $c->stmt->execute()) {
@@ -105,10 +105,10 @@ class efFieldSortProcessor extends modObjectProcessor
         // Update indexes
         $c = $this->modx->newQuery($this->classKey);
         $c->select('id');
-        $c->sortby('rank ASC, id', 'ASC');
+        $c->sortby('colrank ASC, id', 'ASC');
         if ($c->prepare() && $c->stmt->execute()) {
             $table = $this->modx->getTableName($this->classKey);
-            $update = $this->modx->prepare("UPDATE {$table} SET rank = ? WHERE id = ?");
+            $update = $this->modx->prepare("UPDATE {$table} SET colrank = ? WHERE id = ?");
             $i = 0;
             while ($id = $c->stmt->fetch(PDO::FETCH_COLUMN)) {
                 $update->execute(array($i, $id));

@@ -149,28 +149,32 @@ ExtraFields.utils.getAbs = function (config) {
     switch (ExtraFields.config.class_name) {
         case 'modResource':
             fields = [{
-                xtype: 'ef-combo-getlist-multiple',
-                fieldLabel: _('templates'),
-                name: 'ab_templates',
-                url: MODx.config.connector_url,
-                displayField: 'templatename',
-                valueField: 'id',
-                fields: ['templatename', 'id'],
-                baseParams: {
-                    action: ExtraFields.config.modxversion == 3 ? 'Element/Template/GetList' : 'element/template/getlist',
-                    combo: 1,
-                    limit: 0,
-                },
-                listeners: {
-                    afterrender: function (el) {
-                        setTimeout(() => {
-                            let values = config.record.object ? config.record.object.ab_templates : '';
-                            if (!Ext.isEmpty(values)) {
-                                el.setValue(values.split('||'));
-                            }
-                        }, 500);
+                layout: 'form',
+                defaults: {msgTarget: 'under'},
+                items: [{
+                    xtype: 'ef-combo-getlist-multiple',
+                    fieldLabel: _('templates'),
+                    name: 'ab_templates',
+                    url: MODx.config.connector_url,
+                    displayField: 'templatename',
+                    valueField: 'id',
+                    fields: ['templatename', 'id'],
+                    baseParams: {
+                        action: ExtraFields.config.modxversion == 3 ? 'Element/Template/GetList' : 'element/template/getlist',
+                        combo: 1,
+                        limit: 0,
                     },
-                },
+                    listeners: {
+                        afterrender: function (el) {
+                            setTimeout(() => {
+                                let values = config.record.object ? config.record.object.ab_templates : '';
+                                if (!Ext.isEmpty(values)) {
+                                    el.setValue(values.split('||'));
+                                }
+                            }, 500);
+                        },
+                    },
+                }, ]
             }, {
                 layout: 'column',
                 defaults: {msgTarget: 'under'},
@@ -193,7 +197,7 @@ ExtraFields.utils.getAbs = function (config) {
                     defaults: {msgTarget: 'under'},
                     items: [{
                         xtype: 'textfield',
-                        fieldLabel: _('resources'),
+                        fieldLabel: _('resources') + ' (ID)',
                         name: 'ab_resources',
                         id: config.id + '-ab_resources',
                         anchor: '99%',

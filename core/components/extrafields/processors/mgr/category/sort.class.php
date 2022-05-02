@@ -32,14 +32,17 @@ class efCategorySortProcessor extends modObjectProcessor
         if (!is_array($sources)) {
             return $this->failure();
         }
+        /** @var efCategory $target */
+        $target = $this->modx->getObject($this->classKey, ['id' => $this->getProperty('target')]);
+        $where = [
+            'tab_id' => $target->tab_id
+        ];
         foreach ($sources as $id) {
             /** @var efCategory $source */
             $source = $this->modx->getObject($this->classKey, compact('id'));
-            /** @var efCategory $target */
-            $target = $this->modx->getObject($this->classKey, array('id' => $this->getProperty('target')));
-            $this->sort($source, $target);
+            $this->sort($source, $target, $where);
         }
-        $this->updateIndex();
+        $this->updateIndex($where);
 
         return $this->modx->error->success();
     }
@@ -48,52 +51,49 @@ class efCategorySortProcessor extends modObjectProcessor
     /**
      * @param efCategory $source
      * @param efCategory $target
-     *
-     * @return array|string
+     * @param array $where
      */
-    public function sort(efCategory $source, efCategory $target)
+    public function sort(efCategory $source, efCategory $target, $where = [])
     {
         $c = $this->modx->newQuery($this->classKey);
         $c->command('UPDATE');
-        if ($source->get('rank') < $target->get('rank')) {
-            $c->query['set']['menuindex'] = array(
+        $c->where($where);
+        if ($source->get('colrank') < $target->get('colrank')) {
+            $c->query['set']['menuindex'] = [
                 'value' => '`menuindex` - 1',
                 'type' => false,
-            );
-            $c->andCondition(array(
-                'rank:<=' => $target->rank,
-                'rank:>' => $source->rank,
-            ));
-            $c->andCondition(array(
-                'rank:>' => 0,
-            ));
+            ];
+            $c->andCondition([
+                'colrank:<=' => $target->colrank,
+                'colrank:>' => $source->colrank,
+            ]);
+            $c->andCondition([
+                'colrank:>' => 0,
+            ]);
         } else {
-            $c->query['set']['rank'] = array(
-                'value' => '`rank` + 1',
+            $c->query['set']['colrank'] = [
+                'value' => '`colrank` + 1',
                 'type' => false,
-            );
-            $c->andCondition(array(
-                'rank:>=' => $target->rank,
-                'rank:<' => $source->rank,
-            ));
+            ];
+            $c->andCondition([
+                'colrank:>=' => $target->colrank,
+                'colrank:<' => $source->colrank,
+            ]);
         }
         $c->prepare();
         $c->stmt->execute();
 
-        $source->set('rank', $target->rank);
+        $source->set('colrank', $target->colrank);
         $source->save();
     }
 
 
-    /**
-     *
-     */
-    public function updateIndex()
+    public function updateIndex($where = [])
     {
         // Check if need to update indexes
         $c = $this->modx->newQuery($this->classKey);
-        $c->groupby('rank');
-        $c->select('COUNT(rank) as idx');
+        $c->groupby('colrank');
+        $c->select('COUNT(colrank) as idx');
         $c->sortby('idx', 'DESC');
         $c->limit(1);
         if ($c->prepare() && $c->stmt->execute()) {
@@ -104,14 +104,15 @@ class efCategorySortProcessor extends modObjectProcessor
 
         // Update indexes
         $c = $this->modx->newQuery($this->classKey);
+        $c->where($where);
         $c->select('id');
-        $c->sortby('rank ASC, id', 'ASC');
+        $c->sortby('colrank ASC, id', 'ASC');
         if ($c->prepare() && $c->stmt->execute()) {
             $table = $this->modx->getTableName($this->classKey);
-            $update = $this->modx->prepare("UPDATE {$table} SET rank = ? WHERE id = ?");
+            $update = $this->modx->prepare("UPDATE {$table} SET colrank = ? WHERE id = ?");
             $i = 0;
             while ($id = $c->stmt->fetch(PDO::FETCH_COLUMN)) {
-                $update->execute(array($i, $id));
+                $update->execute([$i, $id]);
                 $i++;
             }
         }

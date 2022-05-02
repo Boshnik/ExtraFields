@@ -54,7 +54,7 @@ class efFieldCreateProcessor extends modObjectCreateProcessor
     public function beforeSave()
     {
         $this->object->fromArray([
-            'rank' => $this->modx->getCount($this->classKey, [
+            'colrank' => $this->modx->getCount($this->classKey, [
                 'class_name' => $this->getProperty('class_name'),
             ]),
         ]);

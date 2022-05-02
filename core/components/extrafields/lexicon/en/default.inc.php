@@ -31,7 +31,7 @@ $_lang['ef_grid_search'] = 'Search';
 $_lang['ef_grid_actions'] = 'Actions';
 
 $_lang['ef_fields'] = 'Fields';
-$_lang['ef_field_id'] = 'Id';
+$_lang['ef_field_id'] = 'ID';
 $_lang['ef_field_caption'] = 'Caption';
 $_lang['ef_field_name'] = 'Name';
 $_lang['ef_field_name_desc'] = 'Only lowercase Latin letters are allowed';
@@ -61,11 +61,13 @@ $_lang['textfield'] = 'Text field';
 $_lang['xcheckbox'] = 'Checkbox';
 $_lang['readonly'] = 'Only reading';
 $_lang['ef-xtype'] = 'xtype field';
+$_lang['ef_table'] = 'Table PageBlocks';
 
+$_lang['ef_settings'] = 'Field settings';
+$_lang['ef_position'] = 'Position';
 $_lang['ef_accessibility'] = 'Availability';
 $_lang['templates'] = 'Templates';
 $_lang['parents'] = 'Parents (ID)';
-$_lang['resources'] = 'Resources (ID)';
 $_lang['ab_user_group'] = 'Groups of users';
 $_lang['ab_users'] = 'Users (ID)';
 

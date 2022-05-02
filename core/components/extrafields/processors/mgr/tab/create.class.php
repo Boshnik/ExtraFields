@@ -23,8 +23,12 @@ class efTabCreateProcessor extends modObjectCreateProcessor
             $this->modx->error->addField('name', $this->modx->lexicon('ef_tab_err_ae'));
         }
 
-        $this->properties['ab_templates'] = implode('||', $this->getProperty('ab_templates'));
-        $this->properties['ab_user_group'] = implode('||', $this->getProperty('ab_user_group'));
+        if ($this->properties['ab_templates']) {
+            $this->properties['ab_templates'] = implode('||', $this->properties['ab_templates']);
+        }
+        if ($this->properties['ab_user_group']) {
+            $this->properties['ab_user_group'] = implode('||', $this->properties['ab_user_group']);
+        }
 
         return parent::beforeSet();
     }
@@ -35,7 +39,7 @@ class efTabCreateProcessor extends modObjectCreateProcessor
     public function beforeSave()
     {
         $this->object->fromArray([
-            'rank' => $this->modx->getCount($this->classKey, [
+            'colrank' => $this->modx->getCount($this->classKey, [
                 'class_name' => $this->getProperty('class_name'),
             ]),
         ]);

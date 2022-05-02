@@ -31,11 +31,13 @@ class OnMODXInit extends Event
                 $map['fields'][$field['name']] = $meta['default'];
                 $map['fieldMeta'][$field['name']] = [
                     'dbtype' => $meta['dbtype'],
-                    'precision' => $meta['precision'],
                     'phptype' => $meta['phptype'],
                     'null' => $meta['null'],
                     'default' => $meta['default'],
                 ];
+                if (isset($meta['precision'])) {
+                    $map['fieldMeta'][$field['name']]['precision'] = $meta['precision'];
+                }
             }
 
             $this->modx->map[$row['className']] = $map;

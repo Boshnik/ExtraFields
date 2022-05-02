@@ -12,8 +12,7 @@ Ext.ComponentMgr.onAvailable('modx-user-tabs', function() {
                 let areas = abs.areas.split('_');
                 if (!Ext.isEmpty(abs.areas) && areas.length == 1 && tab_index == areas[0]) {
                     if (ExtraFields.utils.checkAbs(abs)) return;
-                    field.caption = abs.caption;
-                    field.help = abs.help;
+                    field = Object.assign(field, abs);
                     if (tab_index) field.cls = 'main-wrapper';
                     tab.items.splice(abs.index, 0, ExtraFields.utils.getXtype(field));
                     if (!fields.includes(field.id)) {
@@ -34,8 +33,7 @@ Ext.ComponentMgr.onAvailable('modx-user-tabs', function() {
                     if (tab_index != areas[0] || column_index != areas[1]) return;
                     if (!Ext.isEmpty(abs.areas)) {
                         if (ExtraFields.utils.checkAbs(abs)) return;
-                        field.caption = abs.caption;
-                        field.help = abs.help;
+                        field = Object.assign(field, abs);
                         column.items.splice(abs.index, 0, ExtraFields.utils.getXtype(field));
                         if (!fields.includes(field.id)) {
                             fields.push(field.id);
@@ -72,8 +70,7 @@ Ext.ComponentMgr.onAvailable('modx-user-tabs', function() {
                         if (issetField) return;
                         if (tab.id == abs.tab_id && category.id == abs.category_id) {
                             if (ExtraFields.utils.checkAbs(abs)) return;
-                            field.caption = abs.caption;
-                            field.help = abs.help;
+                            field = Object.assign(field, abs);
                             c_items.push(ExtraFields.utils.getXtype(field));
                             if (!fields.includes(field.id)) {
                                 fields.push(field.id);
@@ -101,8 +98,7 @@ Ext.ComponentMgr.onAvailable('modx-user-tabs', function() {
                     if (issetField) return;
                     if (tab.id == abs.tab_id) {
                         if (ExtraFields.utils.checkAbs(abs)) return;
-                        field.caption = abs.caption;
-                        field.help = abs.help;
+                        field = Object.assign(field, abs);
                         items.push(ExtraFields.utils.getXtype(field));
                         if (!fields.includes(field.id)) {
                             fields.push(field.id);

@@ -11,8 +11,7 @@ Ext.ComponentMgr.onAvailable('modx-resource-tabs', function() {
                 if (issetField) return;
                 if (tab.id == abs.areas) {
                     if (ExtraFields.utils.checkAbs(abs)) return;
-                    field.caption = abs.caption;
-                    field.help = abs.help;
+                    field = Object.assign(field, abs);
                     if (tab.id == 'modx-resource-access-permissions') {
                         field.cls = 'main-wrapper';
                     }
@@ -33,8 +32,7 @@ Ext.ComponentMgr.onAvailable('modx-resource-tabs', function() {
                     if (issetField) return;
                     if (column.id == abs.areas) {
                         if (ExtraFields.utils.checkAbs(abs)) return;
-                        field.caption = abs.caption;
-                        field.help = abs.help;
+                        field = Object.assign(field, abs);
                         column.items.splice(abs.index, 0, ExtraFields.utils.getXtype(field));
                         if (!fields.includes(field.id)) {
                             fields.push(field.id);
@@ -53,8 +51,7 @@ Ext.ComponentMgr.onAvailable('modx-resource-tabs', function() {
                             if (issetField) return;
                             if (box.id == abs.areas) {
                                 if (ExtraFields.utils.checkAbs(abs)) return;
-                                field.caption = abs.caption;
-                                field.help = abs.help;
+                                field = Object.assign(field, abs);
                                 box.items.splice(abs.index, 0, ExtraFields.utils.getXtype(field));
                                 if (!fields.includes(field.id)) {
                                     fields.push(field.id);
@@ -93,8 +90,7 @@ Ext.ComponentMgr.onAvailable('modx-resource-tabs', function() {
                         if (issetField) return;
                         if (tab.id == abs.tab_id && category.id == abs.category_id) {
                             if (ExtraFields.utils.checkAbs(abs)) return;
-                            field.caption = abs.caption;
-                            field.help = abs.help;
+                            field = Object.assign(field, abs);
                             c_items.push(ExtraFields.utils.getXtype(field));
                             if (!fields.includes(field.id)) {
                                 fields.push(field.id);
@@ -122,8 +118,7 @@ Ext.ComponentMgr.onAvailable('modx-resource-tabs', function() {
                     if (issetField) return;
                     if (tab.id == abs.tab_id) {
                         if (ExtraFields.utils.checkAbs(abs)) return;
-                        field.caption = abs.caption;
-                        field.help = abs.help;
+                        field = Object.assign(field, abs);
                         items.push(ExtraFields.utils.getXtype(field));
                         if (!fields.includes(field.id)) {
                             fields.push(field.id);

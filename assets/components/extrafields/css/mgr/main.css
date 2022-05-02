@@ -148,7 +148,7 @@ a.ef-btn.disabled, fieldset[disabled] a.ef-btn { pointer-events: none }
     padding: 15px;
 }
 
-    /* Fields */
+/* Fields */
 .ef-hidden-time .ux-datetime-time { display: none }
 .x-datetime-wrap table, .x-datetime-wrap tbody { width: 100%; }
 .x-datetime-wrap .x-form-field-wrap, .x-datetime-wrap .x-form-field-wrap input { width: 98.5% !important; padding-right: 0}

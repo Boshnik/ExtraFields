@@ -4,7 +4,7 @@ ExtraFields.grid.Fields = function (config) {
         baseParams: {
             action: 'mgr/field/getlist',
             class_name: ExtraFields.config.class_name,
-            sort: 'rank',
+            sort: 'colrank',
             dir: 'asc',
         },
         ddAction: 'mgr/field/sort',
@@ -36,7 +36,7 @@ Ext.extend(ExtraFields.grid.Fields, ExtraFields.grid.Default, {
     },
 
     getFields: function () {
-        return ['id', 'name', 'label', 'fieldtype', 'active', 'actions'];
+        return ['id', 'name', 'label', 'type', 'active', 'actions'];
     },
 
     getColumns: function () {
@@ -51,13 +51,8 @@ Ext.extend(ExtraFields.grid.Fields, ExtraFields.grid.Default, {
             sortable: true,
             width: 200,
         }, {
-            header: _('ef_field_label'),
-            dataIndex: 'label',
-            sortable: false,
-            width: 150,
-        }, {
-            header: _('ef_field_fieldtype'),
-            dataIndex: 'fieldtype',
+            header: _('ef_field_type'),
+            dataIndex: 'type',
             sortable: false,
             width: 150,
         }, {

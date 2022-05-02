@@ -31,9 +31,9 @@ $_lang['ef_grid_search'] = 'Поиск';
 $_lang['ef_grid_actions'] = 'Действия';
 
 $_lang['ef_fields'] = 'Поля';
-$_lang['ef_field_id'] = 'Id';
+$_lang['ef_field_id'] = 'ID';
 $_lang['ef_field_caption'] = 'Подпись';
-$_lang['ef_field_name'] = 'Название';
+$_lang['ef_field_name'] = 'Название поля';
 $_lang['ef_field_name_desc'] = 'Допускаются только латинские буквы в нижнем регистре';
 $_lang['ef_field_err_name_cyrillic'] = 'Ошибка в название поля';
 $_lang['ef_field_err_name_reserved'] = 'Название поля уже занято в родной таблице';
@@ -52,7 +52,7 @@ $_lang['ef_field_tab'] = 'Вкладка';
 $_lang['ef_field_category'] = 'Категория';
 $_lang['ef_field_sort'] = 'Поле для сортировки';
 $_lang['ef_field_dir'] = 'Направление сортировки';
-$_lang['ef_field_areas'] = 'Области';
+$_lang['ef_field_areas'] = 'Область';
 $_lang['ef_field_index'] = 'Индекс';
 $_lang['ef_field_active'] = 'Активно';
 
@@ -63,10 +63,11 @@ $_lang['readonly'] = 'Только чтение';
 $_lang['efxtype'] = 'Xtype поле';
 $_lang['ef_table'] = 'Таблица PageBlocks';
 
+$_lang['ef_settings'] = 'Настройки поля';
+$_lang['ef_position'] = 'Расположение';
 $_lang['ef_accessibility'] = 'Доступность';
 $_lang['templates'] = 'Шаблоны';
 $_lang['parents'] = 'Родители (ID)';
-$_lang['resources'] = 'Ресурсы (ID)';
 $_lang['ab_user_group'] = 'Группы пользователей';
 $_lang['ab_users'] = 'Пользователи (ID)';
 

@@ -9,18 +9,19 @@ class efFieldAbsGetProcessor extends modObjectGetProcessor
 
 
     /**
-     * We doing special check of permission
-     * because of our objects is not an instances of modAccessibleObject
-     *
-     * @return mixed
+     * Return the response
+     * @return array
      */
-    public function process()
-    {
-        if (!$this->checkPermissions()) {
-            return $this->failure($this->modx->lexicon('access_denied'));
+    public function cleanup() {
+        $array = $this->object->toArray();
+        if (!empty($array['ab_templates'])) {
+            $array['ab_templates'] = explode('||', $array['ab_templates']);
+        }
+        if (!empty($array['ab_user_group'])) {
+            $array['ab_user_group'] = explode('||', $array['ab_user_group']);
         }
 
-        return parent::process();
+        return $this->success('', $array);
     }
 
 }

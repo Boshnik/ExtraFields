@@ -12,6 +12,9 @@ use efTab;
 use efCategory;
 use efField;
 use efFieldAbs;
+use pbTableValue;
+use pbTableColumn;
+use pbField;
 
 /**
  * class ExtraFields
@@ -58,7 +61,6 @@ class ExtraFields
         'INHERIT',
         'DIRECTORY'
     ];
-
 
     const FIELDMETA = [
         'textfield' => [
@@ -142,9 +144,9 @@ class ExtraFields
             'is_admin' => $this->modx->user->isMember('Administrator'),
         ], $config);
 
-//        if ($pageblocks = $this->getPackage('PageBlocks')) {
-//            $this->config['pageblocks'] = $pageblocks->config;
-//        }
+        if ($pageblocks = $this->getPackage('PageBlocks')) {
+            $this->config['pageblocks'] = $pageblocks->config;
+        }
 
         $this->modx->addPackage($this->namespace, $this->config['modelPath']);
         $this->modx->lexicon->load("$this->namespace:default");
@@ -197,6 +199,11 @@ class ExtraFields
     public function getPackage($packageName)
     {
         $namespace = strtolower($packageName);
+        $file = MODX_CORE_PATH . "components/{$namespace}/model/{$namespace}.class.php";
+        if (!file_exists($file)) {
+            return false;
+        }
+
         if ($this->modx->services instanceof Psr\Http\Client\ClientInterface) {
             $package = $this->modx->services->get($namespace);
         } else {
@@ -216,7 +223,7 @@ class ExtraFields
         $q = $this->modx->newQuery($className);
         $q->select($this->modx->getSelectColumns($className, $className, '', '', false));
         $q->where($where);
-        $q->sortby('rank', 'asc');
+        $q->sortby('colrank', 'asc');
         $q->prepare();
         $q->stmt->execute();
         $results = $q->stmt->fetchAll(PDO::FETCH_ASSOC);
@@ -302,11 +309,29 @@ class ExtraFields
             'active' => 1
          ]);
          foreach ($fields as $idx => $field) {
-             $fields[$idx]['abs'] = $this->getFetchAll(efFieldAbs::class, [
+             $fields[$idx]['abs'] = [];
+             $abs = $this->getFetchAll(efFieldAbs::class, [
                  'field_id' => $field['id'],
                  'active' => 1
              ]);
-             $fields[$idx]['values'] = $this->processBindings($field['values']);
+             foreach ($abs as $item) {
+                 $item['values'] = $this->processBindings($item['values']);
+                 if (isset($this->config['pageblocks'])) {
+                     $columns = $this->getFetchAll(pbTableColumn::class, [
+                         'table_id' => $item['table_id'],
+                     ]);
+                     foreach ($columns as $column) {
+                         $field = $this->modx->getObject(pbField::class, $column['field_id']);
+                         if ($field) {
+                             $column['name'] = $field->name;
+                             $column['caption'] = $field->caption;
+                             $item['table_columns'][] = $column;
+                         }
+                     }
+                 }
+
+                 $fields[$idx]['abs'][] = $item;
+             }
          }
 
          return $fields;

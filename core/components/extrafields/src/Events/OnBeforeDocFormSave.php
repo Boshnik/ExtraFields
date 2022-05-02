@@ -12,6 +12,7 @@ class OnBeforeDocFormSave extends Event
         /** @var \modResource $resource */
         $resource = $this->scriptProperties['resource'];
         $fields = $this->extrafields->getFields('modResource');
+
         foreach ($fields as $field) {
             switch ($field['type']) {
                 case 'listbox-multiple':
@@ -20,12 +21,34 @@ class OnBeforeDocFormSave extends Event
                     $resource->set($field['name'], $value);
                     break;
                 case 'pageblocks':
+                    $results = [];
+                    foreach ($field['abs'] as $abs) {
+                        // templates
+                        if (!empty($abs['ab_templates']) && !in_array($resource->template, explode(',', $abs['ab_templates']))) {
+                            continue;
+                        }
+//
+//                      // parents
+                        if (!empty($abs['ab_parents']) && !in_array($resource->parent, explode(',', $abs['ab_parents']))) {
+                            continue;
+                        }
+
+                        // resource
+                        if (!empty($abs['ab_resources']) && !in_array($resource->id, explode(',', $abs['ab_resources']))) {
+                            continue;
+                        }
+                        if (count($results)) continue;
+                        $results = $this->extrafields->getFetchAll('pbTableValue', [
+                            'resource_id' => $resource->id,
+                            'constructor_id' => 0,
+                            'table_id' => $abs['table_id'],
+                            'field_id' => 0,
+                            'ef_field_id' => $field['id'],
+                            'parent_id' => 0
+                        ]);
+                    }
+
                     $values = [];
-                    $results = $this->extrafields->getFetchAll('pbResourceTable', [
-                        'resource_id' => $resource->id,
-                        'table_id' => $field['table_id'],
-                        'field_name' => $field['name']
-                    ]);
                     foreach ($results as $result) {
                         $values[] = json_decode($result['values'], 1);
                     }

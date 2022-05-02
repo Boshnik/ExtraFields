@@ -11,16 +11,17 @@ class OnUserFormPrerender extends Event
     {
 
         /** @var \modUser $user */
-        $data = [];
-        if ($user = $this->scriptProperties['user']) {
-            $profile = $user->getOne('Profile')->toArray();
-            $data = json_encode(array_merge($profile, [
-                'id' => $user->id,
-                'primary_group' => $user->primary_group,
-                'sudo' => $user->sudo,
-                'username' => $user->username,
-            ]),1);
+        $user = $this->scriptProperties['user'];
+        if (!$user) {
+            return true;
         }
+        $profile = $user->getOne('Profile')->toArray();
+        $data = json_encode(array_merge($profile, [
+            'id' => $user->id,
+            'primary_group' => $user->primary_group,
+            'sudo' => $user->sudo,
+            'username' => $user->username,
+        ]),1);
 
         $this->extrafields->loadRichTextEditor();
         $tabs = json_encode($this->extrafields->getTabs('modUserProfile'),1);

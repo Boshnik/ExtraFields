@@ -12,7 +12,7 @@ $xpdo_meta_map['ExtraMetaField']= array (
   array (
     'name' => '',
     'description' => '',
-    'rank' => 0,
+    'colrank' => 0,
     'active' => 1,
   ),
   'fieldMeta' => 
@@ -32,7 +32,7 @@ $xpdo_meta_map['ExtraMetaField']= array (
       'null' => true,
       'default' => '',
     ),
-    'rank' => 
+    'colrank' =>
     array (
       'dbtype' => 'tinyint',
       'precision' => '1',

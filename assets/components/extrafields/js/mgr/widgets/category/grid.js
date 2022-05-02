@@ -5,7 +5,7 @@ ExtraFields.grid.Categories = function (config) {
         baseParams: {
             action: 'mgr/category/getlist',
             tab_id: config.tab_id,
-            sort: 'rank',
+            sort: 'colrank',
             dir: 'asc',
         },
         paging: false,

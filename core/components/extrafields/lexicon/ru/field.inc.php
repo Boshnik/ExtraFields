@@ -1,5 +1,6 @@
 <?php
 
+$_lang['ef_field_empty_type'] = 'Вы должны выбрать тип поля.';
 $_lang['ef_field_err_name'] = 'Вы должны указать имя поля.';
 $_lang['ef_field_err_ae'] = 'Поле с таким именем уже существует.';
 $_lang['ef_field_err_nf'] = 'Поле не найдено.';

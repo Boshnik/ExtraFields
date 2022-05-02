@@ -16,10 +16,10 @@ ExtraFields.utils.getXtype = function (field) {
         }
     };
 
-    if (field.type.includes(['image', 'file'])) {
+    if (['image', 'file'].includes(field.type)) {
         field.source = field.source || MODx.config['default_media_source'];
-        let media_source = ExtraFields.config.media_source[field.source];
-        let openTo = field.source_path;
+        var media_source = ExtraFields.config.media_source[field.source];
+        var openTo = field.source_path;
         if (!Ext.isEmpty(values)) {
             let a = values.split('/');
             a.pop();
@@ -121,10 +121,8 @@ ExtraFields.utils.getXtype = function (field) {
                     id: Ext.id(),
                     checked: values ? values.split('||').includes(val[1] || val[0]) : false,
                     listeners: {
-                        render: function(el) {
-                            if(!Ext.isEmpty(field.default) && Ext.isEmpty(el.inputValue)) {
-                                el.setValue(field.default);
-                            }
+                        afterrender: function(el) {
+                            ExtraFields.utils.setDefaultValue(el, field.default);
                         }
                     }
                 });
@@ -195,8 +193,12 @@ ExtraFields.utils.getXtype = function (field) {
             xtype.timeFormat =  MODx.config.manager_time_format;
             xtype.dateWidth = field.hide_time ? '100%' : '70%';
             xtype.timeWidth = field.hide_time ? 0 : '30%';
-            xtype.disabledDates = field.disabled_dates.split(',');
-            xtype.disabledDays = field.disabled_days.split(',');
+            if (field.disabled_dates) {
+                xtype.disabledDates = field.disabled_dates.split(',');
+            }
+            if (xtype.disabledDays) {
+                xtype.disabledDays = field.disabled_days.split(',');
+            }
             break;
 
         case 'colorpicker':
@@ -235,8 +237,11 @@ ExtraFields.utils.getXtype = function (field) {
             break;
 
         case 'pageblocks':
-            xtype.xtype = 'pb-grid-resource-table';
+            xtype.xtype = 'pb-table';
             xtype.table_id = field.table_id;
+            xtype.ef_field_id = field.field_id;
+            xtype.table_columns = field.table_columns;
+            xtype.parent_id = 0;
             delete xtype.listeners;
             break;
 
@@ -276,7 +281,6 @@ ExtraFields.utils.getXtype = function (field) {
             text: field.help
         });
     }
-
 
     let classes = [field.cls];
     if (field.hide_time == 1) {

@@ -4,7 +4,7 @@ ExtraFields.grid.Tabs = function (config) {
         baseParams: {
             action: 'mgr/tab/getlist',
             class_name: ExtraFields.config.class_name,
-            sort: 'rank',
+            sort: 'colrank',
             dir: 'asc',
         },
         ddAction: 'mgr/tab/sort',

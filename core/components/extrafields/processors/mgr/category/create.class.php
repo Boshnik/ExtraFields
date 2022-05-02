@@ -33,7 +33,7 @@ class efCategoryCreateProcessor extends modObjectCreateProcessor
     public function beforeSave()
     {
         $this->object->fromArray([
-            'rank' => $this->modx->getCount($this->classKey, [
+            'colrank' => $this->modx->getCount($this->classKey, [
                 'tab_id' => (int) $this->getProperty('tab_id'),
             ]),
         ]);

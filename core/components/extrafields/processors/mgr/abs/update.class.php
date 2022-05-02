@@ -26,9 +26,12 @@ class efFieldAbsUpdateProcessor extends modObjectUpdateProcessor
      */
     public function beforeSet()
     {
-
-        $this->properties['ab_templates'] = implode('||', $this->getProperty('ab_templates'));
-        $this->properties['ab_user_group'] = implode('||', $this->getProperty('ab_user_group'));
+        if ($this->properties['ab_templates']) {
+            $this->properties['ab_templates'] = implode('||', $this->properties['ab_templates']);
+        }
+        if ($this->properties['ab_user_group']) {
+            $this->properties['ab_user_group'] = implode('||', $this->properties['ab_user_group']);
+        }
 
         return parent::beforeSet();
     }
