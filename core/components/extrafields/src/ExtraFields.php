@@ -65,7 +65,7 @@ class ExtraFields
     const FIELDMETA = [
         'textfield' => [
             'dbtype' => 'varchar',
-            'precision' => '255',
+            'precision' => 255,
             'phptype' => 'string',
             'null' => true,
             'default' => null,
@@ -130,16 +130,16 @@ class ExtraFields
         $modxversion = $this->modx->getVersionData();
 
         $this->config = array_merge([
-            'namespace' => $this->namespace,
-            'version' => $this->version,
             'corePath' => $corePath,
             'modelPath' => $corePath . 'model/',
             'processorsPath' => $corePath . 'processors/',
-            'connectorUrl' => $assetsUrl . 'connector.php',
+                'connectorUrl' => $assetsUrl . 'connector.php',
             'assetsUrl' => $assetsUrl,
             'cssUrl' => $assetsUrl . 'css/',
             'jsUrl' => $assetsUrl . 'js/',
 
+            'namespace' => $this->namespace,
+            'version' => $this->version,
             'modxversion' => $modxversion['version'],
             'is_admin' => $this->modx->user->isMember('Administrator'),
         ], $config);
@@ -252,11 +252,9 @@ class ExtraFields
      */
     public function validationField($name, $class_name = 'modResource')
     {
-        $tables = [modResource::class];
-        switch ($class_name) {
-            case 'modUserProfile':
-                $tables = [modUser::class, modUserProfile::class];
-                break;
+        $tables = [$class_name];
+        if ($class_name == 'modUserProfile') {
+            $tables = [modUser::class, modUserProfile::class];
         }
 
         if (!preg_match("/^[\w\d\_]*$/", $name)) {
@@ -308,6 +306,8 @@ class ExtraFields
             'class_name' => $class_name,
             'active' => 1
          ]);
+
+         if (!count($fields)) return [];
          foreach ($fields as $idx => $field) {
              $fields[$idx]['abs'] = [];
              $abs = $this->getFetchAll(efFieldAbs::class, [
@@ -333,7 +333,6 @@ class ExtraFields
                  $fields[$idx]['abs'][] = $item;
              }
          }
-
          return $fields;
     }
 
@@ -382,13 +381,8 @@ class ExtraFields
      */
     public function getSQL($object, $mode = 'create')
     {
-        $className = modResource::class;
-        switch ($object->class_name) {
-            case 'modUserProfile':
-                $className = modUserProfile::class;
-                break;
-        }
-        $table = $this->modx->getTableName($className);
+
+        $table = $this->modx->getTableName($object->class_name);
         $name = $object->name;
 
         $FIELDMETA = self::FIELDMETA;

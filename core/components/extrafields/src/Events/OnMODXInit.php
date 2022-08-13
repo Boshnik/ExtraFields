@@ -16,12 +16,19 @@ class OnMODXInit extends Event
             ], [
                 'className' => $this->modxversion == 3 ? \MODX\Revolution\modUserProfile::class : \modUserProfile::class,
                 'fields' => $this->extrafields->getFields('modUserProfile')
+            ], [
+                'className' => $this->modxversion == 3 ? \MODX\Revolution\pbBlockValue::class : \pbBlockValue::class,
+                'fields' => $this->extrafields->getFields('pbBlockValue')
+            ], [
+                'className' => $this->modxversion == 3 ? \MODX\Revolution\pbTableValue::class : \pbTableValue::class,
+                'fields' => $this->extrafields->getFields('pbTableValue')
             ]
         ];
 
         $extrafields = $this->extrafields;
         $FIELDMETA = $extrafields::FIELDMETA;
         foreach ($rows as $row) {
+            if (!count($row['fields'])) continue;
             if ($this->modxversion == 2) {
                 $this->modx->loadClass($row['className']);
             }
@@ -42,5 +49,6 @@ class OnMODXInit extends Event
 
             $this->modx->map[$row['className']] = $map;
         }
+
     }
 }

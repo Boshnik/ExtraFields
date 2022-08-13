@@ -7,9 +7,6 @@ class efFieldAbsRemoveProcessor extends modObjectRemoveProcessor
     public $languageTopics = ['extrafields'];
     //public $permission = 'remove';
 
-    /** @var ExtraFields $extrafields */
-    public $extrafields;
-
 
     /**
      * @return array|string
@@ -22,8 +19,6 @@ class efFieldAbsRemoveProcessor extends modObjectRemoveProcessor
 
         return parent::initialize();
     }
-
-
 
 }
 

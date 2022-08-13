@@ -236,12 +236,24 @@ ExtraFields.utils.getXtype = function (field) {
             }
             break;
 
-        case 'pageblocks':
-            xtype.xtype = 'pb-table';
+        case 'pb-gallery':
+        case 'pb-video-gallery':
+            xtype.parent_id = 0;
+            xtype.table_id = field.table_id;
+            xtype.ef_field_id = field.field_id;
+            xtype.source = field.source;
+            xtype.source_path = field.source_path;
+            xtype.width = 100;
+            xtype.gallery_help = field.help;
+            delete xtype.help;
+            delete xtype.listeners;
+            break;
+
+        case 'pb-table':
+            xtype.parent_id = 0;
             xtype.table_id = field.table_id;
             xtype.ef_field_id = field.field_id;
             xtype.table_columns = field.table_columns;
-            xtype.parent_id = 0;
             delete xtype.listeners;
             break;
 

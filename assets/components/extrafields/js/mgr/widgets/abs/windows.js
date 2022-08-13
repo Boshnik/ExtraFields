@@ -572,7 +572,12 @@ Ext.extend(ExtraFields.window.CreateFieldAbs, ExtraFields.window.Default, {
                 disabled_days.show();
                 hide_time.show();
                 break;
-            case 'pageblocks':
+            case 'pb-gallery':
+            case 'pb-video-gallery':
+                source.show();
+                source_path.show();
+                break;
+            case 'pb-table':
                 table_id.show();
                 break;
             case 'efxtype':

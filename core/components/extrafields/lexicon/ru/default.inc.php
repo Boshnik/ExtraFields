@@ -13,6 +13,12 @@ $_lang['extrafields_resource_menu_desc'] = 'Управление полями р
 $_lang['extrafields_user'] = 'Пользователь (modUserProfile)';
 $_lang['extrafields_user_menu_desc'] = 'Управление полями пользователя';
 
+$_lang['extrafields_pb_block'] = 'PageBlocks (pbBlockValue)';
+$_lang['extrafields_pb_block_menu_desc'] = 'Управление полями блока';
+
+$_lang['extrafields_pb_table'] = 'PageBlocks (pbTableValue)';
+$_lang['extrafields_pb_table_menu_desc'] = 'Управление полями таблицы';
+
 $_lang['ef_row_create'] = 'Создать';
 $_lang['ef_row_update'] = 'Изменить';
 $_lang['ef_row_enable'] = 'Включить';

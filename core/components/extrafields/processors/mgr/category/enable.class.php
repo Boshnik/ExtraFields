@@ -1,10 +1,12 @@
 <?php
 
-require_once(dirname(__FILE__) . '/update.class.php');
-
-class efCategoryEnableProcessor extends efCategoryUpdateProcessor
+class efCategoryEnableProcessor extends modObjectUpdateProcessor
 {
-    
+    public $classKey = efCategory::class;
+    public $objectType = 'ef_category';
+    public $languageTopics = ['extrafields'];
+
+
     /**
      * @return bool
      */

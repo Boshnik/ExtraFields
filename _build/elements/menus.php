@@ -17,4 +17,16 @@ return [
         'action' => 'user',
         'menuindex' => 2,
     ],
+    'extrafields_pb_block' => [
+        'parent' => 'extrafields',
+        'description' => 'extrafields_pb_block_menu_desc',
+        'action' => 'pbblock',
+        'menuindex' => 3,
+    ],
+    'extrafields_pb_table' => [
+        'parent' => 'extrafields',
+        'description' => 'extrafields_pb_table_menu_desc',
+        'action' => 'pbtable',
+        'menuindex' => 4,
+    ],
 ];

@@ -173,7 +173,9 @@ ExtraFields.combo.Types = function(config) {
     }
 
     if (ExtraFields.config.pageblocks) {
-        data.splice(-4,0,['PageBlocks','pageblocks']);
+        data.splice(-4,0,[_('pb-video-gallery'),'pb-video-gallery']);
+        data.splice(-4,0,[_('pb-gallery'),'pb-gallery']);
+        data.splice(-4,0,[_('pb-table'),'pb-table']);
     }
 
     Ext.applyIf(config,{
@@ -190,6 +192,34 @@ ExtraFields.combo.Types = function(config) {
 };
 Ext.extend(ExtraFields.combo.Types, MODx.combo.ComboBox);
 Ext.reg('ef-combo-field-types',ExtraFields.combo.Types);
+
+ExtraFields.combo.FieldMeta = function(config) {
+    config = config || {};
+
+    var data = [
+        ['varchar (string)','textfield'],
+        ['text (string)','textarea'],
+        ['mediumtext (string)','richtext'],
+        ['int (integer)','numberfield'],
+        ['int (timestamp)','xdatetime'],
+        ['tinyint (integer)','xcheckbox'],
+        ['tinyint (boolean)','combo-boolean'],
+    ];
+
+    Ext.applyIf(config,{
+        store: new Ext.data.ArrayStore({
+            id: 'value',
+            fields: ['display','value'],
+            data: data
+        }),
+        mode: 'local',
+        displayField: 'display',
+        valueField: 'value',
+    });
+    ExtraFields.combo.FieldMeta.superclass.constructor.call(this,config);
+};
+Ext.extend(ExtraFields.combo.FieldMeta, MODx.combo.ComboBox);
+Ext.reg('ef-combo-field-meta',ExtraFields.combo.FieldMeta);
 
 ExtraFields.combo.Areas = function(config) {
     config = config || {};

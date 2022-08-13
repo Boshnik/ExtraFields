@@ -34,10 +34,7 @@ class efFieldUpdateProcessor extends modObjectUpdateProcessor
      */
     public function beforeSet()
     {
-
-        // old_name
         $this->object->set('old_name', $this->object->name);
-
 
         $id = (int) $this->getProperty('id');
         $name = trim($this->getProperty('name'));

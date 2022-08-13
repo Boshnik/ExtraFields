@@ -21,6 +21,7 @@ class OnDocFormPrerender extends Event
         $fields = json_encode($this->extrafields->getFields('modResource'),1);
 
         $config = $this->extrafields->config;
+        $config['class_name'] = 'modResource';
         $config['media_source'] = $this->extrafields->getMediaSources();
 
         $jsUrl = $config['jsUrl'] . 'mgr/';
@@ -33,10 +34,8 @@ class OnDocFormPrerender extends Event
         $this->modx->controller->addJavascript($jsUrl . 'misc/xtype.js');
         $this->modx->controller->addLastJavascript($jsUrl . 'inject/resource.js');
 
-        $config['class_name'] = 'modResource';
-        $config = json_encode($config);
         $this->modx->controller->addHtml("<script>
-            ExtraFields.config = $config;
+            ExtraFields.config = ".json_encode($config).";
             ExtraFields.tabs = $tabs;
             ExtraFields.fields = $fields;
             ExtraFields.modxversion = $this->modxversion;

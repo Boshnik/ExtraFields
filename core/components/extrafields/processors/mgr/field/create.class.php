@@ -41,7 +41,7 @@ class efFieldCreateProcessor extends modObjectCreateProcessor
             $this->modx->error->addField('name', $this->modx->lexicon('ef_field_err_ae'));
         }
 
-        $this->extrafields->validationField($name, 'modUserProfile');
+        $this->extrafields->validationField($name, $this->getProperty('class_name'));
         $this->setProperty('name', strtolower($name));
 
         return parent::beforeSet();
@@ -68,11 +68,12 @@ class efFieldCreateProcessor extends modObjectCreateProcessor
      */
     public function afterSave()
     {
-
-        $abs = $this->modx->getiterator('efFieldAbs', ['field_id' => 0]);
-        foreach ($abs as $item) {
-            $item->set('field_id', $this->object->id);
-            $item->save();
+        if (!in_array($this->object->class_name, ['pbBlockValue', 'pbTableValue'])) {
+            $abs = $this->modx->getCollection('efFieldAbs', ['field_id' => 0]);
+            foreach ($abs as $item) {
+                $item->set('field_id', $this->object->id);
+                $item->save();
+            }
         }
 
         $this->extrafields->createTableColumn($this->object);

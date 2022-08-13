@@ -11,6 +11,7 @@ return [
             'OnBeforeDocFormSave' => [],
             'OnDocFormSave' => [],
             'OnBeforeUserFormSave' => [],
+            'OnManagerPageBeforeRender' => [],
         ],
     ],
 ];

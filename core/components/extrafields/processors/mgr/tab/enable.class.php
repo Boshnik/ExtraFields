@@ -1,10 +1,12 @@
 <?php
 
-require_once(dirname(__FILE__) . '/update.class.php');
-
-class efTabEnableProcessor extends efTabUpdateProcessor
+class efTabEnableProcessor extends modObjectUpdateProcessor
 {
-    
+    public $classKey = efTab::class;
+    public $objectType = 'ef_tab';
+    public $languageTopics = ['extrafields'];
+
+
     /**
      * @return bool
      */

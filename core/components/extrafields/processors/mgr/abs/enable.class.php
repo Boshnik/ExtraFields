@@ -1,10 +1,12 @@
 <?php
 
-require_once(dirname(__FILE__) . '/update.class.php');
-
-class efFieldAbsEnableProcessor extends efFieldAbsUpdateProcessor
+class efFieldAbsEnableProcessor extends modObjectUpdateProcessor
 {
-    
+    public $classKey = efFieldAbs::class;
+    public $objectType = 'ef_field';
+    public $languageTopics = ['extrafields'];
+
+
     /**
      * @return bool
      */
