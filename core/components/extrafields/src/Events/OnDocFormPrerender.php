@@ -41,5 +41,19 @@ class OnDocFormPrerender extends Event
             ExtraFields.modxversion = $this->modxversion;
             ExtraFields.object = $data;
         </script>");
+
+        $this->modx->controller->addHtml("<script> 
+            MODx.clientconfig = ". json_encode($this->getClientConfigs($resource->context_key)) .";
+        </script>");
+    }
+
+    public function getClientConfigs($context = '')
+    {
+        $configs = [];
+        if ($clientconfig = $this->extrafields->getPackage('ClientConfig')) {
+            $configs = $clientconfig->getSettings($context);
+        }
+
+        return $configs;
     }
 }

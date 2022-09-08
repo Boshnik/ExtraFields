@@ -20,15 +20,15 @@ class OnBeforeDocFormSave extends Event
                     $value = implode('||', $resource->get($field['name']));
                     $resource->set($field['name'], $value);
                     break;
-                case 'pageblocks':
+                case 'pb-table':
                     $results = [];
                     foreach ($field['abs'] as $abs) {
                         // templates
                         if (!empty($abs['ab_templates']) && !in_array($resource->template, explode(',', $abs['ab_templates']))) {
                             continue;
                         }
-//
-//                      // parents
+
+                       // parents
                         if (!empty($abs['ab_parents']) && !in_array($resource->parent, explode(',', $abs['ab_parents']))) {
                             continue;
                         }
@@ -51,6 +51,49 @@ class OnBeforeDocFormSave extends Event
                     $values = [];
                     foreach ($results as $result) {
                         $values[] = json_decode($result['values'], 1);
+                    }
+                    $resource->set($field['name'], json_encode($values, JSON_UNESCAPED_UNICODE));
+                    break;
+
+                case 'pb-gallery':
+                case 'pb-video-gallery':
+                    $results = [];
+                    foreach ($field['abs'] as $abs) {
+                        // templates
+                        if (!empty($abs['ab_templates']) && !in_array($resource->template, explode(',', $abs['ab_templates']))) {
+                            continue;
+                        }
+
+                        // parents
+                        if (!empty($abs['ab_parents']) && !in_array($resource->parent, explode(',', $abs['ab_parents']))) {
+                            continue;
+                        }
+
+                        // resource
+                        if (!empty($abs['ab_resources']) && !in_array($resource->id, explode(',', $abs['ab_resources']))) {
+                            continue;
+                        }
+                        if (count($results)) continue;
+                        $results = $this->extrafields->getFetchAll('pbFile', [
+                            'resource_id' => $resource->id,
+                            'table_id' => $abs['table_id'],
+                            'field_id' => 0,
+                            'ef_field_id' => $field['id'],
+                            'parent_id' => 0
+                        ]);
+                    }
+
+                    $values = [];
+                    foreach ($results as $result) {
+                        $values[] = [
+                            'path' => $result['path'],
+                            'filename' => $result['filename'],
+                            'name' => $result['name'],
+                            'title' => $result['title'],
+                            'description' => $result['description'],
+                            'url' => $result['url'],
+                            'type' => $result['type'],
+                        ];
                     }
                     $resource->set($field['name'], json_encode($values, JSON_UNESCAPED_UNICODE));
                     break;

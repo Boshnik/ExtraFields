@@ -199,7 +199,11 @@ class ExtraFields
     public function getPackage($packageName)
     {
         $namespace = strtolower($packageName);
-        $file = MODX_CORE_PATH . "components/{$namespace}/model/{$namespace}.class.php";
+        $model = '/model/';
+        if ($packageName == 'ClientConfig') {
+            $model = '/model/clientconfig/';
+        }
+        $file = MODX_CORE_PATH . "components/{$namespace}{$model}{$namespace}.class.php";
         if (!file_exists($file)) {
             return false;
         }
@@ -207,7 +211,7 @@ class ExtraFields
         if ($this->modx->services instanceof Psr\Http\Client\ClientInterface) {
             $package = $this->modx->services->get($namespace);
         } else {
-            $package = $this->modx->getService($namespace, $packageName, MODX_CORE_PATH . "components/{$namespace}/model/");
+            $package = $this->modx->getService($namespace, $packageName, MODX_CORE_PATH . "components/{$namespace}{$model}");
         }
         return $package;
     }
