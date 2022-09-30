@@ -59,7 +59,7 @@ ExtraFields.utils.getXtype = function (field) {
         case 'listbox-multiple':
             xtype.xtype = 'ef-combo-listbox-multiple';
             if (field.values.indexOf('++') === 0) {
-                field.values = MODx.config[field.values.replace('++', '')];
+                field.values = MODx.clientconfig ? MODx.clientconfig[field.values.replace('++', '')] : '';
             }
             xtype.data = field.values;
             xtype.listeners.render = function (el) {
@@ -117,6 +117,9 @@ ExtraFields.utils.getXtype = function (field) {
             xtype.columns = +field.columns || 1;
             xtype.items = [];
             xtype.name = '';
+            if (field.values.indexOf('++') === 0) {
+                field.values = MODx.clientconfig ? MODx.clientconfig[field.values.replace('++', '')] : '';
+            }
             field.values.split('||').forEach(function (value){
                 var val = value.split('==');
                 xtype.items.push({
@@ -140,6 +143,9 @@ ExtraFields.utils.getXtype = function (field) {
             xtype.items = [];
             xtype.name = '';
             xtype.listeners = {};
+            if (field.values.indexOf('++') === 0) {
+                field.values = MODx.clientconfig ? MODx.clientconfig[field.values.replace('++', '')] : '';
+            }
             field.values.split('||').forEach(function (value){
                 var val = value.split('==');
                 xtype.items.push({
