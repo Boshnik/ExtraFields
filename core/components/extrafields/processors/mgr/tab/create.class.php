@@ -5,7 +5,6 @@ class efTabCreateProcessor extends modObjectCreateProcessor
     public $classKey = efTab::class;
     public $objectType = 'ef_tab';
     public $languageTopics = ['extrafields'];
-    //public $permission = 'create';
 
 
     /**
@@ -13,12 +12,12 @@ class efTabCreateProcessor extends modObjectCreateProcessor
      */
     public function beforeSet()
     {
-        $name = trim($this->getProperty('name'));
+        $name = trim($this->properties['name']);
         if (empty($name)) {
             $this->modx->error->addField('name', $this->modx->lexicon('ef_tab_err_name'));
         } elseif ($this->modx->getCount($this->classKey, [
             'name' => $name,
-            'class_name' => $this->getProperty('class_name'),
+            'class_name' => $this->properties['class_name'],
         ])) {
             $this->modx->error->addField('name', $this->modx->lexicon('ef_tab_err_ae'));
         }
@@ -39,8 +38,8 @@ class efTabCreateProcessor extends modObjectCreateProcessor
     public function beforeSave()
     {
         $this->object->fromArray([
-            'colrank' => $this->modx->getCount($this->classKey, [
-                'class_name' => $this->getProperty('class_name'),
+            'menuindex' => $this->modx->getCount($this->classKey, [
+                'class_name' => $this->properties['class_name'],
             ]),
         ]);
 

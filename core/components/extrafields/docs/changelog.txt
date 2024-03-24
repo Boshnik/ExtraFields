@@ -1,7 +1,7 @@
-Changelog
-
-2.0.0-beta
+2.0.0-pl
 ==============
+ - Updated core
+ - Updated interface
 
 1.1.0-pl
 ==============

@@ -1,14 +1,14 @@
 ExtraFields.utils.getXtype = function (field) {
-    let values = ExtraFields.object ? ExtraFields.object[field.name] : field.values;
+    let values = ExtraFields.object ? ExtraFields.object[field.field_name] : field.values;
     let xtype = {
-        xtype: field.type,
+        xtype: field.field_type,
         fieldLabel: field.caption,
-        name: field.name,
+        name: field.field_name,
         id: Ext.id(),
         anchor: '100%',
         width: '100%',
         allowBlank: !+field.required,
-        description: '<b>[[*' + field.name + ']]</b>',
+        description: '<b>[[*' + field.field_name + ']]</b>',
         listeners: {
             afterrender: function(el) {
                 ExtraFields.utils.setDefaultValue(el, field.default);
@@ -16,7 +16,7 @@ ExtraFields.utils.getXtype = function (field) {
         }
     };
 
-    if (['image', 'file'].includes(field.type)) {
+    if (['image', 'file'].includes(field.field_type)) {
         field.source = field.source || MODx.config['default_media_source'];
         var media_source = ExtraFields.config.media_source[field.source];
         var openTo = field.source_path;
@@ -27,7 +27,7 @@ ExtraFields.utils.getXtype = function (field) {
         }
     }
 
-    switch (field.type) {
+    switch (field.field_type) {
         case 'richtext':
             xtype.xtype = 'textarea';
             xtype.listeners.render = function (el) {
@@ -41,7 +41,7 @@ ExtraFields.utils.getXtype = function (field) {
             xtype.modxTags = true;
             xtype.listeners = {
                 render: function (el) {
-                    if(el.getValue() == 'undefined') {
+                    if(el.getValue() === 'undefined') {
                         el.setValue('');
                     }
                 }
@@ -85,11 +85,18 @@ ExtraFields.utils.getXtype = function (field) {
             break;
 
         case 'combo-boolean':
-            xtype.hiddenName = field.name;
+            xtype.hiddenName = field.field_name;
             xtype.store =  new Ext.data.SimpleStore({
                 fields: ["d", "v"],
                 data: [[_("yes"), 1], [_("no"), 0]]
             });
+            xtype.listeners.afterrender = function (el) {
+                if (!Ext.isEmpty(values)) {
+                    setTimeout(() => {
+                        el.hiddenField.value = +values;
+                    },100);
+                }
+            };
             break;
 
         case 'numberfield':
@@ -126,7 +133,7 @@ ExtraFields.utils.getXtype = function (field) {
                     xtype: 'checkbox',
                     boxLabel: val[0],
                     inputValue: val[1] || val[0],
-                    name: field.name + '[]',
+                    name: field.field_name + '[]',
                     id: Ext.id(),
                     checked: values ? values.split('||').includes(val[1] || val[0]) : false,
                     listeners: {
@@ -151,9 +158,9 @@ ExtraFields.utils.getXtype = function (field) {
                 xtype.items.push({
                     boxLabel: val[0],
                     inputValue: val[1] || val[0],
-                    name: field.name,
+                    name: field.field_name,
                     id: Ext.id(),
-                    checked: values ? values.includes(val[1] || val[0]) : (field.default == (val[1] || val[0]) ? true : false),
+                    checked: values ? values.includes(val[1] || val[0]) : (field.default == (val[1] || val[0])),
                     listeners: {
                         render: function(el) {
                             if(!Ext.isEmpty(field.default) && Ext.isEmpty(el.inputValue)) {
@@ -187,7 +194,7 @@ ExtraFields.utils.getXtype = function (field) {
                 select: function (data) {
                     ExtraFields.utils.updateImage(this.id, data.fullRelativeUrl);
                 },
-                change: (el, f) => {
+                change: (el) => {
                     ExtraFields.utils.updateImage(el.id, el.getValue());
                 }
             }
@@ -249,8 +256,8 @@ ExtraFields.utils.getXtype = function (field) {
             break;
 
         case 'pb-gallery':
-        case 'pb-video-gallery':
-            xtype.parent_id = 0;
+            xtype.model_type = ExtraFields.object.class_key;
+            xtype.model_id = ExtraFields.object.id;
             xtype.table_id = field.table_id;
             xtype.ef_field_id = field.field_id;
             xtype.source = field.source;
@@ -262,7 +269,8 @@ ExtraFields.utils.getXtype = function (field) {
             break;
 
         case 'pb-table':
-            xtype.parent_id = 0;
+            xtype.model_type = ExtraFields.object.class_key;
+            xtype.model_id = ExtraFields.object.id;
             xtype.table_id = field.table_id;
             xtype.ef_field_id = field.field_id;
             xtype.table_columns = field.table_columns;
@@ -276,9 +284,9 @@ ExtraFields.utils.getXtype = function (field) {
 
         case 'efxtype':
             xtype.xtype = field.xtype;
-            xtype.hiddenName = field.name;
+            xtype.hiddenName = field.field_name;
 
-            if(field.xtype == 'modx-description') {
+            if(field.xtype === 'modx-description') {
                 xtype.listeners = {};
                 xtype.html = field.default;
             }
@@ -288,7 +296,7 @@ ExtraFields.utils.getXtype = function (field) {
 
     let items = [xtype];
 
-    if (field.type == 'image') {
+    if (field.field_type === 'image') {
         items.push({
             anchor: '100%',
             html: '',
@@ -307,7 +315,7 @@ ExtraFields.utils.getXtype = function (field) {
     }
 
     let classes = [field.cls];
-    if (field.hide_time == 1) {
+    if (field.hide_time === 1) {
         classes.push('ef-hidden-time');
     }
 
@@ -321,7 +329,7 @@ ExtraFields.utils.getXtype = function (field) {
         cls: classes.join(' '),
     }
 
-    if (ExtraFields.config.modxversion == 3) {
+    if (ExtraFields.config.modxversion === '3') {
         xtype = {
             layout: 'form',
             width:'100%',

@@ -2,7 +2,7 @@ ExtraFields.grid.Default = function (config) {
     config = config || {};
     config.id = Ext.id();
 
-    if (typeof(config['multi_select']) != 'undefined' && config['multi_select'] == true) {
+    if (typeof(config['multi_select']) !== 'undefined' && config['multi_select'] === true) {
         config.sm = new Ext.grid.CheckboxSelectionModel();
     }
 
@@ -17,7 +17,7 @@ ExtraFields.grid.Default = function (config) {
         autoHeight: true,
         paging: true,
         remoteSort: true,
-        stateful: true,
+        stateful: false,
         stateId: config.id,
         ddGroup: config.id + 'DD',
         enableDragDrop: true,
@@ -141,7 +141,7 @@ Ext.extend(ExtraFields.grid.Default, MODx.grid.Grid, {
                 ? _('ef_rows_remove_confirm')
                 : _('ef_row_remove_confirm'),
             function (val) {
-                if (val == 'yes') {
+                if (val === 'yes') {
                     this.multipleAction(this.config.objectAction+'/remove');
                 }
             }, this
@@ -158,7 +158,7 @@ Ext.extend(ExtraFields.grid.Default, MODx.grid.Grid, {
             _('ef_row_copy'),
             _('ef_row_copy_confirm'),
             function (val) {
-                if (val == 'yes') {
+                if (val === 'yes') {
                     this.multipleAction(this.config.objectAction+'/copy');
                 }
             }, this
@@ -251,11 +251,11 @@ Ext.extend(ExtraFields.grid.Default, MODx.grid.Grid, {
 
     onClick: function (e) {
         var elem = e.getTarget();
-        if (elem.nodeName == 'BUTTON') {
+        if (elem.nodeName === 'BUTTON') {
             var row = this.getSelectionModel().getSelected();
             if (typeof(row) != 'undefined') {
                 var action = elem.getAttribute('action');
-                if (action == 'showMenu') {
+                if (action === 'showMenu') {
                     var ri = this.getStore().find('id', row.id);
                     return this._showMenu(this, ri, e);
                 }
@@ -270,7 +270,7 @@ Ext.extend(ExtraFields.grid.Default, MODx.grid.Grid, {
 
     refresh: function() {
         this.getStore().reload();
-        if (this.config['enableDragDrop'] == true) {
+        if (this.config['enableDragDrop'] === true) {
             this.getSelectionModel().clearSelections(true);
         }
     },
@@ -309,7 +309,7 @@ Ext.extend(ExtraFields.grid.Default, MODx.grid.Grid, {
                 var store = grid.getStore();
                 var target = store.getAt(dd.getDragData(e).rowIndex);
                 var sources = [];
-                if (data.selections.length < 1 || data.selections[0].id == target.id) {
+                if (data.selections.length < 1 || data.selections[0].id === target.id) {
                     return false;
                 }
                 for (var i in data.selections) {

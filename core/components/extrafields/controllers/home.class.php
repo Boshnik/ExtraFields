@@ -1,9 +1,9 @@
 <?php
 
 /**
- * The resource manager controller for ExtraFields.
+ * The home manager controller for ExtraFields.
  */
-class ExtraFieldsResourceManagerController extends modExtraManagerController
+class ExtraFieldsHomeManagerController extends modExtraManagerController
 {
     /** @var ExtraFields $extrafields */
     public $extrafields;
@@ -68,16 +68,15 @@ class ExtraFieldsResourceManagerController extends modExtraManagerController
         $this->addJavascript($jsUrl . 'widgets/abs/grid.js');
         $this->addJavascript($jsUrl . 'widgets/abs/windows.js');
 
-        $this->addJavascript($jsUrl . 'panel/resource.js');
-        $this->addJavascript($jsUrl . 'page/resource.js');
+        $this->addJavascript($jsUrl . 'panel/home.js');
+        $this->addJavascript($jsUrl . 'page/home.js');
 
         $config = $this->extrafields->config;
-        $config['class_name'] = 'modResource';
 
         $this->addHtml('<script>
             Ext.onReady(() => {
                 ExtraFields.config = ' . json_encode($config) . ';
-                MODx.load({ xtype: "ef-page-resource"});
+                MODx.load({ xtype: "ef-page-home"});
             });
         </script>');
 
@@ -90,7 +89,7 @@ class ExtraFieldsResourceManagerController extends modExtraManagerController
      */
     public function getTemplateFile()
     {
-        $this->content .= '<div id="ef-panel-resource-div"></div>';
+        $this->content .= '<div id="ef-panel-home-div"></div>';
 
         return '';
     }

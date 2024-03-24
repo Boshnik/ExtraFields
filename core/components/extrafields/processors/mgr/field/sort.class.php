@@ -6,29 +6,15 @@ class efFieldSortProcessor extends modObjectProcessor
 
 
     /**
-     * @return bool|null|string
-     */
-    public function initialize()
-    {
-
-        if (!$this->checkPermissions()) {
-            return $this->failure($this->modx->lexicon('access_denied'));
-        }
-
-        return parent::initialize();
-    }
-
-
-    /**
      * @return array|string
      */
     public function process()
     {
-        if (!$this->modx->getCount($this->classKey, $this->getProperty('target'))) {
+        if (!$this->modx->getCount($this->classKey, $this->properties['target'])) {
             return $this->failure();
         }
 
-        $sources = json_decode($this->getProperty('sources'), true);
+        $sources = json_decode($this->properties['sources'], true);
         if (!is_array($sources)) {
             return $this->failure();
         }
@@ -36,7 +22,9 @@ class efFieldSortProcessor extends modObjectProcessor
             /** @var efField $source */
             $source = $this->modx->getObject($this->classKey, compact('id'));
             /** @var efField $target */
-            $target = $this->modx->getObject($this->classKey, array('id' => $this->getProperty('target')));
+            $target = $this->modx->getObject($this->classKey, [
+                'id' => $this->properties['target']
+            ]);
             $this->sort($source, $target);
         }
         $this->updateIndex();
@@ -55,32 +43,32 @@ class efFieldSortProcessor extends modObjectProcessor
     {
         $c = $this->modx->newQuery($this->classKey);
         $c->command('UPDATE');
-        if ($source->get('colrank') < $target->get('colrank')) {
-            $c->query['set']['menuindex'] = array(
+        if ($source->get('menuindex') < $target->get('menuindex')) {
+            $c->query['set']['menuindex'] = [
                 'value' => '`menuindex` - 1',
                 'type' => false,
-            );
-            $c->andCondition(array(
-                'colrank:<=' => $target->colrank,
-                'colrank:>' => $source->colrank,
-            ));
-            $c->andCondition(array(
-                'colrank:>' => 0,
-            ));
+            ];
+            $c->andCondition([
+                'menuindex:<=' => $target->menuindex,
+                'menuindex:>' => $source->menuindex,
+            ]);
+            $c->andCondition([
+                'menuindex:>' => 0,
+            ]);
         } else {
-            $c->query['set']['colrank'] = array(
-                'value' => '`colrank` + 1',
+            $c->query['set']['menuindex'] = [
+                'value' => '`menuindex` + 1',
                 'type' => false,
-            );
-            $c->andCondition(array(
-                'colrank:>=' => $target->colrank,
-                'colrank:<' => $source->colrank,
-            ));
+            ];
+            $c->andCondition([
+                'menuindex:>=' => $target->menuindex,
+                'menuindex:<' => $source->menuindex,
+            ]);
         }
         $c->prepare();
         $c->stmt->execute();
 
-        $source->set('colrank', $target->colrank);
+        $source->set('menuindex', $target->menuindex);
         $source->save();
     }
 
@@ -92,8 +80,8 @@ class efFieldSortProcessor extends modObjectProcessor
     {
         // Check if need to update indexes
         $c = $this->modx->newQuery($this->classKey);
-        $c->groupby('colrank');
-        $c->select('COUNT(colrank) as idx');
+        $c->groupby('menuindex');
+        $c->select('COUNT(menuindex) as idx');
         $c->sortby('idx', 'DESC');
         $c->limit(1);
         if ($c->prepare() && $c->stmt->execute()) {
@@ -105,13 +93,13 @@ class efFieldSortProcessor extends modObjectProcessor
         // Update indexes
         $c = $this->modx->newQuery($this->classKey);
         $c->select('id');
-        $c->sortby('colrank ASC, id', 'ASC');
+        $c->sortby('menuindex ASC, id', 'ASC');
         if ($c->prepare() && $c->stmt->execute()) {
             $table = $this->modx->getTableName($this->classKey);
-            $update = $this->modx->prepare("UPDATE {$table} SET colrank = ? WHERE id = ?");
+            $update = $this->modx->prepare("UPDATE {$table} SET menuindex = ? WHERE id = ?");
             $i = 0;
             while ($id = $c->stmt->fetch(PDO::FETCH_COLUMN)) {
-                $update->execute(array($i, $id));
+                $update->execute([$i, $id]);
                 $i++;
             }
         }

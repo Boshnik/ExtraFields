@@ -11,13 +11,12 @@ ExtraFields.window.CreateFieldAbs = function (config) {
     ExtraFields.window.CreateFieldAbs.superclass.constructor.call(this, config);
 
     this.on('afterrender', () => {
-        this.statusFields(config.id, config.type);
+        this.statusFields(config);
     });
 };
 Ext.extend(ExtraFields.window.CreateFieldAbs, ExtraFields.window.Default, {
 
     getFields: function (config) {
-
         return [{
             xtype: 'hidden',
             name: 'id',
@@ -292,10 +291,12 @@ Ext.extend(ExtraFields.window.CreateFieldAbs, ExtraFields.window.Default, {
             width: 100,
             allowBlank: true,
             hidden: true,
-            url: ExtraFields.config.pageblocks ? ExtraFields.config.pageblocks.connectorUrl : '',
+            url: ExtraFields.config.pageblocks
+                ? ExtraFields.config.pageblocks.connectorUrl
+                : '',
             baseParams: {
                 action: 'mgr/table/getlist',
-                sort: 'colrank',
+                sort: 'menuindex',
                 dir: 'asc',
                 combo: true,
             }
@@ -356,110 +357,110 @@ Ext.extend(ExtraFields.window.CreateFieldAbs, ExtraFields.window.Default, {
             text: _('checkbox_columns_desc'),
             hidden: true,
         }, {
-            xtype: 'modx-tabs',
-            defaults: {border: false, autoHeight: true},
+            xtype: 'fieldset',
+            title: _('ef_position'),
             id: Ext.id(),
+            layout: 'form',
+            columnWidth: 1,
+            collapsible: true,
             items: [{
-                title: _('ef_position'),
-                layout: 'anchor',
+                layout: 'column',
                 items: [{
-                    layout: 'column',
+                    columnWidth: .4,
+                    layout: 'form',
+                    defaults: {msgTarget: 'under'},
+                    cls: 'x-superboxselect ef-superboxselect',
                     items: [{
-                        columnWidth: .5,
-                        layout: 'form',
-                        defaults: {msgTarget: 'under'},
-                        cls: 'x-superboxselect ef-superboxselect',
-                        items: [{
-                            xtype: 'ef-combo-areas',
-                            fieldLabel: _('ef_field_areas'),
-                            name: 'areas',
-                            id: config.id + '-areas',
-                            allowBlank: true,
-                            anchor: '100%',
-                            width: 100,
-                        },{
-                            xtype: 'ef-combo-getlist',
-                            fieldLabel: _('ef_field_tab'),
-                            name: 'tab_id',
-                            id: config.id + '-tab-id',
-                            allowBlank: true,
-                            baseParams: {
-                                action: 'mgr/tab/getlist',
-                                class_name: ExtraFields.config.class_name,
-                                sort: 'colrank',
-                                dir: 'asc',
-                                combo: 1,
+                        xtype: 'ef-combo-getlist',
+                        fieldLabel: _('ef_field_tab'),
+                        name: 'tab_id',
+                        id: config.id + '-tab-id',
+                        allowBlank: true,
+                        baseParams: {
+                            action: 'mgr/tab/getlist',
+                            class_name: config.class_name,
+                            sort: 'menuindex',
+                            dir: 'asc',
+                            combo: 1,
+                        },
+                        triggerConfig: {
+                            tag: 'div',
+                            cls: 'x-superboxselect-btns',
+                            cn: [
+                                {tag: 'div', cls: 'x-superboxselect-btn-expand x-form-trigger'},
+                                {tag: 'div', cls: 'x-superboxselect-btn-clear x-form-trigger'}
+                            ]
+                        },
+                        onTriggerClick: function(event, btn){
+                            if (btn && Ext.get(btn).hasClass('x-superboxselect-btn-clear')) {
+                                Ext.getCmp(config.id + '-tab-id').setValue();
+                                this.fireEvent('render', this);
+                            } else {
+                                MODx.combo.ComboBox.superclass.onTriggerClick.call(this);
+                            }
+                        },
+                        listeners: {
+                            render: {
+                                fn: this.changeTabId,
+                                scope: this,
                             },
-                            triggerConfig: {
-                                tag: 'div',
-                                cls: 'x-superboxselect-btns',
-                                cn: [
-                                    {tag: 'div', cls: 'x-superboxselect-btn-expand x-form-trigger'},
-                                    {tag: 'div', cls: 'x-superboxselect-btn-clear x-form-trigger'}
-                                ]
-                            },
-                            onTriggerClick: function(event, btn){
-                                if (btn && Ext.get(btn).hasClass('x-superboxselect-btn-clear')) {
-                                    Ext.getCmp(config.id + '-tab-id').setValue();
-                                    this.fireEvent('render', this);
-                                } else {
-                                    MODx.combo.ComboBox.superclass.onTriggerClick.call(this);
-                                }
-                            },
-                            listeners: {
-                                render: {
-                                    fn: this.changeTabId,
-                                    scope: this,
-                                },
-                                select: {
-                                    fn: this.changeTabId,
-                                    scope: this,
+                            select: {
+                                fn: this.changeTabId,
+                                scope: this,
+                            }
+                        }
+                    }]
+                }, {
+                    columnWidth: .4,
+                    layout: 'form',
+                    defaults: {msgTarget: 'under'},
+                    items: [{
+                        xtype: 'ef-combo-getlist',
+                        fieldLabel: _('ef_field_category'),
+                        name: 'category_id',
+                        id: config.id + '-category-id',
+                        allowBlank: true,
+                        baseParams: {
+                            action: 'mgr/category/getlist',
+                            tab_id: config.record ? config.record.object.tab_id : 0,
+                            sort: 'menuindex',
+                            dir: 'asc',
+                            combo: 1,
+                        }
+                    }]
+                }, {
+                    columnWidth: .2,
+                    layout: 'form',
+                    defaults: {msgTarget: 'under'},
+                    items: [{
+                        xtype: 'numberfield',
+                        inputType: 'number',
+                        cls: 'x-form-text',
+                        fieldLabel: _('ef_field_index'),
+                        name: 'index',
+                        id: config.id + '-index',
+                        allowBlank: true,
+                        anchor: '100%',
+                        width: 100,
+                        listeners: {
+                            render: function (el) {
+                                if(Ext.isEmpty(el.value)) {
+                                    el.setValue(0);
                                 }
                             }
-                        }]
-                    }, {
-                        columnWidth: .5,
-                        layout: 'form',
-                        defaults: {msgTarget: 'under'},
-                        items: [{
-                            xtype: 'numberfield',
-                            inputType: 'number',
-                            cls: 'x-form-text',
-                            fieldLabel: _('ef_field_index'),
-                            name: 'index',
-                            id: config.id + '-index',
-                            allowBlank: true,
-                            anchor: '100%',
-                            width: 100,
-                            listeners: {
-                                render: function (el) {
-                                    if(Ext.isEmpty(el.value)) {
-                                        el.setValue(0);
-                                    }
-                                }
-                            }
-                        }, {
-                            xtype: 'ef-combo-getlist',
-                            fieldLabel: _('ef_field_category'),
-                            name: 'category_id',
-                            id: config.id + '-category-id',
-                            allowBlank: true,
-                            baseParams: {
-                                action: 'mgr/category/getlist',
-                                tab_id: config.record ? config.record.object.tab_id : 0,
-                                sort: 'colrank',
-                                dir: 'asc',
-                                combo: 1,
-                            }
-                        }]
+                        }
                     }]
                 }]
-            }, {
-                title: _('ef_accessibility'),
-                layout: 'anchor',
-                items: ExtraFields.utils.getAbs(config)
             }]
         }, {
+            xtype: 'fieldset',
+            title: _('ef_accessibility'),
+            id: Ext.id(),
+            layout: 'form',
+            columnWidth: 1,
+            collapsible: true,
+            items: ExtraFields.utils.getAbs(config, config.class_name)
+        },{
             xtype: 'checkboxgroup',
             hideLabel: true,
             name: 'checkboxgroup',
@@ -481,7 +482,9 @@ Ext.extend(ExtraFields.window.CreateFieldAbs, ExtraFields.window.Default, {
         }];
     },
 
-    statusFields: function (id, type) {
+    statusFields: function (config) {
+        const { id, field_type } = config;
+
         let values = Ext.getCmp(id + '-values');
         let values_desc = Ext.getCmp(id + '-values-desc');
         let defaultfield = Ext.getCmp(id + '-default');
@@ -529,7 +532,7 @@ Ext.extend(ExtraFields.window.CreateFieldAbs, ExtraFields.window.Default, {
         defaultfield_desc.show();
         required.show();
 
-        switch (type) {
+        switch (field_type) {
             case 'listbox':
             case 'listbox-multiple':
                 values.show();
@@ -573,7 +576,6 @@ Ext.extend(ExtraFields.window.CreateFieldAbs, ExtraFields.window.Default, {
                 hide_time.show();
                 break;
             case 'pb-gallery':
-            case 'pb-video-gallery':
                 source.show();
                 source_path.show();
                 break;

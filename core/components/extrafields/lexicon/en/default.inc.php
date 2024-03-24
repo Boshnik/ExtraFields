@@ -7,11 +7,12 @@ $_lang['extrafields'] = 'ExtraFields';
 $_lang['extrafields_menu_desc'] = 'Additional fields';
 $_lang['extrafields_intro_msg'] = 'You can select multiple fields at once using Shift or Ctrl.';
 
-$_lang['extrafields_resource'] = 'Resource (modResource)';
-$_lang['extrafields_resource_menu_desc'] = 'Managing Resource Fields';
-
-$_lang['extrafields_user'] = 'User (modUserProfile)';
-$_lang['extrafields_user_menu_desc'] = 'User fields management';
+$_lang['ef_docs'] = 'Documentation';
+$_lang['ef_class_name'] = 'Table';
+$_lang['ef_class_name_modResource'] = 'Resource';
+$_lang['ef_class_name_modUserProfile'] = 'User';
+$_lang['ef_class_name_pbBlockValue'] = 'PageBlocks (Block)';
+$_lang['ef_class_name_pbTableValue'] = 'PageBlocks (Table)';
 
 $_lang['ef_row_create'] = 'Create';
 $_lang['ef_row_update'] = 'Change';
@@ -30,11 +31,13 @@ $_lang['ef_grid_active'] = 'Active';
 $_lang['ef_grid_search'] = 'Search';
 $_lang['ef_grid_actions'] = 'Actions';
 
+$_lang['ef_field'] = 'Field';
 $_lang['ef_fields'] = 'Fields';
 $_lang['ef_field_id'] = 'ID';
 $_lang['ef_field_caption'] = 'Caption';
 $_lang['ef_field_name'] = 'Name';
-$_lang['ef_field_name_desc'] = 'Only lowercase Latin letters are allowed';
+$_lang['ef_field_null'] = 'NULL';
+$_lang['ef_field_default'] = 'Default';
 $_lang['ef_field_err_name_cyrillic'] = 'Error in field name';
 $_lang['ef_field_err_name_reserved'] = 'The field name is already taken in the native table';
 $_lang['ef_field_type'] = 'Field type';
@@ -57,12 +60,6 @@ $_lang['ef_field_index'] = 'Index';
 $_lang['ef_field_active'] = 'Actively';
 
 $_lang['ef_combo_empty'] = 'Click to select';
-$_lang['textfield'] = 'Text field';
-$_lang['xcheckbox'] = 'Checkbox';
-$_lang['readonly'] = 'Only reading';
-$_lang['ef-xtype'] = 'xtype field';
-$_lang['ef_table'] = 'Table PageBlocks';
-
 $_lang['ef_settings'] = 'Field settings';
 $_lang['ef_position'] = 'Position';
 $_lang['ef_accessibility'] = 'Availability';

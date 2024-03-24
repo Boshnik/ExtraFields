@@ -3,8 +3,7 @@ ExtraFields.grid.Tabs = function (config) {
     Ext.applyIf(config, {
         baseParams: {
             action: 'mgr/tab/getlist',
-            class_name: ExtraFields.config.class_name,
-            sort: 'colrank',
+            sort: 'menuindex',
             dir: 'asc',
         },
         ddAction: 'mgr/tab/sort',
@@ -28,7 +27,6 @@ Ext.extend(ExtraFields.grid.Tabs, ExtraFields.grid.Default, {
         });
         w.reset();
         w.setValues({
-            class_name: ExtraFields.config.class_name,
             active: true
         });
         w.show(e.target);
@@ -66,7 +64,8 @@ Ext.extend(ExtraFields.grid.Tabs, ExtraFields.grid.Default, {
             renderer: ExtraFields.utils.renderActions,
             sortable: false,
             width: 100,
-            id: 'actions'
+            id: 'actions',
+            hidden: ExtraFields.config.modxversion !== '2',
         }];
     },
 

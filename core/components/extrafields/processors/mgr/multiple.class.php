@@ -8,10 +8,10 @@ class ExtraFieldsMultipleProcessor extends modProcessor
      */
     public function process()
     {
-        if (!$method = $this->getProperty('method', false)) {
+        if (!$method = ($this->properties['method'] ?? false)) {
             return $this->failure();
         }
-        $ids = json_decode($this->getProperty('ids'), true);
+        $ids = json_decode($this->properties['ids'], true);
         if (empty($ids)) {
             return $this->success();
         }

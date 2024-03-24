@@ -5,7 +5,7 @@ ExtraFields.grid.Categories = function (config) {
         baseParams: {
             action: 'mgr/category/getlist',
             tab_id: config.tab_id,
-            sort: 'colrank',
+            sort: 'menuindex',
             dir: 'asc',
         },
         paging: false,
@@ -59,7 +59,8 @@ Ext.extend(ExtraFields.grid.Categories, ExtraFields.grid.Default, {
             renderer: ExtraFields.utils.renderActions,
             sortable: false,
             width: 100,
-            id: 'actions'
+            id: 'actions',
+            hidden: ExtraFields.config.modxversion !== '2',
         }];
     },
 

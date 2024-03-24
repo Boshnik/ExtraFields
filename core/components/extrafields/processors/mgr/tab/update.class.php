@@ -5,20 +5,6 @@ class efTabUpdateProcessor extends modObjectUpdateProcessor
     public $classKey = efTab::class;
     public $objectType = 'ef_tab';
     public $languageTopics = ['extrafields'];
-    //public $permission = 'save';
-
-
-    /**
-     * @return bool|null|string
-     */
-    public function initialize()
-    {
-        if (!$this->checkPermissions()) {
-            return $this->modx->lexicon('access_denied');
-        }
-
-        return parent::initialize();
-    }
 
 
     /**
@@ -26,8 +12,8 @@ class efTabUpdateProcessor extends modObjectUpdateProcessor
      */
     public function beforeSet()
     {
-        $id = (int)$this->getProperty('id');
-        $name = trim($this->getProperty('name'));
+        $id = (int)$this->properties['id'];
+        $name = trim($this->properties['name']);
         if (empty($id)) {
             return $this->modx->lexicon('ef_tab_err_ns');
         }

@@ -144,9 +144,9 @@ ExtraFields.utils.setDefaultValue = function (el, defaultValue) {
     },0);
 }
 
-ExtraFields.utils.getAbs = function (config) {
+ExtraFields.utils.getAbs = function (config, class_name = ExtraFields.config.class_name) {
     let fields = [];
-    switch (ExtraFields.config.class_name) {
+    switch (class_name) {
         case 'modResource':
             fields = [{
                 layout: 'form',
@@ -159,8 +159,11 @@ ExtraFields.utils.getAbs = function (config) {
                     displayField: 'templatename',
                     valueField: 'id',
                     fields: ['templatename', 'id'],
+                    id: config.id + '-ab_templates',
                     baseParams: {
-                        action: ExtraFields.config.modxversion == 3 ? 'Element/Template/GetList' : 'element/template/getlist',
+                        action: ExtraFields.config.modxversion === '3'
+                            ? 'Element/Template/GetList'
+                            : 'element/template/getlist',
                         combo: 1,
                         limit: 0,
                     },
@@ -177,12 +180,11 @@ ExtraFields.utils.getAbs = function (config) {
                 }, ]
             }, {
                 layout: 'column',
-                defaults: {msgTarget: 'under'},
-                renderTo: Ext.getBody(),
                 items: [{
                     columnWidth: .5,
                     layout: 'form',
                     defaults: {msgTarget: 'under'},
+                    cls: 'x-column-100',
                     items: [{
                         xtype: 'textfield',
                         fieldLabel: _('parents'),
@@ -190,11 +192,19 @@ ExtraFields.utils.getAbs = function (config) {
                         id: config.id + '-ab_parents',
                         anchor: '99%',
                         allowBlank: true,
+                        listeners: {
+                            afterrender: el => {
+                                setTimeout(() => {
+                                    el.setWidth('95%');
+                                }, 0);
+                            }
+                        }
                     }]
                 }, {
                     columnWidth: .5,
                     layout: 'form',
                     defaults: {msgTarget: 'under'},
+                    cls: 'x-column-100',
                     items: [{
                         xtype: 'textfield',
                         fieldLabel: _('resources') + ' (ID)',
@@ -202,6 +212,13 @@ ExtraFields.utils.getAbs = function (config) {
                         id: config.id + '-ab_resources',
                         anchor: '99%',
                         allowBlank: true,
+                        listeners: {
+                            afterrender: el => {
+                                setTimeout(() => {
+                                    el.setWidth('95%');
+                                }, 0);
+                            }
+                        }
                     }]
                 }]
             }];
@@ -216,8 +233,11 @@ ExtraFields.utils.getAbs = function (config) {
                 displayField: 'name',
                 valueField: 'id',
                 fields: ['name', 'id'],
+                id: config.id + '-ab_user_group',
                 baseParams: {
-                    action: ExtraFields.config.modxversion == 3 ? 'Security/Group/GetList' : 'security/group/getlist',
+                    action: ExtraFields.config.modxversion === '3'
+                        ? 'Security/Group/GetList'
+                        : 'security/group/getlist',
                     combo: 1
                 },
                 listeners: {
@@ -234,10 +254,9 @@ ExtraFields.utils.getAbs = function (config) {
                 xtype: 'textfield',
                 fieldLabel: _('ab_users'),
                 name: 'ab_users',
-                id: Ext.id(),
+                id: config.id + '-ab_users',
                 anchor: '99%',
                 allowBlank: true,
-                renderTo: Ext.getBody(),
             }];
 
             break;

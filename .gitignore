@@ -1,3 +1,4 @@
 .idea
 config.core.php
 /core/components/extrafields/vendor/
+_build/resolvers/symlinks.php

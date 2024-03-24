@@ -17,10 +17,26 @@ Ext.extend(ExtraFields.window.CreateTab, ExtraFields.window.Default, {
             xtype: 'hidden',
             name: 'id',
             id: config.id + '-id',
-        },{
-            xtype: 'hidden',
+        }, {
+            xtype: 'ef-combo-table-class',
+            fieldLabel: _('ef_class_name'),
             name: 'class_name',
+            hiddenName: 'class_name',
             id: config.id + '-class_name',
+            combo: config.combo,
+            anchor: '100%',
+            width: 100,
+            allowBlank: false,
+            listeners: {
+                afterrender: {
+                    fn: this.changeFields,
+                    scope: this,
+                },
+                select: {
+                    fn: this.changeFields,
+                    scope: this,
+                }
+            }
         }, {
             layout: 'column',
             items: [{
@@ -49,30 +65,41 @@ Ext.extend(ExtraFields.window.CreateTab, ExtraFields.window.Default, {
                     anchor: '99%',
                     value: 99,
                     maxValue: 99,
-                    minValue: 0
+                    minValue: 0,
+                    listeners: {
+                        afterrender: (el) => {
+                            if (Ext.isEmpty(el.value)) {
+                                el.setValue(1);
+                            }
+                        }
+                    }
                 }]
             }]
         }, {
-            xtype: 'modx-tabs',
-            defaults: {border: false, autoHeight: true},
-            hideMode: 'offsets',
-            style: {margin: '15px 0'},
-            cls: 'modx' + ExtraFields.config.modxversion,
+            xtype: 'fieldset',
+            title: _('ef_accessibility'),
+            id: config.id + '-abs',
+            layout: 'form',
+            columnWidth: 1,
+            collapsible: true,
+            hidden: true,
+            items: [].concat(
+                ExtraFields.utils.getAbs(config, 'modResource'),
+                ExtraFields.utils.getAbs(config, 'modUserProfile')
+            ),
+        }, {
+            xtype: 'fieldset',
+            title: _('ef_categories'),
+            id: config.id + '-categories',
+            layout: 'form',
+            columnWidth: 1,
+            collapsible: true,
+            hidden: true,
             items: [{
-                title: _('ef_categories'),
-                layout: 'form',
-                cls: '',
-                items: [{
-                    xtype: 'ef-grid-categories',
-                    tab_id: config.record ? config.record.object.id : 0,
-                }]
-            }, {
-                title: _('ef_accessibility'),
-                layout: 'form',
-                cls: '',
-                items: ExtraFields.utils.getAbs(config)
+                xtype: 'ef-grid-categories',
+                tab_id: config.record ? config.record.object.id : 0,
             }]
-        },{
+        }, {
             xtype: 'xcheckbox',
             boxLabel: _('ef_field_active'),
             name: 'active',
@@ -80,6 +107,62 @@ Ext.extend(ExtraFields.window.CreateTab, ExtraFields.window.Default, {
             checked: true,
         }];
     },
+
+
+    changeFields: function (combo, row) {
+        let fixId = this.id;
+
+        if (!Ext.isEmpty(combo.value)) {
+            ExtraFields.config.class_name = combo.value;
+        }
+
+        let panelAbs = Ext.getCmp(fixId + '-abs');
+        let panelCategories = Ext.getCmp(fixId + '-categories');
+
+        let ab_templates = Ext.getCmp(fixId + '-ab_templates');
+        let ab_parents = Ext.getCmp(fixId + '-ab_parents');
+        let ab_resources = Ext.getCmp(fixId + '-ab_resources');
+        let ab_userGroup = Ext.getCmp(fixId + '-ab_user_group');
+        let ab_users = Ext.getCmp(fixId + '-ab_users');
+
+        ab_templates.hide();
+        ab_parents.hide();
+        ab_resources.hide();
+        ab_userGroup.hide();
+        ab_users.hide();
+
+        switch (combo.value) {
+            case 'modResource':
+                ab_templates.show();
+                ab_parents.show();
+                ab_resources.show();
+                break;
+            case 'modUserProfile':
+                ab_userGroup.show();
+                ab_users.show();
+        }
+
+        if (panelAbs) {
+            panelAbs.setVisible(true);
+        }
+        if (panelCategories) {
+            panelCategories.setVisible(true);
+        }
+
+        // if (panelAbs) {
+            // panelAbs.removeAll(true);
+            // let fields = ExtraFields.utils.getAbs(this.config);
+            // fields.forEach(function(field) {
+            //     if (field.name) {
+            //         field.id = fixId + '-' + field.name;
+            //     }
+            //     panelAbs.add(field);
+            // });
+            // panelAbs.setVisible(true);
+            // panelAbs.doLayout();
+        // }
+    },
+
 
 });
 Ext.reg('ef-tab-window-create', ExtraFields.window.CreateTab);

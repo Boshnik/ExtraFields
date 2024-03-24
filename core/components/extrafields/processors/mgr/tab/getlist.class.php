@@ -6,23 +6,6 @@ class efTabGetListProcessor extends modObjectGetListProcessor
     public $objectType = 'ef_tab';
     public $defaultSortField = 'id';
     public $defaultSortDirection = 'DESC';
-    //public $permission = 'list';
-
-
-    /**
-     * We do a special check of permissions
-     * because our objects is not an instances of modAccessibleObject
-     *
-     * @return boolean|string
-     */
-    public function beforeQuery()
-    {
-        if (!$this->checkPermissions()) {
-            return $this->modx->lexicon('access_denied');
-        }
-
-        return true;
-    }
 
 
     /**
@@ -32,11 +15,13 @@ class efTabGetListProcessor extends modObjectGetListProcessor
      */
     public function prepareQueryBeforeCount(xPDOQuery $c)
     {
-        $c->where([
-            'class_name' => trim($this->getProperty('class_name')),
-        ]);
+        if (isset($this->properties['class_name'])) {
+            $c->where([
+                'class_name' => trim($this->properties['class_name']),
+            ]);
+        }
 
-        $query = trim($this->getProperty('query'));
+        $query = trim($this->properties['query']);
         if ($query) {
             $c->where([
                 'name:LIKE' => "%{$query}%",
@@ -44,7 +29,7 @@ class efTabGetListProcessor extends modObjectGetListProcessor
             ]);
         }
 
-        if ($this->getProperty('combo')) {
+        if ($this->properties['combo']) {
             $c->where(['active' => 1]);
             $c->select('id,name');
         }
@@ -60,11 +45,11 @@ class efTabGetListProcessor extends modObjectGetListProcessor
      */
     public function prepareRow(xPDOObject $object)
     {
-        if ($this->getProperty('combo')) {
-            $array = array(
-                'id' => $object->get('id'),
-                'name' => $object->get('name'),
-            );
+        if ($this->properties['combo']) {
+            $array = [
+                'id' => 'modx-ef-tab-' . $object->id,
+                'name' => $object->name,
+            ];
 
             return $array;
         }
@@ -116,6 +101,32 @@ class efTabGetListProcessor extends modObjectGetListProcessor
         ];
 
         return $array;
+    }
+
+    public function outputArray(array $array,$count = false) {
+        if ($count === false) { $count = count($array); }
+
+        if ($this->properties['combo']) {
+            switch ($this->properties['class_name']) {
+                case 'modResource':
+                    $array = array_merge([
+                        ['id' => 'modx-resource-settings', 'name' => $this->modx->lexicon('modx-resource-settings')],
+                        ['id' => 'modx-page-settings', 'name' => $this->modx->lexicon('modx-page-settings')],
+                        ['id' => 'modx-resource-access-permissions', 'name' => $this->modx->lexicon('modx-resource-access-permissions')],
+                    ], $array);
+                    break;
+                case 'modUserProfile':
+                    $array = array_merge([
+                        ['id' => 'user_tab_0', 'name' => $this->modx->lexicon('user_tab_0')],
+                        ['id' => 'user_tab_1', 'name' => $this->modx->lexicon('user_tab_1')],
+                        ['id' => 'user_tab_2', 'name' => $this->modx->lexicon('user_tab_2')],
+                        ['id' => 'user_tab_3', 'name' => $this->modx->lexicon('user_tab_3')],
+                    ], $array);
+                    break;
+            }
+        }
+
+        return '{"success":true,"total":"'.$count.'","results":'.$this->modx->toJSON($array).'}';
     }
 
 }

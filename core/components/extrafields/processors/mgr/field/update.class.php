@@ -1,32 +1,14 @@
 <?php
 
+use Boshnik\ExtraFields\Processors\HelpProcessor;
+
 class efFieldUpdateProcessor extends modObjectUpdateProcessor
 {
+    use HelpProcessor;
+
     public $classKey = efField::class;
     public $objectType = 'ef_field';
     public $languageTopics = ['extrafields'];
-    //public $permission = 'save';
-
-    /** @var ExtraFields $extrafields */
-    public $extrafields;
-
-
-    /**
-     * @return bool|null|string
-     */
-    public function initialize()
-    {
-        if (!$this->checkPermissions()) {
-            return $this->modx->lexicon('access_denied');
-        }
-        if ($this->modx->services instanceof Psr\Http\Client\ClientInterface) {
-            $this->extrafields = $this->modx->services->get('extrafields');
-        } else {
-            $this->extrafields = $this->modx->getService('extrafields', 'ExtraFields', MODX_CORE_PATH . 'components/extrafields/model/');
-        }
-
-        return parent::initialize();
-    }
 
 
     /**
@@ -34,23 +16,25 @@ class efFieldUpdateProcessor extends modObjectUpdateProcessor
      */
     public function beforeSet()
     {
-        $this->object->set('old_name', $this->object->name);
+        $this->object->set('old_name', $this->object->field_name);
 
-        $id = (int) $this->getProperty('id');
-        $name = trim($this->getProperty('name'));
+        $id = (int) $this->properties['id'];
+        $name = trim($this->properties['field_name']);
         if (empty($id)) {
             return $this->modx->lexicon('ef_field_err_ns');
         }
 
         if (empty($name)) {
-            $this->modx->error->addField('name', $this->modx->lexicon('ef_field_err_name'));
+            $this->modx->error->addField('field_name', $this->modx->lexicon('ef_field_err_name'));
         } elseif ($this->modx->getCount($this->classKey, [
-            'name' => $name,
-            'class_name' => $this->getProperty('class_name'),
+            'field_name' => $name,
+            'class_name' => $this->properties['class_name'],
             'id:!=' => $id
         ])) {
-            $this->modx->error->addField('name', $this->modx->lexicon('ef_field_err_ae'));
+            $this->modx->error->addField('field_name', $this->modx->lexicon('ef_field_err_ae'));
         }
+
+        $this->validFieldType($this->properties);
 
         return parent::beforeSet();
     }
@@ -61,7 +45,7 @@ class efFieldUpdateProcessor extends modObjectUpdateProcessor
      */
     public function afterSave()
     {
-        $this->extrafields->updateTableColumn($this->object);
+        $this->updateTableColumn($this->object);
 
         return true;
     }

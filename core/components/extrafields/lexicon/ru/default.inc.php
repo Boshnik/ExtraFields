@@ -7,17 +7,12 @@ $_lang['extrafields'] = 'ExtraFields';
 $_lang['extrafields_menu_desc'] = 'Дополнительные поля';
 $_lang['extrafields_intro_msg'] = 'Вы можете выделять сразу несколько полей при помощи Shift или Ctrl.';
 
-$_lang['extrafields_resource'] = 'Ресурс (modResource)';
-$_lang['extrafields_resource_menu_desc'] = 'Управление полями ресурса';
-
-$_lang['extrafields_user'] = 'Пользователь (modUserProfile)';
-$_lang['extrafields_user_menu_desc'] = 'Управление полями пользователя';
-
-$_lang['extrafields_pb_block'] = 'PageBlocks (pbBlockValue)';
-$_lang['extrafields_pb_block_menu_desc'] = 'Управление полями блока';
-
-$_lang['extrafields_pb_table'] = 'PageBlocks (pbTableValue)';
-$_lang['extrafields_pb_table_menu_desc'] = 'Управление полями таблицы';
+$_lang['ef_docs'] = 'Документация';
+$_lang['ef_class_name'] = 'Таблица';
+$_lang['ef_class_name_modResource'] = 'Ресурс';
+$_lang['ef_class_name_modUserProfile'] = 'Пользователь';
+$_lang['ef_class_name_pbBlockValue'] = 'PageBlocks (Block)';
+$_lang['ef_class_name_pbTableValue'] = 'PageBlocks (Table)';
 
 $_lang['ef_row_create'] = 'Создать';
 $_lang['ef_row_update'] = 'Изменить';
@@ -36,11 +31,13 @@ $_lang['ef_grid_active'] = 'Активно';
 $_lang['ef_grid_search'] = 'Поиск';
 $_lang['ef_grid_actions'] = 'Действия';
 
+$_lang['ef_field'] = 'Поле';
 $_lang['ef_fields'] = 'Поля';
 $_lang['ef_field_id'] = 'ID';
-$_lang['ef_field_caption'] = 'Подпись';
+$_lang['ef_field_caption'] = 'Заголовок поля';
 $_lang['ef_field_name'] = 'Название поля';
-$_lang['ef_field_name_desc'] = 'Допускаются только латинские буквы в нижнем регистре';
+$_lang['ef_field_null'] = 'NULL';
+$_lang['ef_field_default'] = 'По умолчанию';
 $_lang['ef_field_err_name_cyrillic'] = 'Ошибка в название поля';
 $_lang['ef_field_err_name_reserved'] = 'Название поля уже занято в родной таблице';
 $_lang['ef_field_type'] = 'Тип поля';
@@ -63,12 +60,6 @@ $_lang['ef_field_index'] = 'Индекс';
 $_lang['ef_field_active'] = 'Активно';
 
 $_lang['ef_combo_empty'] = 'Нажмите для выбора';
-$_lang['textfield'] = 'Текстовое поле';
-$_lang['xcheckbox'] = 'Флажок';
-$_lang['readonly'] = 'Только чтение';
-$_lang['efxtype'] = 'Xtype поле';
-$_lang['ef_table'] = 'Таблица PageBlocks';
-
 $_lang['ef_settings'] = 'Настройки поля';
 $_lang['ef_position'] = 'Расположение';
 $_lang['ef_accessibility'] = 'Доступность';

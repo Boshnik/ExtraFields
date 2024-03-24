@@ -4,13 +4,13 @@ ExtraFields.grid.FieldAbs = function (config) {
         baseParams: {
             action: 'mgr/abs/getlist',
             field_id: config.field_id,
-            sort: 'colrank',
+            sort: 'menuindex',
             dir: 'asc',
         },
-        cls: '',
+        paging: false,
+        pageSize: 100,
         ddAction: 'mgr/abs/sort',
-        multi_select: true,
-        pageSize: 10,
+        multi_select: false,
     });
 
     ExtraFields.grid.FieldAbs.superclass.constructor.call(this, config);
@@ -19,16 +19,23 @@ Ext.extend(ExtraFields.grid.FieldAbs, ExtraFields.grid.Default, {
 
     createObject: function (btn, e) {
 
-        let type = Ext.getCmp(this.config.config_id + '-type').getValue();
-        if (Ext.isEmpty(type)) {
-            MODx.msg.alert(_('error'), _('ef_field_empty_type'));
+        let class_name = Ext.getCmp(this.config.config_id + '-class_name');
+        if (!class_name || Ext.isEmpty(class_name.value)) {
+            MODx.msg.alert(_('error'), _('ef_field_empty_class_name'));
+            return;
+        }
+
+        let field_type = Ext.getCmp(this.config.config_id + '-field_type');
+        if (!field_type || Ext.isEmpty(field_type.value)) {
+            MODx.msg.alert(_('error'), _('ef_field_empty_field_type'));
             return;
         }
 
         var w = MODx.load({
             xtype: 'ef-abs-window-create',
             id: Ext.id(),
-            type: type,
+            class_name: class_name.value,
+            field_type: field_type.value,
             listeners: {
                 success: {
                     fn: function () {
@@ -53,9 +60,15 @@ Ext.extend(ExtraFields.grid.FieldAbs, ExtraFields.grid.Default, {
             return false;
         }
 
-        let type = Ext.getCmp(this.config.config_id + '-type').getValue();
-        if (Ext.isEmpty(type)) {
-            MODx.msg.alert(_('error'), _('ef_field_empty_type'));
+        let class_name = Ext.getCmp(this.config.config_id + '-class_name');
+        if (!class_name || Ext.isEmpty(class_name.value)) {
+            MODx.msg.alert(_('error'), _('ef_field_empty_class_name'));
+            return;
+        }
+
+        let field_type = Ext.getCmp(this.config.config_id + '-field_type');
+        if (!field_type || Ext.isEmpty(field_type.value)) {
+            MODx.msg.alert(_('error'), _('ef_field_empty_field_type'));
             return;
         }
 
@@ -71,7 +84,8 @@ Ext.extend(ExtraFields.grid.FieldAbs, ExtraFields.grid.Default, {
                         var w = MODx.load({
                             xtype: 'ef-abs-window-update',
                             id: Ext.id(),
-                            type: type,
+                            class_name: class_name.value,
+                            field_type: field_type.value,
                             record: r,
                             listeners: {
                                 success: {
@@ -102,24 +116,16 @@ Ext.extend(ExtraFields.grid.FieldAbs, ExtraFields.grid.Default, {
             header: _('ef_field_caption'),
             dataIndex: 'caption',
             sortable: true,
-            width: 200,
-        }, {
-            header: _('ef_field_tab'),
-            dataIndex: 'tab',
-            sortable: false,
-            width: 150,
-        }, {
-            header: _('ef_field_category'),
-            dataIndex: 'category',
-            sortable: false,
-            width: 150,
+            width: 'auto',
         }, {
             header: _('ef_grid_actions'),
             dataIndex: 'actions',
             renderer: ExtraFields.utils.renderActions,
             sortable: false,
-            width: 100,
-            id: 'actions'
+            width: 125,
+            fixed: true,
+            id: 'actions',
+            hidden: ExtraFields.config.modxversion !== '2',
         }];
     },
 

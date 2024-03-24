@@ -2,11 +2,17 @@
 
 namespace Boshnik\ExtraFields\Events;
 
+use Boshnik\ExtraFields\Processors\QueryProcessor;
+use Boshnik\ExtraFields\Processors\HelpProcessor;
+
 /**
  * class OnDocFormPrerender
  */
 class OnDocFormPrerender extends Event
 {
+    use QueryProcessor;
+    use HelpProcessor;
+
     public function run()
     {
         /** @var \modResource $resource */
@@ -17,12 +23,12 @@ class OnDocFormPrerender extends Event
         $data = json_encode($resource->toArray(),1);
 
         $this->extrafields->loadRichTextEditor();
-        $tabs = json_encode($this->extrafields->getTabs('modResource'),1);
-        $fields = json_encode($this->extrafields->getFields('modResource'),1);
+        $tabs = json_encode($this->getTabs(),1);
+        $fields = json_encode($this->getFields(),1);
 
         $config = $this->extrafields->config;
         $config['class_name'] = 'modResource';
-        $config['media_source'] = $this->extrafields->getMediaSources();
+        $config['media_source'] = $this->getMediaSources();
 
         $jsUrl = $config['jsUrl'] . 'mgr/';
         $cssUrl = $config['cssUrl'] . 'mgr/';
@@ -50,7 +56,7 @@ class OnDocFormPrerender extends Event
     public function getClientConfigs($context = '')
     {
         $configs = [];
-        if ($clientconfig = $this->extrafields->getPackage('ClientConfig')) {
+        if ($clientconfig = $this->getPackage('ClientConfig')) {
             $configs = $clientconfig->getSettings($context);
         }
 

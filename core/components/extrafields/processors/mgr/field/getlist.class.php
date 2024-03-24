@@ -6,23 +6,6 @@ class efFieldGetListProcessor extends modObjectGetListProcessor
     public $objectType = 'ef_field';
     public $defaultSortField = 'id';
     public $defaultSortDirection = 'DESC';
-    //public $permission = 'list';
-
-
-    /**
-     * We do a special check of permissions
-     * because our objects is not an instances of modAccessibleObject
-     *
-     * @return boolean|string
-     */
-    public function beforeQuery()
-    {
-        if (!$this->checkPermissions()) {
-            return $this->modx->lexicon('access_denied');
-        }
-
-        return true;
-    }
 
 
     /**
@@ -32,16 +15,22 @@ class efFieldGetListProcessor extends modObjectGetListProcessor
      */
     public function prepareQueryBeforeCount(xPDOQuery $c)
     {
-        $c->where([
-            'class_name' => trim($this->getProperty('class_name'))
-        ]);
+        if (isset($this->properties['class_name'])) {
+            $c->where([
+                'class_name' => $this->properties['class_name']
+            ]);
+        }
 
-        $query = trim($this->getProperty('query'));
+        $query = trim($this->properties['query']);
         if ($query) {
             $c->where([
-                'name:LIKE' => "%{$query}%",
-                'OR:caption:LIKE' => "%{$query}%",
+                'field_name:LIKE' => "%{$query}%",
             ]);
+        }
+
+        if ($this->properties['combo']) {
+            $c->where(['active' => 1]);
+            $c->select('id, field_name');
         }
 
         return $c;
@@ -55,12 +44,23 @@ class efFieldGetListProcessor extends modObjectGetListProcessor
      */
     public function prepareRow(xPDOObject $object)
     {
+        if ($this->properties['combo']) {
+            $array = [
+                'id' => $object->id,
+                'name' => $object->field_name,
+            ];
+
+            return $array;
+        }
+
         $array = $object->toArray();
         $array['actions'] = [];
 
-        if ($field = $object->getOne('Field')) {
-            $array['fieldtype'] = $field->get('name');
-        }
+        $fieldType = str_replace(['pb-panel-', 'pb-', 'modx-'], '', $array['field_type']);
+        $fieldType = str_replace('-', '_', $fieldType);
+        $array['type_lexicon'] = $this->modx->lexicon('ef_field_type_' . $fieldType);
+
+        $array['class_name_lexicon'] = $this->modx->lexicon('ef_class_name_' . $array['class_name']);
 
         // Edit
         $array['actions'][] = [

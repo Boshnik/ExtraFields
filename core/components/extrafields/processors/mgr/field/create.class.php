@@ -1,29 +1,14 @@
 <?php
 
+use Boshnik\ExtraFields\Processors\HelpProcessor;
+
 class efFieldCreateProcessor extends modObjectCreateProcessor
 {
+    use HelpProcessor;
+
     public $classKey = efField::class;
     public $objectType = 'ef_field';
     public $languageTopics = ['extrafields'];
-    //public $permission = 'create';
-
-    /** @var ExtraFields $extrafields */
-    public $extrafields;
-
-
-    /**
-     * @return bool|null|string
-     */
-    public function initialize()
-    {
-        if ($this->modx->services instanceof Psr\Http\Client\ClientInterface) {
-            $this->extrafields = $this->modx->services->get('extrafields');
-        } else {
-            $this->extrafields = $this->modx->getService('extrafields', 'ExtraFields', MODX_CORE_PATH . 'components/extrafields/model/');
-        }
-
-        return parent::initialize();
-    }
 
 
     /**
@@ -31,18 +16,20 @@ class efFieldCreateProcessor extends modObjectCreateProcessor
      */
     public function beforeSet()
     {
-        $name = str_replace('-', '_', trim($this->getProperty('name')));
+        $name = str_replace('-', '_', trim($this->properties['field_name']));
         if (empty($name)) {
-            $this->modx->error->addField('name', $this->modx->lexicon('ef_field_err_name'));
+            $this->modx->error->addField('field_name', $this->modx->lexicon('ef_field_err_name'));
         } elseif ($this->modx->getCount($this->classKey, [
-            'name' => $name,
-            'class_name' => $this->getProperty('class_name'),
+            'class_name' => $this->properties['class_name'],
+            'field_name' => $name,
         ])) {
-            $this->modx->error->addField('name', $this->modx->lexicon('ef_field_err_ae'));
+            $this->modx->error->addField('field_name', $this->modx->lexicon('ef_field_err_ae'));
         }
 
-        $this->extrafields->validationField($name, $this->getProperty('class_name'));
-        $this->setProperty('name', strtolower($name));
+        $this->validationField($name, $this->properties['class_name']);
+        $this->properties['field_name'] = strtolower($name);
+
+        $this->validFieldType($this->properties);
 
         return parent::beforeSet();
     }
@@ -54,9 +41,7 @@ class efFieldCreateProcessor extends modObjectCreateProcessor
     public function beforeSave()
     {
         $this->object->fromArray([
-            'colrank' => $this->modx->getCount($this->classKey, [
-                'class_name' => $this->getProperty('class_name'),
-            ]),
+            'menuindex' => $this->modx->getCount($this->classKey),
         ]);
 
         return true;
@@ -76,7 +61,7 @@ class efFieldCreateProcessor extends modObjectCreateProcessor
             }
         }
 
-        $this->extrafields->createTableColumn($this->object);
+        $this->createTableColumn($this->object);
 
         return true;
     }

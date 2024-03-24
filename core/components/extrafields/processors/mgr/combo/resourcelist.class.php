@@ -31,8 +31,6 @@ class ExtraFieldsResourceGetListProcessor extends modObjectGetListProcessor
             $c->where(['pagetitle:LIKE' => "%{$query}%"]);
         }
 
-        $this->modx->log(1, print_r($this->properties,1));
-
         return $c;
     }
 

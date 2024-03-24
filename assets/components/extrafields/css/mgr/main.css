@@ -128,9 +128,10 @@ a.ef-btn.disabled, fieldset[disabled] a.ef-btn { pointer-events: none }
 .x-window-maximized .x-window-body { height: calc(100vh - 100px) !important; }
 .ef-window  .x-form-field-trigger-wrap { width: 99% !important }
 #modx-action-buttons { right: 15px; }
+.x-column-100 .x-form-element { padding: 0 !important }
 
 /* Developer */
-.boshnik { display:flex!important;align-items:center;font-size:.75rem!important;letter-spacing:1px;opacity:.4;cursor:pointer;transition:.3s }
+.boshnik { display:flex!important;align-items:center;font-size:.75rem!important;font-weight: bold !important;font-family: "Verdana", sans-serif !important;letter-spacing:1px;opacity:.4;cursor:pointer;transition:.3s }
 .boshnik:hover { opacity:1 }
 .boshnik img { display:inline-block;width:50px;height:50px;border-radius:50%;padding:0 10px }
 .boshnik-window .x-window-body { padding-bottom:0 }

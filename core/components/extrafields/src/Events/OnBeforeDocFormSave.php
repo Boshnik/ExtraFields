@@ -2,61 +2,70 @@
 
 namespace Boshnik\ExtraFields\Events;
 
+use Boshnik\ExtraFields\Processors\QueryProcessor;
+
 /**
  * class OnBeforeDocFormSave
  */
 class OnBeforeDocFormSave extends Event
 {
+    use QueryProcessor;
+
     public function run()
     {
+        if ($this->scriptProperties['mode'] == 'new') return;
+
         /** @var \modResource $resource */
         $resource = $this->scriptProperties['resource'];
-        $fields = $this->extrafields->getFields('modResource');
+        $fields = $this->getFields();
 
         foreach ($fields as $field) {
-            switch ($field['type']) {
+            switch ($field['field_type']) {
                 case 'listbox-multiple':
                 case 'checkboxgroup':
-                    $value = implode('||', $resource->get($field['name']));
-                    $resource->set($field['name'], $value);
-                    break;
-                case 'pb-table':
-                    $results = [];
-                    foreach ($field['abs'] as $abs) {
-                        // templates
-                        if (!empty($abs['ab_templates']) && !in_array($resource->template, explode(',', $abs['ab_templates']))) {
-                            continue;
-                        }
-
-                       // parents
-                        if (!empty($abs['ab_parents']) && !in_array($resource->parent, explode(',', $abs['ab_parents']))) {
-                            continue;
-                        }
-
-                        // resource
-                        if (!empty($abs['ab_resources']) && !in_array($resource->id, explode(',', $abs['ab_resources']))) {
-                            continue;
-                        }
-                        if (count($results)) continue;
-                        $results = $this->extrafields->getFetchAll('pbTableValue', [
-                            'resource_id' => $resource->id,
-                            'constructor_id' => 0,
-                            'table_id' => $abs['table_id'],
-                            'field_id' => 0,
-                            'ef_field_id' => $field['id'],
-                            'parent_id' => 0
-                        ]);
+                    $value = $resource->get($field['field_name']);
+                    if (is_array($value)) {
+                        $value = implode('||', $value);
                     }
-
-                    $values = [];
-                    foreach ($results as $result) {
-                        $values[] = json_decode($result['values'], 1);
-                    }
-                    $resource->set($field['name'], json_encode($values, JSON_UNESCAPED_UNICODE));
+                    $resource->set($field['field_name'], $value);
                     break;
+//                case 'pb-table':
+//                    $results = [];
+//                    foreach ($field['abs'] as $abs) {
+//                        // templates
+//                        if (!empty($abs['ab_templates']) && !in_array($resource->template, explode(',', $abs['ab_templates']))) {
+//                            continue;
+//                        }
+//
+//                       // parents
+//                        if (!empty($abs['ab_parents']) && !in_array($resource->parent, explode(',', $abs['ab_parents']))) {
+//                            continue;
+//                        }
+//
+//                        // resource
+//                        if (!empty($abs['ab_resources']) && !in_array($resource->id, explode(',', $abs['ab_resources']))) {
+//                            continue;
+//                        }
+//                        if (count($results)) continue;
+//                        $results = $this->getFetchAll('pbTableValue', [
+//                            'model_type' => $resource->_class,
+//                            'model_id' => $resource->id,
+//                            'constructor_id' => 0,
+//                            'table_id' => $abs['table_id'],
+//                            'field_id' => 0,
+//                            'ef_field_id' => $field['id'],
+//                            'published' => 1
+//                        ]);
+//                    }
+//
+//                    $values = [];
+//                    foreach ($results as $result) {
+//                        $values[] = json_decode($result['values'], 1);
+//                    }
+//                    $resource->set($field['field_name'], json_encode($values, JSON_UNESCAPED_UNICODE));
+//                    break;
 
                 case 'pb-gallery':
-                case 'pb-video-gallery':
                     $results = [];
                     foreach ($field['abs'] as $abs) {
                         // templates
@@ -74,12 +83,13 @@ class OnBeforeDocFormSave extends Event
                             continue;
                         }
                         if (count($results)) continue;
-                        $results = $this->extrafields->getFetchAll('pbFile', [
-                            'resource_id' => $resource->id,
-                            'table_id' => $abs['table_id'],
+
+                        $results = $this->getFetchAll('pbFile', [
+                            'model_type' => $resource->_class,
+                            'model_id' => $resource->id,
                             'field_id' => 0,
                             'ef_field_id' => $field['id'],
-                            'parent_id' => 0
+                            'published' => 1
                         ]);
                     }
 
@@ -95,7 +105,7 @@ class OnBeforeDocFormSave extends Event
                             'type' => $result['type'],
                         ];
                     }
-                    $resource->set($field['name'], json_encode($values, JSON_UNESCAPED_UNICODE));
+                    $resource->set($field['field_name'], json_encode($values, JSON_UNESCAPED_UNICODE));
                     break;
             }
         }

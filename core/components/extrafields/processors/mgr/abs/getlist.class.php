@@ -6,23 +6,6 @@ class efFieldAbsGetListProcessor extends modObjectGetListProcessor
     public $objectType = 'ef_field';
     public $defaultSortField = 'id';
     public $defaultSortDirection = 'DESC';
-    //public $permission = 'list';
-
-
-    /**
-     * We do a special check of permissions
-     * because our objects is not an instances of modAccessibleObject
-     *
-     * @return boolean|string
-     */
-    public function beforeQuery()
-    {
-        if (!$this->checkPermissions()) {
-            return $this->modx->lexicon('access_denied');
-        }
-
-        return true;
-    }
 
 
     /**
@@ -33,7 +16,7 @@ class efFieldAbsGetListProcessor extends modObjectGetListProcessor
     public function prepareQueryBeforeCount(xPDOQuery $c)
     {
         $c->where([
-            'field_id' => trim($this->getProperty('field_id'))
+            'field_id' => trim($this->properties['field_id'])
         ]);
 
         return $c;

@@ -3,8 +3,7 @@ ExtraFields.grid.Fields = function (config) {
     Ext.applyIf(config, {
         baseParams: {
             action: 'mgr/field/getlist',
-            class_name: ExtraFields.config.class_name,
-            sort: 'colrank',
+            sort: 'menuindex',
             dir: 'asc',
         },
         ddAction: 'mgr/field/sort',
@@ -15,28 +14,12 @@ ExtraFields.grid.Fields = function (config) {
 };
 Ext.extend(ExtraFields.grid.Fields, ExtraFields.grid.Default, {
 
-    createObject: function (btn, e) {
-        var w = MODx.load({
-            xtype: 'ef-field-window-create',
-            id: Ext.id(),
-            listeners: {
-                success: {
-                    fn: function () {
-                        this.refresh();
-                    }, scope: this
-                }
-            }
-        });
-        w.reset();
-        w.setValues({
-            class_name: ExtraFields.config.class_name,
-            active: true
-        });
-        w.show(e.target);
-    },
-
     getFields: function () {
-        return ['id', 'name', 'label', 'type', 'active', 'actions'];
+        return [
+            'id', 'class_name', 'class_name_lexicon', 'field_name',
+            'type_lexicon', 'field_null', 'field_default',
+            'active', 'actions'
+        ];
     },
 
     getColumns: function () {
@@ -44,30 +27,49 @@ Ext.extend(ExtraFields.grid.Fields, ExtraFields.grid.Default, {
             header: _('ef_field_id'),
             dataIndex: 'id',
             sortable: true,
-            width: 70
+            width: 70,
+            fixed: true,
         }, {
-            header: _('ef_field_name'),
-            dataIndex: 'name',
-            sortable: true,
-            width: 200,
+            header: _('ef_class_name'),
+            dataIndex: 'class_name_lexicon',
+            sortable: false,
+            width: 'auto',
         }, {
             header: _('ef_field_type'),
-            dataIndex: 'type',
+            dataIndex: 'type_lexicon',
             sortable: false,
-            width: 150,
+            width: 'auto',
+        }, {
+            header: _('ef_field_name'),
+            dataIndex: 'field_name',
+            sortable: true,
+            width: 'auto',
+        }, {
+            header: _('ef_field_null'),
+            dataIndex: 'field_null',
+            renderer: ExtraFields.utils.renderBoolean,
+            sortable: true,
+            width: 'auto',
+        }, {
+            header: _('ef_field_default'),
+            dataIndex: 'field_default',
+            sortable: true,
+            width: 'auto',
         }, {
             header: _('ef_field_active'),
             dataIndex: 'active',
             renderer: ExtraFields.utils.renderBoolean,
             sortable: true,
-            width: 100,
+            width: 'auto',
         }, {
             header: _('ef_grid_actions'),
             dataIndex: 'actions',
             renderer: ExtraFields.utils.renderActions,
             sortable: false,
-            width: 100,
-            id: 'actions'
+            width: 125,
+            fixed: true,
+            id: 'actions',
+            hidden: ExtraFields.config.modxversion !== '2',
         }];
     },
 

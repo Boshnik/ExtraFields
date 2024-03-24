@@ -12,7 +12,7 @@ return [
     'name' => 'ExtraFields',
     'name_lower' => 'extrafields',
     'version' => '2.0.0',
-    'release' => 'beta3',
+    'release' => 'pl',
     // Install package to site right after build
     'install' => true,
     // Which elements should be updated on package upgrade

@@ -1,6 +1,35 @@
 <?php
 
-$_lang['ef_field_empty_type'] = 'Вы должны выбрать тип поля.';
+$_lang['ef_field_type_textfield'] = 'Текстовое поле';
+$_lang['ef_field_type_textarea'] = 'Текстовая область';
+$_lang['ef_field_type_richtext'] = 'Текстовый редактор';
+//$_lang['ef_field_type_editorjs'] = 'EditorJs';
+$_lang['ef_field_type_texteditor'] = 'ACE';
+$_lang['ef_field_type_listbox'] = 'Выпадающий список';
+$_lang['ef_field_type_listbox_multiple'] = 'Выпадающий список (мультивыбор)';
+$_lang['ef_field_type_resourcelist'] = 'Список ресурсов';
+//$_lang['ef_field_type_readyblocks'] = 'Готовые блоки';
+$_lang['ef_field_type_combo_boolean'] = 'Список Да/Нет';
+$_lang['ef_field_type_price'] = 'Числовое поле (цена)';
+$_lang['ef_field_type_numberfield'] = 'Числовое поле';
+$_lang['ef_field_type_xcheckbox'] = 'Флажок';
+$_lang['ef_field_type_checkboxgroup'] = 'Группа флажков';
+$_lang['ef_field_type_radiogroup'] = 'Радиокнопка';
+$_lang['ef_field_type_file'] = 'Файл';
+$_lang['ef_field_type_image'] = 'Изображение';
+$_lang['ef_field_type_gallery'] = 'Галерея';
+$_lang['ef_field_type_video'] = 'Видео';
+//$_lang['ef_field_type_button'] = 'Кнопка';
+$_lang['ef_field_type_xdatetime'] = 'Дата';
+//$_lang['ef_field_type_timefield'] = 'Время';
+$_lang['ef_field_type_table'] = 'Таблица';
+//$_lang['ef_field_type_colorpalette'] = 'Цветовая палитра';
+$_lang['ef_field_type_readonly'] = 'Только чтение';
+$_lang['ef_field_type_hidden'] = 'Скрытое поле';
+$_lang['ef_field_type_xtype'] = 'Xtype поле';
+
+$_lang['ef_field_empty_class_name'] = 'Вы должны выбрать таблицу.';
+$_lang['ef_field_empty_field_type'] = 'Вы должны выбрать тип поля.';
 $_lang['ef_field_err_name'] = 'Вы должны указать имя поля.';
 $_lang['ef_field_err_ae'] = 'Поле с таким именем уже существует.';
 $_lang['ef_field_err_nf'] = 'Поле не найдено.';
@@ -9,3 +38,6 @@ $_lang['ef_field_err_name_reserved'] = 'Это название поля уже 
 $_lang['ef_field_err_name_cyrillic'] = 'Название поля должно быть на латинице';
 $_lang['ef_field_err_remove'] = 'Ошибка при удалении поля.';
 $_lang['ef_field_err_save'] = 'Ошибка при сохранении поля.';
+$_lang['ef_field_default_error_combo'] = 'Возможные значения: 0 или 1';
+$_lang['ef_field_default_error_numberfield'] = 'Строка должна быть числом';
+$_lang['ef_field_default_error_date'] = 'Значение должно быть пустым или в форате даты: YYYY-MM-DD';

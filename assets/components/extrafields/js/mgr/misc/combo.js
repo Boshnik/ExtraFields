@@ -70,7 +70,7 @@ Ext.reg('ef-combo-dir',ExtraFields.combo.SortDir);
 ExtraFields.combo.Browser = function (config) {
     config = config || {};
 
-    if (config.length != 0 && config.openTo != undefined) {
+    if (config.length !== 0 && config.openTo !== undefined) {
         if (!/^\//.test(config.openTo)) {
             config.openTo = '/' + config.openTo;
         }
@@ -132,7 +132,7 @@ Ext.extend(ExtraFields.combo.Browser, Ext.form.TriggerField, {
     },
 
     getPath: function (n) {
-        if (n.id == '/') {
+        if (n.id === '/') {
             return '';
         }
 
@@ -141,41 +141,72 @@ Ext.extend(ExtraFields.combo.Browser, Ext.form.TriggerField, {
 });
 Ext.reg('ef-combo-browser', ExtraFields.combo.Browser);
 
+ExtraFields.combo.TableClass = function(config) {
+    config = config || {};
+
+    var data = [
+        [_('ef_class_name_modResource'),'modResource'],
+        [_('ef_class_name_modUserProfile'),'modUserProfile'],
+    ];
+
+    if (config.create_field) {
+        data.push(
+            [_('ef_class_name_pbBlockValue'),'pbBlockValue'],
+            [_('ef_class_name_pbTableValue'),'pbTableValue']
+        );
+    }
+
+    Ext.applyIf(config,{
+        store: new Ext.data.ArrayStore({
+            id: 'value',
+            fields: ['display','value'],
+            data: data
+        }),
+        mode: 'local',
+        displayField: 'display',
+        valueField: 'value',
+    });
+    ExtraFields.combo.TableClass.superclass.constructor.call(this,config);
+};
+Ext.extend(ExtraFields.combo.TableClass, MODx.combo.ComboBox);
+Ext.reg('ef-combo-table-class',ExtraFields.combo.TableClass);
+
 ExtraFields.combo.Types = function(config) {
     config = config || {};
 
     var data = [
-        [_('textfield'),'textfield'],
-        [_('textarea'),'textarea'],
-        [_('listbox'),'listbox'],
-        [_('listbox-multiple'),'listbox-multiple'],
-        [_('resourcelist'),'resourcelist'],
-        [_('list') + ' ' + _('yesno'),'combo-boolean'],
-        [_('numberfield'),'numberfield'],
-        [_('xcheckbox'),'xcheckbox'],
-        [_('checkbox'),'checkboxgroup'],
-        [_('option'),'radiogroup'],
-        [_('image'),'image'],
-        [_('file'),'file'],
-        [_('date'),'xdatetime'],
-        [_('readonly'),'readonly'],
-        [_('hidden'),'hidden'],
-        [_('efxtype'),'efxtype']
+        [_('ef_field_type_textfield'),'textfield'],
+        [_('ef_field_type_textarea'),'textarea'],
+        [_('ef_field_type_listbox'),'listbox'],
+        [_('ef_field_type_listbox_multiple'),'listbox-multiple'],
+        [_('ef_field_type_resourcelist'),'resourcelist'],
+        [_('ef_field_type_combo_boolean'),'combo-boolean'],
+        [_('ef_field_type_numberfield'),'numberfield'],
+        [_('ef_field_type_price'),'price'],
+        [_('ef_field_type_xcheckbox'),'xcheckbox'],
+        [_('ef_field_type_checkboxgroup'),'checkboxgroup'],
+        [_('ef_field_type_radiogroup'),'radiogroup'],
+        [_('ef_field_type_image'),'image'],
+        [_('ef_field_type_file'),'file'],
+        [_('ef_field_type_xdatetime'),'xdatetime'],
+        [_('ef_field_type_readonly'),'readonly'],
+        [_('ef_field_type_hidden'),'hidden'],
+        [_('ef_field_type_xtype'),'efxtype']
     ];
 
-    if (MODx.loadRTE) data.splice(2,0,[_('richtext'),'richtext']);
+    if (MODx.loadRTE) data.splice(2,0,[_('ef_field_type_richtext'),'richtext']);
 
     var ace = (typeof(MODx.ux) != 'undefined' && typeof(MODx.ux.Ace) == 'function') ? 1 : 0;
-    if (ace) data.splice(2,0,[_('ace'), 'modx-texteditor']);
+    if (ace) data.splice(2,0,[_('ef_field_type_texteditor'), 'modx-texteditor']);
 
     if (typeof ColorPicker == 'object') {
         data.splice(-4,0,['ColorPicker','colorpicker']);
     }
 
-    if (ExtraFields.config.pageblocks) {
-        data.splice(-4,0,[_('pb-video-gallery'),'pb-video-gallery']);
-        data.splice(-4,0,[_('pb-gallery'),'pb-gallery']);
-        data.splice(-4,0,[_('pb-table'),'pb-table']);
+    if (!Ext.isEmpty(ExtraFields.config.pageblocks?.apiKey)) {
+        data.splice(-4,0,[_('ef_field_type_gallery'),'pb-gallery']);
+        data.splice(-4,0,[_('ef_field_type_video'),'pb-panel-video']);
+        // data.splice(-4,0,[_('ef_field_type_table'),'pb-table']);
     }
 
     Ext.applyIf(config,{
@@ -193,100 +224,6 @@ ExtraFields.combo.Types = function(config) {
 Ext.extend(ExtraFields.combo.Types, MODx.combo.ComboBox);
 Ext.reg('ef-combo-field-types',ExtraFields.combo.Types);
 
-ExtraFields.combo.FieldMeta = function(config) {
-    config = config || {};
-
-    var data = [
-        ['varchar (string)','textfield'],
-        ['text (string)','textarea'],
-        ['mediumtext (string)','richtext'],
-        ['int (integer)','numberfield'],
-        ['int (timestamp)','xdatetime'],
-        ['tinyint (integer)','xcheckbox'],
-        ['tinyint (boolean)','combo-boolean'],
-    ];
-
-    Ext.applyIf(config,{
-        store: new Ext.data.ArrayStore({
-            id: 'value',
-            fields: ['display','value'],
-            data: data
-        }),
-        mode: 'local',
-        displayField: 'display',
-        valueField: 'value',
-    });
-    ExtraFields.combo.FieldMeta.superclass.constructor.call(this,config);
-};
-Ext.extend(ExtraFields.combo.FieldMeta, MODx.combo.ComboBox);
-Ext.reg('ef-combo-field-meta',ExtraFields.combo.FieldMeta);
-
-ExtraFields.combo.Areas = function(config) {
-    config = config || {};
-    if (Ext.isEmpty(config.id)) {
-        config.id = Ext.id();
-    }
-    let data = [];
-
-    switch (ExtraFields.config.class_name) {
-        case 'modResource':
-            data = [
-                [_('modx-resource-settings'),'modx-resource-settings'],
-                [_('modx-resource-main-left'),'modx-resource-main-left'],
-                [_('modx-resource-main-right'),'modx-resource-main-right'],
-
-                [_('modx-page-settings'),'modx-page-settings'],
-                [_('modx-page-settings-left'),'modx-page-settings-left'],
-                [_('modx-page-settings-right'),'modx-page-settings-right'],
-                [_('modx-page-settings-right-box-left'),'modx-page-settings-right-box-left'],
-                [_('modx-page-settings-right-box-right'),'modx-page-settings-right-box-right'],
-
-                [_('modx-resource-access-permissions'),'modx-resource-access-permissions'],
-            ];
-            break;
-
-        case 'modUserProfile':
-            data = [
-                [_('user_tab_0'), '0'],
-                [_('user_tab_0_1'), '0_0'],
-                [_('user_tab_0_2'), '0_1'],
-                [_('user_tab_1'), '1'],
-                [_('user_tab_2'), '2'],
-                [_('user_tab_3'), '3'],
-            ];
-            break;
-    }
-
-    Ext.applyIf(config,{
-        store: new Ext.data.ArrayStore({
-            id: 'value',
-            fields: ['display','value'],
-            data: data
-        }),
-        mode: 'local',
-        displayField: 'display',
-        valueField: 'value',
-        hiddenName: config.name,
-        triggerConfig: {
-            tag: 'div',
-            cls: 'x-superboxselect-btns',
-            cn: [
-                {tag: 'div', cls: 'x-superboxselect-btn-expand x-form-trigger'},
-                {tag: 'div', cls: 'x-superboxselect-btn-clear x-form-trigger'}
-            ]
-        },
-        onTriggerClick: function(event, btn){
-            if (btn && Ext.get(btn).hasClass('x-superboxselect-btn-clear')) {
-                Ext.getCmp(config.id).setValue();
-            } else {
-                MODx.combo.ComboBox.superclass.onTriggerClick.call(this);
-            }
-        },
-    });
-    ExtraFields.combo.Areas.superclass.constructor.call(this,config);
-};
-Ext.extend(ExtraFields.combo.Areas, MODx.combo.ComboBox);
-Ext.reg('ef-combo-areas',ExtraFields.combo.Areas);
 
 ExtraFields.combo.Listbox = function(config) {
 
@@ -392,10 +329,8 @@ ExtraFields.combo.GetList = function (config) {
     ExtraFields.combo.GetList.superclass.constructor.call(this, config);
 
     setTimeout(() => {
-        if (!config.hidden) {
-            config.store.load();
-        }
-    }, 1000);
+        config.store.load({'params': {'limit': config.pageSize }});
+    },1000);
 };
 Ext.extend(ExtraFields.combo.GetList, MODx.combo.ComboBox);
 Ext.reg('ef-combo-getlist',ExtraFields.combo.GetList);
@@ -406,9 +341,9 @@ ExtraFields.combo.GetListMulti = function (config) {
     let store = new Ext.data.JsonStore({
         fields: config.fields || ['name', 'id'],
         autoLoad: true,
-        autoDestroy: false,
+        autoDestroy: true,
         root: 'results',
-        url: config.url || PageBlocks.config['connector_url'],
+        url: config.url || ExtraFields.config['connector_url'],
         baseParams: config.baseParams || {},
     });
 
@@ -431,46 +366,9 @@ ExtraFields.combo.GetListMulti = function (config) {
 
     ExtraFields.combo.GetListMulti.superclass.constructor.call(this, config);
 
-    setTimeout(() => {
+    this.on('afterrender', function() {
         store.load({'params': {'limit': 10}});
-    },1000);
+    });
 };
 Ext.extend(ExtraFields.combo.GetListMulti, Ext.ux.form.SuperBoxSelect);
 Ext.reg('ef-combo-getlist-multiple', ExtraFields.combo.GetListMulti);
-
-ExtraFields.form.Boshnik = Ext.extend(Ext.Toolbar.TextItem, {
-    baseCls: 'boshnik',
-    listeners: {
-        afterrender: function () {
-            this.getEl().addClass(this.baseCls);
-            var msg = '<div class="wrapper"><div class="col">';
-            msg += '<img src="'+ExtraFields.config.assetsUrl+'img/boshnik.jpg" alt="Boshnik" width="60" height="60"/>'
-            msg += '</div><div class="col">';
-            msg += '<p><b>Email:</b> Superboshnik@ya.ru</p>';
-            msg += '<p><b>Telegram:</b> <a href="https://t.me/Boshnik" target="_blank">@Boshnik</a></p>';
-            msg += '<p><b>GitHub:</b> <a href="https://github.com/Boshnik" target="_blank">Boshnik</a></p>';
-            msg += '</div>';
-            msg += '<br><p class="col-12">&copy; '+ new Date().getFullYear() +' <a href="https://boshnik.com" target="_blank">boshnik.com</a></p>'
-            msg += '</div>';
-
-            this.el.on('click', () => {
-                var btnOKText = Ext.Msg.buttonText.ok;
-                Ext.Msg.buttonText.ok = '<i class="icon icon-coffee"></i> buy me a coffee';
-                Ext.Msg.show({
-                    title: _('extrafields') + ' ' + ExtraFields.config.version,
-                    msg: msg,
-                    buttons: Ext.Msg.OKCANCEL,
-                    fn: function(btn) {
-                        if (btn == 'ok') {
-                            window.open('https://yoomoney.ru/to/410011655323883', '_blank');
-                        }
-                    },
-                    cls: 'boshnik-window',
-                    width: 300
-                });
-                Ext.Msg.buttonText.ok = btnOKText;
-            })
-        }
-    },
-});
-Ext.reg("boshnik", ExtraFields.form.Boshnik);
