@@ -13,7 +13,6 @@ class OnBeforeUserFormSave extends Event
 
     public function run()
     {
-        $this->modx->log(1, print_r($this->scriptProperties['mode'],1));
         if ($this->scriptProperties['mode'] == 'new') return;
 
         /** @var \modUser $user */

@@ -1,7 +1,7 @@
 <?php
 
 $_lang['ef_field_type_textfield'] = 'Text field';
-$_lang['ef_field_type_textarea'] = 'Text area';
+$_lang['ef_field_type_textarea'] = 'Textarea';
 $_lang['ef_field_type_richtext'] = 'Text editor';
 //$_lang['ef_field_type_editorjs'] = 'EditorJs';
 $_lang['ef_field_type_texteditor'] = 'ACE';
@@ -10,17 +10,17 @@ $_lang['ef_field_type_listbox_multiple'] = 'Listbox (multiple)';
 $_lang['ef_field_type_resourcelist'] = 'Resource list';
 //$_lang['ef_field_type_readyblocks'] = 'Готовые блоки';
 $_lang['ef_field_type_combo_boolean'] = 'Yes/No list';
-$_lang['ef_field_type_price'] = 'Numeric field (price)';
+$_lang['ef_field_type_price'] = 'Price field';
 $_lang['ef_field_type_numberfield'] = 'Numeric field';
-$_lang['ef_field_type_xcheckbox'] = 'Flag';
-$_lang['ef_field_type_checkboxgroup'] = 'Flag group';
+$_lang['ef_field_type_xcheckbox'] = 'Checkbox';
+$_lang['ef_field_type_checkboxgroup'] = 'Checkbox group';
 $_lang['ef_field_type_radiogroup'] = 'Radio button';
 $_lang['ef_field_type_file'] = 'File';
 $_lang['ef_field_type_image'] = 'Image';
 $_lang['ef_field_type_gallery'] = 'Gallery';
 $_lang['ef_field_type_video'] = 'Video';
 //$_lang['ef_field_type_button'] = 'Кнопка';
-$_lang['ef_field_type_xdatetime'] = 'Date';
+$_lang['ef_field_type_xdatetime'] = 'DateTime';
 //$_lang['ef_field_type_timefield'] = 'Время';
 $_lang['ef_field_type_table'] = 'Table';
 //$_lang['ef_field_type_colorpalette'] = 'Цветовая палитра';

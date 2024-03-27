@@ -18,10 +18,10 @@ class OnMODXInit extends Event
 
         $rows = [
             [
-                'className' => $this->modxversion === 3 ? \MODX\Revolution\modResource::class : \modResource::class,
+                'className' => $this->modxversion === '3' ? \MODX\Revolution\modResource::class : \modResource::class,
                 'fields' => $this->getFields()
             ], [
-                'className' => $this->modxversion === 3 ? \MODX\Revolution\modUserProfile::class : \modUserProfile::class,
+                'className' => $this->modxversion === '3' ? \MODX\Revolution\modUserProfile::class : \modUserProfile::class,
                 'fields' => $this->getFields('modUserProfile')
             ], [
                 'className' => \pbBlockValue::class,

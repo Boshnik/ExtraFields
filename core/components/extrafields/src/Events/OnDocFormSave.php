@@ -17,7 +17,7 @@ class OnDocFormSave extends Event
 
         $fields = $this->getFields();
         foreach ($fields as $field) {
-            unset($resource->_fields[$field['name']]);
+            unset($resource->_fields[$field['field_name']]);
         }
     }
 }

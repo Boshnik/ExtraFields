@@ -7,7 +7,7 @@ ExtraFields.utils.getXtype = function (field) {
         id: Ext.id(),
         anchor: '100%',
         width: '100%',
-        allowBlank: !+field.required,
+        allowBlank: !field.required,
         description: '<b>[[*' + field.field_name + ']]</b>',
         listeners: {
             afterrender: function(el) {
@@ -32,7 +32,7 @@ ExtraFields.utils.getXtype = function (field) {
             xtype.xtype = 'textarea';
             xtype.listeners.render = function (el) {
                 ExtraFields.utils.renderRTE(el);
-            }
+            };
             break;
 
         case 'modx-texteditor':
@@ -66,7 +66,7 @@ ExtraFields.utils.getXtype = function (field) {
                 if (!Ext.isEmpty(values)) {
                     el.setValue(values.split('||'));
                 }
-            }
+            };
             break;
 
         case 'resourcelist':
@@ -100,6 +100,8 @@ ExtraFields.utils.getXtype = function (field) {
             break;
 
         case 'numberfield':
+        case 'price':
+            xtype.xtype = 'numberfield';
             xtype.inputType = 'number';
             xtype.cls = 'x-form-text';
             if(!field.number_allownegative) {
@@ -197,7 +199,7 @@ ExtraFields.utils.getXtype = function (field) {
                 change: (el) => {
                     ExtraFields.utils.updateImage(el.id, el.getValue());
                 }
-            }
+            };
             break;
 
         case 'file':
@@ -252,7 +254,7 @@ ExtraFields.utils.getXtype = function (field) {
                         el.container.dom.querySelector('.clr-field').style.color = el.value;
                     },500);
                 }
-            }
+            };
             break;
 
         case 'pb-gallery':
@@ -266,6 +268,44 @@ ExtraFields.utils.getXtype = function (field) {
             xtype.gallery_help = field.help;
             delete xtype.help;
             delete xtype.listeners;
+            break;
+
+        case 'pb-panel-video':
+            xtype.model_id = ExtraFields.object.id || 0;
+            xtype.source = field.source;
+            xtype.source_path = field.source_path || '/';
+            xtype.allowedFileTypes = ExtraFields.config.media_source[field.source].allowedFileTypes || '';
+            xtype.openTo = field.openTo || '/';
+            xtype.panel_help = field.help;
+            field.help = '';
+            xtype.listeners = {
+                afterrender: function(el) {
+                    setTimeout(function(){
+                        let input = document.getElementById(el.id + '-input');
+
+                        if (Ext.isEmpty(input.value) && !Ext.isEmpty(field.default)) {
+                            let image = new Image();
+                            image.src = MODx.config.base_url + field.default;
+                            image.onload = function() {
+                                input.value = field.default;
+                                let info = document.getElementById(el.id + '-info');
+                                if (info) {
+                                    info.value = JSON.stringify({
+                                        "url": field.default,
+                                        "width": image.width,
+                                        "height": image.height,
+                                        "title": field.default.split('/').pop()
+                                    });
+                                }
+                                let preview = Ext.getCmp(el.id + '-preview');
+                                if (preview) {
+                                    preview.update(PageBlocks.utils.previewImage(field.default));
+                                }
+                            };
+                        }
+                    }, 500);
+                }
+            };
             break;
 
         case 'pb-table':
@@ -282,7 +322,7 @@ ExtraFields.utils.getXtype = function (field) {
             xtype.readOnly = true;
             break;
 
-        case 'efxtype':
+        case 'ef-xtype':
             xtype.xtype = field.xtype;
             xtype.hiddenName = field.field_name;
 
@@ -327,7 +367,7 @@ ExtraFields.utils.getXtype = function (field) {
         width:'100%',
         items: items,
         cls: classes.join(' '),
-    }
+    };
 
     if (ExtraFields.config.modxversion === '3') {
         xtype = {

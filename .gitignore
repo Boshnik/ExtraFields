@@ -1,4 +1,5 @@
 .idea
-config.core.php
 /core/components/extrafields/vendor/
 _build/resolvers/symlinks.php
+/node_modules/
+pass.txt

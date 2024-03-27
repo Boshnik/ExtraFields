@@ -15,12 +15,24 @@ trait HelpProcessor
             'dbtype' => 'text',
             'phptype' => 'string',
         ],
+        'pb-panel-video' => [
+            'dbtype' => 'text',
+            'phptype' => 'string',
+        ],
         'richtext' => [
+            'dbtype' => 'mediumtext',
+            'phptype' => 'string',
+        ],
+        'pb-gallery' => [
             'dbtype' => 'mediumtext',
             'phptype' => 'string',
         ],
         'modx-texteditor' => [
             'dbtype' => 'mediumtext',
+            'phptype' => 'string',
+        ],
+        'listbox-multiple' => [
+            'dbtype' => 'text',
             'phptype' => 'string',
         ],
         'numberfield' => [
@@ -51,9 +63,9 @@ trait HelpProcessor
             'default' => 0,
         ],
         'xdatetime' => [
-            'dbtype' => 'date',
-            'precision' => null,
-            'phptype' => 'date',
+            'dbtype' => 'int',
+            'precision' => 20,
+            'phptype' => 'timestamp',
         ],
     ];
 
@@ -66,8 +78,6 @@ trait HelpProcessor
     public function createTableColumn($object)
     {
         if ($sql = $this->getSQL($object)) {
-            $this->modx->log(1, print_r($object->toArray(),1));
-            $this->modx->log(1, print_r($sql,1));
             $this->modx->exec($sql);
         }
     }
@@ -80,8 +90,6 @@ trait HelpProcessor
     public function updateTableColumn($object)
     {
         if ($sql = $this->getSQL($object, 'update')) {
-            $this->modx->log(1, print_r($object->toArray(),1));
-            $this->modx->log(1, print_r($sql,1));
             $this->modx->exec($sql);
         }
     }
@@ -94,8 +102,6 @@ trait HelpProcessor
     public function removeTableColumn($object)
     {
         if ($sql = $this->getSQL($object, 'remove')) {
-            $this->modx->log(1, print_r($object->toArray(),1));
-            $this->modx->log(1, print_r($sql,1));
             $this->modx->exec($sql);
         }
     }

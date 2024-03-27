@@ -56,7 +56,7 @@ class efFieldGetListProcessor extends modObjectGetListProcessor
         $array = $object->toArray();
         $array['actions'] = [];
 
-        $fieldType = str_replace(['pb-panel-', 'pb-', 'modx-'], '', $array['field_type']);
+        $fieldType = str_replace(['pb-panel-', 'pb-', 'modx-', 'ef-'], '', $array['field_type']);
         $fieldType = str_replace('-', '_', $fieldType);
         $array['type_lexicon'] = $this->modx->lexicon('ef_field_type_' . $fieldType);
 

@@ -20,7 +20,9 @@ class OnDocFormPrerender extends Event
         if (!$resource) {
             return true;
         }
-        $data = json_encode($resource->toArray(),1);
+        $data = $resource->toArray();
+        $data['class_key'] = $resource->_class;
+        $data = json_encode($data,1);
 
         $this->extrafields->loadRichTextEditor();
         $tabs = json_encode($this->getTabs(),1);

@@ -191,17 +191,18 @@ ExtraFields.combo.Types = function(config) {
         [_('ef_field_type_xdatetime'),'xdatetime'],
         [_('ef_field_type_readonly'),'readonly'],
         [_('ef_field_type_hidden'),'hidden'],
-        [_('ef_field_type_xtype'),'efxtype']
+        [_('ef_field_type_xtype'),'ef-xtype']
     ];
 
     if (MODx.loadRTE) data.splice(2,0,[_('ef_field_type_richtext'),'richtext']);
 
     var ace = (typeof(MODx.ux) != 'undefined' && typeof(MODx.ux.Ace) == 'function') ? 1 : 0;
-    if (ace) data.splice(2,0,[_('ef_field_type_texteditor'), 'modx-texteditor']);
+    if (ace) data.splice(3,0,[_('ef_field_type_texteditor'), 'modx-texteditor']);
 
-    if (typeof ColorPicker == 'object') {
-        data.splice(-4,0,['ColorPicker','colorpicker']);
-    }
+    // TODO
+    // if (typeof ColorPicker == 'object') {
+    //     data.splice(-4,0,['ColorPicker','colorpicker']);
+    // }
 
     if (!Ext.isEmpty(ExtraFields.config.pageblocks?.apiKey)) {
         data.splice(-4,0,[_('ef_field_type_gallery'),'pb-gallery']);
