@@ -1,7 +1,7 @@
 # ExtraFields
 Additional fields in the resource and user profile
 
- - **Version**: 2.0.0-pl
+ - **Version**: 2.0.1-pl
  - **Support MODX**: 2 / 3
  - **Author**: Boshnik
 

@@ -1,1 +1,0 @@
-import{_ as e,c as o,o as a,a4 as t}from"./chunks/framework.DFD0Bnux.js";const m=JSON.parse('{"title":"ExtraFields","description":"","frontmatter":{},"headers":[],"relativePath":"docs/index.md","filePath":"docs/index.md"}'),r={name:"docs/index.md"},i=t("",8),s=[i];function n(l,f,c,u,d,p){return a(),o("div",null,s)}const _=e(r,[["render",n]]);export{m as __pageData,_ as default};
