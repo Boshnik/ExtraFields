@@ -1,3 +1,9 @@
+2.0.1-pl
+==============
+ - fixed issues #4
+ - fixed issues #5
+ - fixed issues #6
+
 2.0.0-pl
 ==============
  - Updated core
