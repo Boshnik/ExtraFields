@@ -172,7 +172,7 @@ ExtraFields.utils.getAbs = function (config, class_name = ExtraFields.config.cla
                             setTimeout(() => {
                                 let values = config.record.object ? config.record.object.ab_templates : '';
                                 if (!Ext.isEmpty(values)) {
-                                    el.setValue(values.split('||'));
+                                    el.setValue(values);
                                 }
                             }, 500);
                         },
