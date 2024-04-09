@@ -7,7 +7,7 @@ ExtraFields.utils.getXtype = function (field) {
         id: Ext.id(),
         anchor: '100%',
         width: '100%',
-        allowBlank: !field.required,
+        allowBlank: !+field.required,
         description: '<b>[[*' + field.field_name + ']]</b>',
         listeners: {
             afterrender: function(el) {
@@ -355,7 +355,7 @@ ExtraFields.utils.getXtype = function (field) {
     }
 
     let classes = [field.cls];
-    if (field.hide_time === 1) {
+    if (parseInt(field.hide_time) === 1) {
         classes.push('ef-hidden-time');
     }
 
