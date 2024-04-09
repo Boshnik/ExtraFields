@@ -582,7 +582,7 @@ Ext.extend(ExtraFields.window.CreateFieldAbs, ExtraFields.window.Default, {
             case 'pb-table':
                 table_id.show();
                 break;
-            case 'efxtype':
+            case 'ef-xtype':
                 custom_xtype.show();
                 custom_xtype_desc.show();
                 break;
