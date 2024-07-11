@@ -106,13 +106,22 @@ class efCategoryGetListProcessor extends modObjectGetListProcessor
                     ], $array);
                     break;
                 case 'modx-page-settings':
-                    $array = array_merge([
-                        ['id' => 'modx-page-settings-left', 'name' => $this->modx->lexicon('modx-page-settings-left')],
-                        ['id' => 'modx-page-settings-right', 'name' => $this->modx->lexicon('modx-page-settings-right')],
-                        ['id' => 'modx-page-settings-right-box-left', 'name' => $this->modx->lexicon('modx-page-settings-right-box-left')],
-                        ['id' => 'modx-page-settings-right-box-right', 'name' => $this->modx->lexicon('modx-page-settings-right-box-right')],
-                    ], $array);
-                    break;
+                    if ($this->modx->getVersionData()['version'] === '3') { // In MODX 3 there are different regions available
+                        $array = array_merge([
+                            ['id' => 'modx-page-settings-left', 'name' => $this->modx->lexicon('modx-page-settings-left')],
+                            ['id' => 'modx-page-settings-right', 'name' => $this->modx->lexicon('modx-page-settings-right')],
+                            ['id' => 'modx-page-settings-box-left', 'name' => $this->modx->lexicon('modx-page-settings-box-left')],
+                            ['id' => 'modx-page-settings-box-right', 'name' => $this->modx->lexicon('modx-page-settings-box-right')],
+                        ], $array);
+                    } else {
+                        $array = array_merge([
+                            ['id' => 'modx-page-settings-left', 'name' => $this->modx->lexicon('modx-page-settings-left')],
+                            ['id' => 'modx-page-settings-right', 'name' => $this->modx->lexicon('modx-page-settings-right')],
+                            ['id' => 'modx-page-settings-right-box-left', 'name' => $this->modx->lexicon('modx-page-settings-right-box-left')],
+                            ['id' => 'modx-page-settings-right-box-right', 'name' => $this->modx->lexicon('modx-page-settings-right-box-right')],
+                        ], $array);
+                    }
+                    break;        
                 case 'user_tab_0':
                     $array = array_merge([
                         ['id' => 'user_tab_0_1', 'name' => $this->modx->lexicon('user_tab_0_1')],

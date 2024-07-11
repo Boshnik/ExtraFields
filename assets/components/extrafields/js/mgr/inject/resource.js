@@ -9,7 +9,7 @@ Ext.ComponentMgr.onAvailable('modx-resource-tabs', function() {
             let issetField = false;
             field.abs.forEach(abs => {
                 if (issetField) return;
-                if (tab.id === abs.category_id) {
+                if ((tab.id === abs.category_id) || (tab.id === abs.tab_id && Ext.isEmpty(abs.category_id))) {
                     if (ExtraFields.utils.checkAbs(abs)) return;
                     field = Object.assign(abs, field);
                     if (tab.id === 'modx-resource-access-permissions') {
@@ -27,7 +27,12 @@ Ext.ComponentMgr.onAvailable('modx-resource-tabs', function() {
             let columns = tab.items[0];
             if (columns.layout !== 'column') return;
 
-            columns.items.forEach(column => {
+            let columnItems = columns.items;
+            // The layout in MODX 3 is different
+            if (tab.id === 'modx-page-settings' && ExtraFields.config.modxversion === '3' && columns.items.length === 2){
+                columnItems = columns.items[0].items.concat(columns.items[1].items);
+            }
+            columnItems.forEach(column => {
                 field.abs.forEach(abs => {
                     if (issetField) return;
                     if (column.id === abs.category_id) {
@@ -43,7 +48,7 @@ Ext.ComponentMgr.onAvailable('modx-resource-tabs', function() {
 
                 if (issetField) return;
 
-                if (column.id === 'modx-page-settings-right') {
+                if ((column.id === 'modx-page-settings-right') && ExtraFields.config.modxversion !== '3') {
                     if (!column.items[3].items) return;
                     let boxes = column.items[3].items[0].items;
                     boxes.forEach(box => {
