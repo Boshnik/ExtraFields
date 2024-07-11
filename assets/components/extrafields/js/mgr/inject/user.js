@@ -9,8 +9,8 @@ Ext.ComponentMgr.onAvailable('modx-user-tabs', function() {
             let issetField = false;
             field.abs.forEach(abs => {
                 if (issetField) return;
-                let areas = abs.category_id.split('_');
-                if (!Ext.isEmpty(abs.category_id) && areas.length === 1 && tab_index === areas[0]) {
+                let areas = abs.tab_id.replace(/^user_tab_/i, '').split('_');
+                if (Ext.isEmpty(abs.category_id) && areas.length === 1 && tab_index == areas[0]) {
                     if (ExtraFields.utils.checkAbs(abs)) return;
                     field = Object.assign(abs, field);
                     if (tab_index) field.cls = 'main-wrapper';
@@ -28,9 +28,9 @@ Ext.ComponentMgr.onAvailable('modx-user-tabs', function() {
             columns.items.forEach((column, column_index) => {
                 field.abs.forEach(abs => {
                     if (issetField) return;
-                    let areas = abs.category_id.split('_');
+                    let areas = abs.category_id.replace(/^user_tab_/i, '').split('_');
                     if (areas.length === 1) return;
-                    if (tab_index !== areas[0] || column_index !== areas[1]) return;
+                    if (tab_index != areas[0] || (column_index + 1) != areas[1]) return;
                     if (!Ext.isEmpty(abs.category_id)) {
                         if (ExtraFields.utils.checkAbs(abs)) return;
                         field = Object.assign(abs, field);
