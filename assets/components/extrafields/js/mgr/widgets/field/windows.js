@@ -71,11 +71,15 @@ Ext.extend(ExtraFields.window.CreateField, ExtraFields.window.Default, {
                     allowBlank: false,
                     listeners: {
                         afterrender: {
-                            fn: this.changeFields,
+                            fn: function(cmp) {
+                                this.changeFields(cmp, false);
+                            },
                             scope: this,
                         },
                         select: {
-                            fn: this.changeFields,
+                            fn: function(cmp) {
+                                this.changeFields(cmp, true);
+                            },
                             scope: this,
                         }
                     }
@@ -130,13 +134,16 @@ Ext.extend(ExtraFields.window.CreateField, ExtraFields.window.Default, {
         }];
     },
 
-    changeFields: function (combo, row) {
+    changeFields: function (combo, isSelect) {
         let field_null = Ext.getCmp(this.id + '-field_null');
         let field_default = Ext.getCmp(this.id + '-field_default');
 
         field_default.setDisabled(false);
         if (field_null) {
-            field_null.setDisabled(false).setValue(1);
+            field_null.setDisabled(false);
+            if (isSelect) {
+                field_null.setValue(1); // Only set the value on the 'select' event
+            }
         }
 
         switch (combo.value) {
