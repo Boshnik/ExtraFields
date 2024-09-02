@@ -76,6 +76,8 @@ $_lang['modx-page-settings-left'] = 'Настройки (modx-page-settings-left
 $_lang['modx-page-settings-right'] = 'Настройки (modx-page-settings-right)';
 $_lang['modx-page-settings-right-box-left'] = 'Настройки (modx-page-settings-right-box-left)';
 $_lang['modx-page-settings-right-box-right'] = 'Настройки (modx-page-settings-right-box-right)';
+$_lang['modx-page-settings-box-left'] = 'Настройки (modx-page-settings-box-left)';
+$_lang['modx-page-settings-box-right'] = 'Настройки (modx-page-settings-box-right)';
 $_lang['modx-resource-access-permissions'] = 'Группы ресурсов';
 
 $_lang['user_tab_0'] = 'Общая информация';
