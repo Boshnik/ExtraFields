@@ -30,7 +30,6 @@
         <field key="active" dbtype="tinyint" precision="1" phptype="boolean" null="true" default="1"/>
 
         <composite alias="Categories" class="efCategory" local="id" foreign="tab_id" cardinality="many" owner="local" />
-        <composite alias="Abs" class="efFieldAbs" local="id" foreign="tab_id" cardinality="many" owner="local" />
     </object>
 
     <object class="efCategory" table="ef_categories" extends="xPDOSimpleObject">
@@ -46,11 +45,13 @@
         <field key="active" dbtype="tinyint" precision="1" phptype="boolean" null="true" default="1"/>
 
         <aggregate alias="Tab" class="efTab" local="tab_id" foreign="id" cardinality="one" owner="foreign" />
-        <composite alias="Abs" class="efFieldAbs" local="id" foreign="category_id" cardinality="many" owner="local" />
     </object>
 
     <object class="efFieldAbs" table="ef_field_abs" extends="xPDOSimpleObject">
-        <field key="field_id" dbtype="tinyint" precision="1" phptype="integer" attributes="unsigned" null="true" default="0"/>
+        <field key="field_id" dbtype="smallint" precision="10" phptype="integer" null="false" default="0" />
+        <field key="table_id" dbtype="tinyint" precision="1" phptype="integer" attributes="unsigned" null="true" default="0"/>
+        <field key="tab_id" dbtype="varchar" precision="100" phptype="string" null="true" default=""/>
+        <field key="category_id" dbtype="varchar" precision="100" phptype="string" null="true" default=""/>
         <field key="caption" dbtype="varchar" precision="100" phptype="string" null="false" default=""/>
         <field key="help" dbtype="varchar" precision="255" phptype="string" null="true" default=""/>
         <field key="values" dbtype="text" phptype="string" null="true" default=""/>
@@ -68,13 +69,6 @@
         <field key="xtype" dbtype="varchar" precision="100" phptype="string" null="false" default=""/>
         <field key="source" dbtype="smallint" precision="10" phptype="integer" attributes="unsigned" null="true" default="0"/>
         <field key="source_path" dbtype="varchar" precision="100" phptype="string" null="true" default=""/>
-        <field key="table_id" dbtype="tinyint" precision="1" phptype="integer" attributes="unsigned" null="true" default="0"/>
-
-<!--        <field key="tab_id" dbtype="tinyint" precision="1" phptype="integer" attributes="unsigned" null="true" default="0"/>-->
-<!--        <field key="category_id" dbtype="tinyint" precision="1" phptype="integer" attributes="unsigned" null="false" default="0"/>-->
-        <field key="tab_id" dbtype="varchar" precision="100" phptype="string" null="true" default=""/>
-        <field key="category_id" dbtype="varchar" precision="100" phptype="string" null="true" default=""/>
-
         <field key="areas" dbtype="varchar" precision="100" phptype="string" null="false" default=""/>
         <field key="index" dbtype="tinyint" precision="1" phptype="integer" attributes="unsigned" null="false" default="0"/>
         <field key="ab_templates" dbtype="varchar" precision="255" phptype="string" null="true" default=""/>
