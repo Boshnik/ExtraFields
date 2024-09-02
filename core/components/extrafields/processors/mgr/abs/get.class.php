@@ -20,6 +20,7 @@ class efFieldAbsGetProcessor extends modObjectGetProcessor
         if (!empty($array['ab_user_group'])) {
             $array['ab_user_group'] = explode('||', $array['ab_user_group']);
         }
+        $array['hide_time'] = $array['hide_time'] ? 1 : 0;
 
         return $this->success('', $array);
     }

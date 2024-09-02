@@ -81,7 +81,7 @@ Ext.extend(ExtraFields.grid.FieldAbs, ExtraFields.grid.Default, {
             listeners: {
                 success: {
                     fn: function (r) {
-                        var w = MODx.load({
+                        let w = MODx.load({
                             xtype: 'ef-abs-window-update',
                             id: Ext.id(),
                             class_name: class_name.value,
