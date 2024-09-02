@@ -97,7 +97,7 @@ Ext.extend(ExtraFields.window.CreateTab, ExtraFields.window.Default, {
             hidden: true,
             items: [{
                 xtype: 'ef-grid-categories',
-                tab_id: config.record ? config.record.object.id : 0,
+                tab_id: config.record?.id ?? 0,
             }]
         }, {
             xtype: 'xcheckbox',
@@ -174,7 +174,7 @@ ExtraFields.window.UpdateTab = function (config) {
         config.id = 'ef-tab-window-update';
     }
     Ext.applyIf(config, {
-        title: _('ef_row_update') + ': ' + config.record.object.name,
+        title: _('ef_row_update') + ': ' + config.record.name,
         action: 'mgr/tab/update',
     });
     ExtraFields.window.UpdateTab.superclass.constructor.call(this, config);

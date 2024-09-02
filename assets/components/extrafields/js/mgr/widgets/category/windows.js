@@ -60,7 +60,7 @@ ExtraFields.window.UpdateCategory = function (config) {
         config.id = 'ef-category-window-update';
     }
     Ext.applyIf(config, {
-        title: _('ef_row_update') + ': ' + config.record.object.name,
+        title: _('ef_row_update') + ': ' + config.record.name,
         action: 'mgr/category/update',
     });
     ExtraFields.window.UpdateCategory.superclass.constructor.call(this, config);

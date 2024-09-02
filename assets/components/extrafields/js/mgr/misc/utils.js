@@ -170,7 +170,7 @@ ExtraFields.utils.getAbs = function (config, class_name = ExtraFields.config.cla
                     listeners: {
                         afterrender: function (el) {
                             setTimeout(() => {
-                                let values = config.record.object ? config.record.object.ab_templates : '';
+                                let values = config.record?.ab_templates ?? '';
                                 if (!Ext.isEmpty(values)) {
                                     el.setValue(values);
                                 }
@@ -243,7 +243,7 @@ ExtraFields.utils.getAbs = function (config, class_name = ExtraFields.config.cla
                 listeners: {
                     afterrender: function (el) {
                         setTimeout(() => {
-                            let values = config.record.object ? config.record.object.ab_user_group : '';
+                            let values = config.record?.ab_user_group ?? '';
                             if (!Ext.isEmpty(values)) {
                                 el.setValue(values.split('||'));
                             }

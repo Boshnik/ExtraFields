@@ -422,7 +422,7 @@ Ext.extend(ExtraFields.window.CreateFieldAbs, ExtraFields.window.Default, {
                         allowBlank: true,
                         baseParams: {
                             action: 'mgr/category/getlist',
-                            tab_id: config.record ? config.record.object.tab_id : 0,
+                            tab_id: config.record?.tab_id ?? 0,
                             sort: 'menuindex',
                             dir: 'asc',
                             combo: 1,
@@ -462,21 +462,19 @@ Ext.extend(ExtraFields.window.CreateFieldAbs, ExtraFields.window.Default, {
             items: ExtraFields.utils.getAbs(config, config.class_name)
         },{
             xtype: 'checkboxgroup',
-            hideLabel: true,
-            name: 'checkboxgroup',
             columns: 3,
             items: [{
                 xtype: 'xcheckbox',
                 boxLabel: _('ef_row_active'),
                 name: 'active',
                 id: config.id + '-active',
-                checked: config.record ? config.record.object['active'] : true,
+                checked: config.record?.active ?? true,
             }, {
                 xtype: 'xcheckbox',
                 boxLabel: _('ef_field_required'),
                 name: 'required',
                 id: config.id + '-required',
-                checked: config.record ? config.record.object['required'] : false,
+                checked: config.record?.required ?? false,
                 hidden: true,
             }]
         }];
@@ -622,7 +620,7 @@ ExtraFields.window.UpdateFieldAbs = function (config) {
         config.id = Ext.id();
     }
     Ext.applyIf(config, {
-        title: _('ef_row_update') + ': ' + config.record.object.caption,
+        title: _('ef_row_update') + ': ' + config.record.caption,
         action: 'mgr/abs/update',
     });
 

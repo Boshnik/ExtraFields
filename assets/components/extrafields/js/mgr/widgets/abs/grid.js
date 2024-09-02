@@ -86,7 +86,7 @@ Ext.extend(ExtraFields.grid.FieldAbs, ExtraFields.grid.Default, {
                             id: Ext.id(),
                             class_name: class_name.value,
                             field_type: field_type.value,
-                            record: r,
+                            record: r.object,
                             listeners: {
                                 success: {
                                     fn: function () {

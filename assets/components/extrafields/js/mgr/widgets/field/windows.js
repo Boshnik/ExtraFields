@@ -14,17 +14,6 @@ ExtraFields.window.CreateField = function (config) {
 Ext.extend(ExtraFields.window.CreateField, ExtraFields.window.Default, {
 
     getFields: function (config) {
-
-        let field_null = true;
-        let field_null_disabled = false;
-        if (config.record && config.record.object) {
-            field_null = config.record.object['field_null'];
-            if (config.record.object.field_type === 'combo-boolean') {
-                field_null = false;
-                field_null_disabled = true;
-            }
-        }
-
         return [{
             xtype: 'hidden',
             name: 'id',
@@ -70,10 +59,6 @@ Ext.extend(ExtraFields.window.CreateField, ExtraFields.window.Default, {
                     width: 100,
                     allowBlank: false,
                     listeners: {
-                        afterrender: {
-                            fn: this.changeFields,
-                            scope: this,
-                        },
                         select: {
                             fn: this.changeFields,
                             scope: this,
@@ -83,25 +68,19 @@ Ext.extend(ExtraFields.window.CreateField, ExtraFields.window.Default, {
                     xtype: 'textfield',
                     fieldLabel: _('ef_field_default'),
                     name: 'field_default',
-                    id: config.id + '-field_default',
+                    id: config.id + '-field-default',
                     anchor: '100%',
                     width: 100,
                     allowBlank: true,
                 }]
             }]
         }, {
-            xtype: 'checkboxgroup',
-            hideLabel: true,
-            name: 'checkboxgroup',
-            columns: 3,
-            items: [{
-                xtype: 'xcheckbox',
-                boxLabel: _('ef_field_null'),
-                name: 'field_null',
-                id: config.id + '-field_null',
-                checked: field_null,
-                disabled: field_null_disabled
-            }]
+            xtype: 'xcheckbox',
+            boxLabel: _('ef_field_null'),
+            name: 'field_null',
+            id: config.id + '-field-null',
+            checked: config.record?.field_null ?? true,
+            disabled: (config.record?.field_type === 'combo-boolean') || false
         }, {
             xtype: 'fieldset',
             title: _('ef_settings'),
@@ -111,28 +90,26 @@ Ext.extend(ExtraFields.window.CreateField, ExtraFields.window.Default, {
             hidden: false,
             items: [{
                 xtype: 'ef-grid-field-abs',
-                field_id: config.record ? config.record.object.id : 0,
+                field_id: config.record?.id || 0,
                 config_id: config.id,
                 cls: '',
             }]
         }, {
             xtype: 'checkboxgroup',
-            hideLabel: true,
-            name: 'checkboxgroup',
             columns: 3,
             items: [{
                 xtype: 'xcheckbox',
                 boxLabel: _('ef_row_active'),
                 name: 'active',
-                id: config.id + '-active',
-                checked: config.record ? config.record.object['active'] : true,
+                id: Ext.id(),
+                checked: config.record?.active ?? true
             }]
         }];
     },
 
-    changeFields: function (combo, row) {
-        let field_null = Ext.getCmp(this.id + '-field_null');
-        let field_default = Ext.getCmp(this.id + '-field_default');
+    changeFields: function (combo) {
+        let field_null = Ext.getCmp(this.id + '-field-null');
+        let field_default = Ext.getCmp(this.id + '-field-default');
 
         field_default.setDisabled(false);
         if (field_null) {
@@ -163,7 +140,7 @@ ExtraFields.window.UpdateField = function (config) {
         config.id = 'ef-field-window-update';
     }
     Ext.applyIf(config, {
-        title: _('ef_row_update') + ': ' + config.record.object.field_name,
+        title: _('ef_row_update') + ': ' + config.record.field_name,
         action: 'mgr/field/update',
     });
 

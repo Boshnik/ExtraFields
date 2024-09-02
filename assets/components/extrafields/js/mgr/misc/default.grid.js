@@ -115,7 +115,7 @@ Ext.extend(ExtraFields.grid.Default, MODx.grid.Grid, {
                         var w = MODx.load({
                             xtype: 'ef-'+this.config.objectName+'-window-update',
                             id: Ext.id(),
-                            record: r,
+                            record: r.object,
                             listeners: {
                                 success: {
                                     fn: function () {
