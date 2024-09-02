@@ -28,7 +28,8 @@ $_lang['ef_field_type_readonly'] = 'Reading only';
 $_lang['ef_field_type_hidden'] = 'Hidden Field';
 $_lang['ef_field_type_xtype'] = 'Xtype field';
 
-$_lang['ef_field_empty_type'] = 'You must select a field type.';
+$_lang['ef_field_empty_class_name'] = 'You must select a table.';
+$_lang['ef_field_empty_field_type'] = 'You must select a field type.';
 $_lang['ef_field_err_name'] = 'You must provide a field name.';
 $_lang['ef_field_err_ae'] = 'A field with the same name already exists.';
 $_lang['ef_field_err_nf'] = 'Field not found.';
@@ -37,3 +38,6 @@ $_lang['ef_field_err_name_reserved'] = 'This field name is already taken in the 
 $_lang['ef_field_err_name_cyrillic'] = 'The field name must be in Latin';
 $_lang['ef_field_err_remove'] = 'Error while deleting a field.';
 $_lang['ef_field_err_save'] = 'Error saving field.';
+$_lang['ef_field_default_error_combo'] = 'Possible values: 0 or 1';
+$_lang['ef_field_default_error_numberfield'] = 'The value must be a number';
+$_lang['ef_field_default_error_date'] = 'The value must be empty or in the format: YYYY-MM-DD';

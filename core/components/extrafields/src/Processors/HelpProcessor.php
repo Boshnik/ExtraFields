@@ -123,7 +123,7 @@ trait HelpProcessor
             $type .= "({$meta['precision']})";
         }
         $null = $object->field_null ? 'NULL' : 'NOT NULL';
-        $default = empty($object->field_default) ? "" : " DEFAULT '$object->field_default'";
+        $default = (empty($object->field_default) && $object->field_default !== '0') ? "" : " DEFAULT '$object->field_default'";
 
         if (!empty($object->old_name) && $object->field_name !== $object->old_name) {
             $mode = 'rename';
