@@ -1,7 +1,7 @@
 # ExtraFields
 Additional fields in the resource and user profile
 
-- **Version:** <Badge type="tip" text="2.0.2-pl" />
+- **Version:** <Badge type="tip" text="2.0.3-pl" />
 - **Support MODX:** <Badge type="warning" text="2 / 3" />
 - **Support PHP:** <Badge type="danger" text="^8.1" />
 - **Author:** <Badge type="info" text="Boshnik" />
@@ -12,6 +12,13 @@ Additional fields in the resource and user profile
 If you discover an error in ExtraFields, open an issue in the repository on [GitHub](https://github.com/Boshnik/ExtraFields).
 
 ## Changelog
+
+### 2.0.3-pl
+- fixed field values
+- fixed custom tab
+- fixed abs update
+- fixed abs grid
+- fixed docs link
 
 ### 2.0.2-pl
 
