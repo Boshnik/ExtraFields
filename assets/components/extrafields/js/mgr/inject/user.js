@@ -1,3 +1,4 @@
+
 Ext.ComponentMgr.onAvailable('modx-user-tabs', function() {
     let tabs = this.items;
     let fields = [];
@@ -10,8 +11,10 @@ Ext.ComponentMgr.onAvailable('modx-user-tabs', function() {
             field.abs.forEach(abs => {
                 if (issetField) return;
                 let areas = abs.tab_id.replace(/^user_tab_/i, '').split('_');
+
                 if (Ext.isEmpty(abs.category_id) && areas.length === 1 && tab_index == areas[0]) {
                     if (ExtraFields.utils.checkAbs(abs)) return;
+
                     field = Object.assign(abs, field);
                     if (tab_index) field.cls = 'main-wrapper';
                     tab.items.splice(abs.index, 0, ExtraFields.utils.getXtype(field));
@@ -99,7 +102,7 @@ Ext.ComponentMgr.onAvailable('modx-user-tabs', function() {
                 field.abs.forEach(abs => {
                     if (issetField) return;
                     abs.tab_id = abs.tab_id.replace('modx-ef-tab-', '');
-                    if (tab.id === abs.tab_id) {
+                    if (tab.id == abs.tab_id) {
                         if (ExtraFields.utils.checkAbs(abs)) return;
                         field = Object.assign(abs, field);
                         items.push(ExtraFields.utils.getXtype(field));
@@ -123,7 +126,7 @@ Ext.ComponentMgr.onAvailable('modx-user-tabs', function() {
             layout: 'form',
             bodyCssClass: 'main-wrapper',
             cls: 'modx-extrafields-tab extrafields-' + (tab.categories.length ? 'vtabs' : 'tab'),
-            id: 'modx-extrafields-tab-' + tab.id,
+            id: 'modx-ef-tab-' + tab.id,
             hideMode: 'offsets',
             items: items
         });
