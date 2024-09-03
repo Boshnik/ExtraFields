@@ -9,7 +9,7 @@ export default defineConfig({
     // https://vitepress.dev/reference/default-theme-config
     nav: [
       { text: 'Home', link: 'https://boshnik.com/', target: '_self' },
-      { text: 'Documentation', link: '/docs/' }
+      { text: 'Documentation', link: '/' }
     ],
 
     sidebar: [

@@ -1,17 +1,41 @@
 # ExtraFields
 Additional fields in the resource and user profile
 
- - **Version**: 2.0.1-pl
- - **Support MODX**: 2 / 3
- - **Author**: Boshnik
+- **Version:** <Badge type="tip" text="2.0.2-pl" />
+- **Support MODX:** <Badge type="warning" text="2 / 3" />
+- **Support PHP:** <Badge type="danger" text="^8.1" />
+- **Author:** <Badge type="info" text="Boshnik" />
 
 
 ## Bug Reports
 
 If you discover an error in ExtraFields, open an issue in the repository on [GitHub](https://github.com/Boshnik/ExtraFields).
 
-## Buy me a coffee
+## Changelog
 
-If you found this component useful and it has helped you, please feel free to treat me to a cup of coffee.
+### 2.0.2-pl
 
-[![An image](https://img.buymeacoffee.com/button-api/?text=Buy%20me%20a%20coffee&emoji=%E2%98%95&slug=boshnik&button_colour=FFDD00&font_colour=000000&font_family=Cookie&outline_colour=000000&coffee_colour=ffffff)](https://www.buymeacoffee.com/boshnik)
+- fixed issues #7
+- fixed issues #14
+- PR #9 (halftrainedharry)
+- PR #10 (halftrainedharry)
+- PR #12 (halftrainedharry)
+
+### 2.0.1-pl
+
+- fixed issues #4
+- fixed issues #5
+- fixed issues #6
+
+### 2.0.0-pl
+
+- Updated core
+- Updated interface
+
+### 1.1.0-pl
+
+- Refactored to use PSR-4 autoload
+
+### 1.0.0-pl
+
+- First release

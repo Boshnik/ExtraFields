@@ -1,31 +1,31 @@
 {
-  "hash": "e33e32a0",
-  "configHash": "13f307e8",
+  "hash": "f96a3622",
+  "configHash": "e67e1827",
   "lockfileHash": "5a359e28",
-  "browserHash": "7c239604",
+  "browserHash": "a2287b7e",
   "optimized": {
     "vue": {
       "src": "../../../../node_modules/vue/dist/vue.runtime.esm-bundler.js",
       "file": "vue.js",
-      "fileHash": "882ac3b3",
+      "fileHash": "d09d1bdc",
       "needsInterop": false
     },
     "vitepress > @vue/devtools-api": {
       "src": "../../../../node_modules/@vue/devtools-api/dist/index.js",
       "file": "vitepress___@vue_devtools-api.js",
-      "fileHash": "40eb72ed",
+      "fileHash": "b07e7c32",
       "needsInterop": false
     },
     "vitepress > @vueuse/core": {
       "src": "../../../../node_modules/@vueuse/core/index.mjs",
       "file": "vitepress___@vueuse_core.js",
-      "fileHash": "9e06d619",
+      "fileHash": "6c81f0e5",
       "needsInterop": false
     },
     "@fancyapps/ui": {
       "src": "../../../../node_modules/@fancyapps/ui/dist/index.esm.js",
       "file": "@fancyapps_ui.js",
-      "fileHash": "fca612a0",
+      "fileHash": "a3e017f8",
       "needsInterop": false
     }
   },
