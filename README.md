@@ -1,8 +1,9 @@
 # ExtraFields
 Additional fields in the resource and user profile
 
-- **Version**: 2.0.2-pl
-- **Support MODX**: 2 / 3
-- **Author**: Boshnik
+- **Version:** 2.0.2-pl
+- **Support MODX:** 2 / 3
+- **Support PHP:** ^8.1
+- **Author:** Boshnik
 
-[Documentation](https://extrafields.boshnik.com/docs/)
+[Documentation](https://extrafields.boshnik.com/)

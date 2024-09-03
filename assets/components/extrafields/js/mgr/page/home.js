@@ -9,7 +9,7 @@ ExtraFields.page.Home = function (config) {
             xtype: 'button',
             text: '<i class="icon icon-large icon-book"></i> ' + _('ef_docs'),
             handler: () => {
-                window.open('https://extrafields.boshnik.com/docs/')
+                window.open('https://extrafields.boshnik.com/')
             }
         }]
     });
