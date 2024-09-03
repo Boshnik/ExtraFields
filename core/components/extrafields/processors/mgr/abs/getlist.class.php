@@ -33,18 +33,18 @@ class efFieldAbsGetListProcessor extends modObjectGetListProcessor
         $array = $object->toArray();
         $array['actions'] = [];
 
-        if (empty($object->areas)) {
-            if ($tab = $object->getOne('Tab')) {
-                $array['tab'] = $tab->get('name');
-            }
-
-            if ($category = $object->getOne('Category')) {
-                $array['category'] = $category->get('name');
-            }
-        } else {
-            $array['tab'] = $this->modx->lexicon($object->areas);
-            $array['category'] = $object->areas;
-        }
+//        if (empty($object->areas)) {
+//            if ($tab = $object->getOne('Tab')) {
+//                $array['tab'] = $tab->get('name');
+//            }
+//
+//            if ($category = $object->getOne('Category')) {
+//                $array['category'] = $category->get('name');
+//            }
+//        } else {
+//            $array['tab'] = $this->modx->lexicon($object->areas);
+//            $array['category'] = $object->areas;
+//        }
 
 
         // Edit
