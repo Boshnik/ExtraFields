@@ -1,3 +1,11 @@
+2.0.3-pl
+==============
+ - fixed field values
+ - fixed custom tab
+ - fixed abs update
+ - fixed abs grid
+ - fixed docs link
+
 2.0.2-pl
 ==============
  - fixed issues #7
