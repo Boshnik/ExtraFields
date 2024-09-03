@@ -1,3 +1,11 @@
+2.0.2-pl
+==============
+ - fixed issues #7
+ - fixed issues #14
+ - PR #9 (halftrainedharry)
+ - PR #10 (halftrainedharry)
+ - PR #12 (halftrainedharry)
+
 2.0.1-pl
 ==============
  - fixed issues #4
