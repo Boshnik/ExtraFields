@@ -65,7 +65,9 @@ trait QueryProcessor
                 'active' => 1
             ]);
             foreach ($abs as $item) {
-                $item['values'] = $this->processBindings($item['values']);
+                if (!empty($item['values'])) {
+                    $item['values'] = $this->processBindings($item['values']);
+                }
                 if (isset($this->config['pageblocks'])) {
                     $columns = $this->getFetchAll(\pbTableColumn::class, [
                         'table_id' => $item['table_id'],
