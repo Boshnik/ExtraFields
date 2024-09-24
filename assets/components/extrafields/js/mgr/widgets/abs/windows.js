@@ -436,7 +436,7 @@ Ext.extend(ExtraFields.window.CreateFieldAbs, ExtraFields.window.Default, {
                         xtype: 'numberfield',
                         inputType: 'number',
                         cls: 'x-form-text',
-                        fieldLabel: _('ef_field_index'),
+                        fieldLabel: _('ef_field_position'),
                         name: 'index',
                         id: config.id + '-index',
                         allowBlank: true,

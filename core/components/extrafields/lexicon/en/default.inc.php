@@ -57,7 +57,7 @@ $_lang['ef_field_category'] = 'Category';
 $_lang['ef_field_sort'] = 'Sort field';
 $_lang['ef_field_dir'] = 'Sorting direction';
 $_lang['ef_field_areas'] = 'Areas';
-$_lang['ef_field_index'] = 'Index';
+$_lang['ef_field_position'] = 'Index';
 $_lang['ef_field_active'] = 'Active';
 
 $_lang['ef_combo_empty'] = 'Click to select';

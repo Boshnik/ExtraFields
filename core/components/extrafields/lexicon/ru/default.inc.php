@@ -57,7 +57,7 @@ $_lang['ef_field_category'] = 'Категория';
 $_lang['ef_field_sort'] = 'Поле для сортировки';
 $_lang['ef_field_dir'] = 'Направление сортировки';
 $_lang['ef_field_areas'] = 'Область';
-$_lang['ef_field_index'] = 'Индекс';
+$_lang['ef_field_position'] = 'Индекс';
 $_lang['ef_field_active'] = 'Активно';
 
 $_lang['ef_combo_empty'] = 'Нажмите для выбора';
