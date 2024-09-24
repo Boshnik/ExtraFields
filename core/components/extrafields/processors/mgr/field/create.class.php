@@ -62,6 +62,7 @@ class efFieldCreateProcessor extends modObjectCreateProcessor
         }
 
         $this->createTableColumn($this->object);
+        $this->updateIndex($this->object);
 
         return true;
     }

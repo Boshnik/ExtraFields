@@ -46,6 +46,7 @@ class efFieldUpdateProcessor extends modObjectUpdateProcessor
     public function afterSave()
     {
         $this->updateTableColumn($this->object);
+        $this->updateIndex($this->object);
 
         return true;
     }

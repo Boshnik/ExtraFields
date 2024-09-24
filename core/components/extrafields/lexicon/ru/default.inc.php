@@ -37,6 +37,7 @@ $_lang['ef_field_id'] = 'ID';
 $_lang['ef_field_caption'] = 'Заголовок поля';
 $_lang['ef_field_name'] = 'Название поля';
 $_lang['ef_field_null'] = 'NULL';
+$_lang['ef_field_index'] = 'Индексируемое поле';
 $_lang['ef_field_default'] = 'По умолчанию';
 $_lang['ef_field_err_name_cyrillic'] = 'Ошибка в название поля';
 $_lang['ef_field_err_name_reserved'] = 'Название поля уже занято в родной таблице';

@@ -75,12 +75,22 @@ Ext.extend(ExtraFields.window.CreateField, ExtraFields.window.Default, {
                 }]
             }]
         }, {
-            xtype: 'xcheckbox',
-            boxLabel: _('ef_field_null'),
-            name: 'field_null',
-            id: config.id + '-field-null',
-            checked: config.record?.field_null ?? true,
-            disabled: (config.record?.field_type === 'combo-boolean') || false
+            xtype: 'checkboxgroup',
+            columns: 2,
+            items: [{
+                xtype: 'xcheckbox',
+                boxLabel: _('ef_field_null'),
+                name: 'field_null',
+                id: config.id + '-field-null',
+                checked: config.record?.field_null ?? true,
+                disabled: (config.record?.field_type === 'combo-boolean') || false
+            }, {
+                xtype: 'xcheckbox',
+                boxLabel: _('ef_field_index'),
+                name: 'field_index',
+                id: config.id + '-field-index',
+                checked: config.record?.field_index ?? false,
+            }]
         }, {
             xtype: 'fieldset',
             title: _('ef_settings'),

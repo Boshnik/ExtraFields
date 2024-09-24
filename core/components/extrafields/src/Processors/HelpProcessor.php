@@ -106,6 +106,38 @@ trait HelpProcessor
         }
     }
 
+    public function updateIndex($object)
+    {
+        $sql = $this->getSQL($object, 'check_index');
+        $result = $this->modx->query($sql);
+
+        $sql = null;
+
+        if ($result && $result->fetch(\PDO::FETCH_ASSOC)) {
+            if (!$object->field_index) {
+                $sql = $this->getSQL($object, 'remove_index');
+            }
+        } else {
+            if ($object->field_index) {
+                $sql = $this->getSQL($object, 'add_index');
+            }
+        }
+
+        if ($sql) {
+            $this->modx->exec($sql);
+        }
+    }
+
+    public function removeIndex($object)
+    {
+        $sql = $this->getSQL($object, 'check_index');
+        $result = $this->modx->query($sql);
+        if ($result && $result->fetch(\PDO::FETCH_ASSOC)) {
+            $sql = $this->getSQL($object, 'remove_index');
+            $this->modx->exec($sql);
+        }
+    }
+
     /**
      * @param $object
      * @param string $mode
@@ -141,6 +173,15 @@ trait HelpProcessor
                 break;
             case 'remove':
                 $sql = "ALTER TABLE {$table} DROP COLUMN`{$name}`;";
+                break;
+            case 'check_index':
+                $sql = "SHOW INDEX FROM {$table} WHERE Key_name = 'idx_{$name}';";
+                break;
+            case 'add_index':
+                $sql = "ALTER TABLE {$table} ADD INDEX `idx_{$name}` ($name);";
+                break;
+            case 'remove_index':
+                $sql = "ALTER TABLE {$table} DROP INDEX `idx_{$name}`;";
                 break;
         }
 

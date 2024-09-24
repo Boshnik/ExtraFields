@@ -17,6 +17,7 @@ class efFieldRemoveProcessor extends modObjectRemoveProcessor
     public function afterRemove()
     {
         $this->removeTableColumn($this->object);
+        $this->removeIndex($this->object);
 
         return true;
     }

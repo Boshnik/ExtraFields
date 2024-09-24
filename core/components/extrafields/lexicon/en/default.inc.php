@@ -37,6 +37,7 @@ $_lang['ef_field_id'] = 'ID';
 $_lang['ef_field_caption'] = 'Caption';
 $_lang['ef_field_name'] = 'Name';
 $_lang['ef_field_null'] = 'NULL';
+$_lang['ef_field_index'] = 'Indexable field';
 $_lang['ef_field_default'] = 'Default';
 $_lang['ef_field_err_name_cyrillic'] = 'Error in field name';
 $_lang['ef_field_err_name_reserved'] = 'The field name is already taken in the native table';

@@ -7,6 +7,7 @@
         <field key="field_name" dbtype="varchar" precision="100" phptype="string" null="false" default=""/>
         <field key="field_type" dbtype="varchar" precision="100" phptype="string" null="false" default=""/>
         <field key="field_null" dbtype="tinyint" precision="1" attributes="unsigned" phptype="boolean" null="false" default="1" />
+        <field key="field_index" dbtype="tinyint" precision="1" attributes="unsigned" phptype="boolean" null="false" default="0" />
         <field key="field_default" dbtype="varchar" precision="100" phptype="string" null="true" default=""/>
         <field key="menuindex" dbtype="smallint" precision="10" phptype="integer" null="false" default="0" />
         <field key="active" dbtype="tinyint" precision="1" attributes="unsigned" phptype="boolean" null="false" default="1" />
