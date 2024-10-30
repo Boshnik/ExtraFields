@@ -73,7 +73,7 @@ Ext.ComponentMgr.onAvailable('modx-user-tabs', function() {
                         if (issetField) return;
                         abs.tab_id = abs.tab_id.replace('modx-ef-tab-', '');
                         abs.category_id = abs.category_id.replace('modx-ef-category-', '');
-                        if (tab.id === abs.tab_id && category.id === abs.category_id) {
+                        if (tab.id == abs.tab_id && category.id == abs.category_id) {
                             if (ExtraFields.utils.checkAbs(abs)) return;
                             field = Object.assign(abs, field);
                             c_items.push(ExtraFields.utils.getXtype(field));

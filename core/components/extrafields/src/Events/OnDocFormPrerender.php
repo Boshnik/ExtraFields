@@ -16,7 +16,7 @@ class OnDocFormPrerender extends Event
     public function run()
     {
         /** @var \modResource $resource */
-        $resource = $this->scriptProperties['resource'];
+        $resource = $this->scriptProperties['resource'] ?? false;
         if (!$resource) {
             return true;
         }

@@ -37,16 +37,18 @@ class OnMODXInit extends Event
             $this->modx->loadClass($row['className']);
             $map = $this->modx->map[$row['className']];
             foreach ($row['fields'] as $field) {
-                $meta = array_key_exists($field['field_type'], $this->fieldmeta) ? $this->fieldmeta[$field['field_type']] : $this->fieldmeta['richtext'];
-                $map['fields'][$field['field_name']] = $field['field_default'];
-                $map['fieldMeta'][$field['field_name']] = [
-                    'dbtype' => $meta['dbtype'],
-                    'phptype' => $meta['phptype'],
-                    'null' => $field['field_null'],
-                    'default' => $field['field_default'],
-                ];
-                if (isset($meta['precision'])) {
-                    $map['fieldMeta'][$field['field_name']]['precision'] = $meta['precision'];
+                if (!isset($map['fields'][$field['field_name']])) {
+                    $meta = array_key_exists($field['field_type'], $this->fieldmeta) ? $this->fieldmeta[$field['field_type']] : $this->fieldmeta['richtext'];
+                    $map['fields'][$field['field_name']] = $field['field_default'];
+                    $map['fieldMeta'][$field['field_name']] = [
+                        'dbtype' => $meta['dbtype'],
+                        'phptype' => $meta['phptype'],
+                        'null' => $field['field_null'],
+                        'default' => $field['field_default'],
+                    ];
+                    if (isset($meta['precision'])) {
+                        $map['fieldMeta'][$field['field_name']]['precision'] = $meta['precision'];
+                    }
                 }
             }
 
