@@ -13,9 +13,8 @@ Ext.ComponentMgr.onAvailable('modx-user-tabs', function() {
                 let areas = abs.tab_id.replace(/^user_tab_/i, '').split('_');
 
                 if (Ext.isEmpty(abs.category_id) && areas.length === 1 && tab_index == areas[0]) {
-                    if (ExtraFields.utils.checkAbs(abs)) return;
-
                     field = Object.assign(abs, field);
+                    if (ExtraFields.utils.checkAbs(field)) return;
                     if (tab_index) field.cls = 'main-wrapper';
                     tab.items.splice(abs.index, 0, ExtraFields.utils.getXtype(field));
                     if (!fields.includes(field.id)) {
@@ -35,8 +34,8 @@ Ext.ComponentMgr.onAvailable('modx-user-tabs', function() {
                     if (areas.length === 1) return;
                     if (tab_index != areas[0] || (column_index + 1) != areas[1]) return;
                     if (!Ext.isEmpty(abs.category_id)) {
-                        if (ExtraFields.utils.checkAbs(abs)) return;
                         field = Object.assign(abs, field);
+                        if (ExtraFields.utils.checkAbs(field)) return;
                         column.items.splice(abs.index, 0, ExtraFields.utils.getXtype(field));
                         if (!fields.includes(field.id)) {
                             fields.push(field.id);
@@ -74,8 +73,8 @@ Ext.ComponentMgr.onAvailable('modx-user-tabs', function() {
                         abs.tab_id = abs.tab_id.replace('modx-ef-tab-', '');
                         abs.category_id = abs.category_id.replace('modx-ef-category-', '');
                         if (tab.id == abs.tab_id && category.id == abs.category_id) {
-                            if (ExtraFields.utils.checkAbs(abs)) return;
                             field = Object.assign(abs, field);
+                            if (ExtraFields.utils.checkAbs(abs)) return;
                             c_items.push(ExtraFields.utils.getXtype(field));
                             if (!fields.includes(field.id)) {
                                 fields.push(field.id);
@@ -103,8 +102,8 @@ Ext.ComponentMgr.onAvailable('modx-user-tabs', function() {
                     if (issetField) return;
                     abs.tab_id = abs.tab_id.replace('modx-ef-tab-', '');
                     if (tab.id == abs.tab_id) {
-                        if (ExtraFields.utils.checkAbs(abs)) return;
                         field = Object.assign(abs, field);
+                        if (ExtraFields.utils.checkAbs(abs)) return;
                         items.push(ExtraFields.utils.getXtype(field));
                         if (!fields.includes(field.id)) {
                             fields.push(field.id);

@@ -245,7 +245,7 @@ ExtraFields.utils.getAbs = function (config, class_name = ExtraFields.config.cla
                         setTimeout(() => {
                             let values = config.record?.ab_user_group ?? '';
                             if (!Ext.isEmpty(values)) {
-                                el.setValue(values.split('||'));
+                                el.setValue(Object.isArray(values) ? values : values.split('||'));
                             }
                         }, 500);
                     },
@@ -268,7 +268,7 @@ ExtraFields.utils.getAbs = function (config, class_name = ExtraFields.config.cla
 ExtraFields.utils.checkAbs = function (object) {
 
     let result = false;
-    switch (ExtraFields.config.class_name) {
+    switch (object.class_name) {
         case 'modResource':
             // templates
             let templates = Ext.isEmpty(object.ab_templates) ? [] : object.ab_templates.split('||');
