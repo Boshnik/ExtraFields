@@ -245,7 +245,7 @@ ExtraFields.utils.getAbs = function (config, class_name = ExtraFields.config.cla
                         setTimeout(() => {
                             let values = config.record?.ab_user_group ?? '';
                             if (!Ext.isEmpty(values)) {
-                                el.setValue(values.split('||'));
+                                el.setValue(Array.isArray(values) ? values : values.split('||'));
                             }
                         }, 500);
                     },

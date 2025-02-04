@@ -34,6 +34,7 @@ class OnUserFormPrerender extends Event
         $fields = json_encode($this->getFields('modUserProfile'),1);
 
         $config = $this->extrafields->config;
+        $config['class_name'] = 'modUserProfile';
         $config['media_source'] = $this->getMediaSources();
 
         $jsUrl = $this->extrafields->config['jsUrl'] . 'mgr/';
