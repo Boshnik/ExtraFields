@@ -8,7 +8,7 @@ trait HelpProcessor
     public $fieldmeta = [
         'textfield' => [
             'dbtype' => 'varchar',
-            'precision' => 255,
+            'precision' => 250,
             'phptype' => 'string',
         ],
         'textarea' => [
@@ -30,6 +30,12 @@ trait HelpProcessor
         'modx-texteditor' => [
             'dbtype' => 'mediumtext',
             'phptype' => 'string',
+        ],
+        'listbox-int' => [
+            'dbtype' => 'int',
+            'precision' => 16,
+            'phptype' => 'integer',
+            'default' => 0,
         ],
         'listbox-multiple' => [
             'dbtype' => 'text',
