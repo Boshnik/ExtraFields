@@ -8,7 +8,7 @@ trait HelpProcessor
     public $fieldmeta = [
         'textfield' => [
             'dbtype' => 'varchar',
-            'precision' => 255,
+            'precision' => 250,
             'phptype' => 'string',
         ],
         'textarea' => [
