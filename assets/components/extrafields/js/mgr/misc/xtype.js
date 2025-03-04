@@ -49,6 +49,7 @@ ExtraFields.utils.getXtype = function (field) {
             break;
 
         case 'listbox':
+        case 'listbox-int':
             xtype.xtype = 'ef-combo-listbox';
             if (field.values.indexOf('++') === 0) {
                 field.values = MODx.clientconfig ? MODx.clientconfig[field.values.replace('++', '')] : '';

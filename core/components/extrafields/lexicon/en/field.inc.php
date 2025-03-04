@@ -6,6 +6,7 @@ $_lang['ef_field_type_richtext'] = 'Text editor';
 //$_lang['ef_field_type_editorjs'] = 'EditorJs';
 $_lang['ef_field_type_texteditor'] = 'ACE';
 $_lang['ef_field_type_listbox'] = 'Listbox';
+$_lang['ef_field_type_listbox_int'] = 'Listbox (int values)';
 $_lang['ef_field_type_listbox_multiple'] = 'Listbox (multiple)';
 $_lang['ef_field_type_resourcelist'] = 'Resource list';
 //$_lang['ef_field_type_readyblocks'] = 'Готовые блоки';

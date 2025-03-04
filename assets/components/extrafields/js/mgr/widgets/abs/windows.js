@@ -239,6 +239,12 @@ Ext.extend(ExtraFields.window.CreateFieldAbs, ExtraFields.window.Default, {
             text: _('ef_field_values_desc'),
             hidden: true,
         }, {
+            xtype: 'label',
+            id: config.id + '-values-int-desc',
+            cls: 'desc-under',
+            html: _('ef_field_values_int_desc'),
+            hidden: true,
+        }, {
             layout: 'column',
             items: [{
                 columnWidth: .5,
@@ -436,7 +442,7 @@ Ext.extend(ExtraFields.window.CreateFieldAbs, ExtraFields.window.Default, {
                         xtype: 'numberfield',
                         inputType: 'number',
                         cls: 'x-form-text',
-                        fieldLabel: _('ef_field_position'),
+                        fieldLabel: _('ef_field_index'),
                         name: 'index',
                         id: config.id + '-index',
                         allowBlank: true,
@@ -485,6 +491,7 @@ Ext.extend(ExtraFields.window.CreateFieldAbs, ExtraFields.window.Default, {
 
         let values = Ext.getCmp(id + '-values');
         let values_desc = Ext.getCmp(id + '-values-desc');
+        let values_int_desc = Ext.getCmp(id + '-values-int-desc');
         let defaultfield = Ext.getCmp(id + '-default');
         let defaultfield_desc = Ext.getCmp(id + '-default-desc');
         let table_id = Ext.getCmp(id + '-table_id');
@@ -535,6 +542,10 @@ Ext.extend(ExtraFields.window.CreateFieldAbs, ExtraFields.window.Default, {
             case 'listbox-multiple':
                 values.show();
                 values_desc.show();
+                break;
+            case 'listbox-int':
+                values.show();
+                values_int_desc.show();
                 break;
             case 'resourcelist':
                 sort.show();

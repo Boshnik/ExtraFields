@@ -178,6 +178,7 @@ ExtraFields.combo.Types = function(config) {
         [_('ef_field_type_textfield'),'textfield'],
         [_('ef_field_type_textarea'),'textarea'],
         [_('ef_field_type_listbox'),'listbox'],
+        [_('ef_field_type_listbox_int'),'listbox-int'],
         [_('ef_field_type_listbox_multiple'),'listbox-multiple'],
         [_('ef_field_type_resourcelist'),'resourcelist'],
         [_('ef_field_type_combo_boolean'),'combo-boolean'],
@@ -197,7 +198,7 @@ ExtraFields.combo.Types = function(config) {
     if (MODx.loadRTE) data.splice(2,0,[_('ef_field_type_richtext'),'richtext']);
 
     var ace = (typeof(MODx.ux) != 'undefined' && typeof(MODx.ux.Ace) == 'function') ? 1 : 0;
-    if (ace) data.splice(3,0,[_('ef_field_type_texteditor'), 'modx-texteditor']);
+    if (ace) data.splice((MODx.loadRTE ? 3 : 2),0,[_('ef_field_type_texteditor'), 'modx-texteditor']);
 
     // TODO
     // if (typeof ColorPicker == 'object') {
