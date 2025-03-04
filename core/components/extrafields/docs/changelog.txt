@@ -1,3 +1,7 @@
+2.0.6-pl
+==============
+ - Added new field type Listbox (int values) (@gvozdb) [#19]
+
 2.0.5-pl
 ==============
  - Fixed errors
