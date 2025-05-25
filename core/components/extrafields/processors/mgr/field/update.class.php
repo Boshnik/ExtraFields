@@ -38,7 +38,7 @@ class efFieldUpdateProcessor extends modObjectUpdateProcessor
 
     public function afterSave()
     {
-        if ($this->object->field_type === 'enumfield') {
+        if (in_array($this->object->field_type, ['enumfield', 'setfield'])) {
             $oldEnum = explode(',', $this->object->old_precision);
             $newEnum = explode(',', $this->object->precision);
             $deletedValues = array_diff($oldEnum, $newEnum);
@@ -46,7 +46,11 @@ class efFieldUpdateProcessor extends modObjectUpdateProcessor
             $field_name = $this->object->field_name;
             $default = $this->object->field_null ? 'NULL' : "'{$this->object->field_default}'";
             foreach ($deletedValues as $value) {
-                $sql = "UPDATE $table SET $field_name = $default WHERE $field_name = '$value'";
+                if ($this->object->field_type === 'enumfield') {
+                    $sql = "UPDATE $table SET $field_name = $default WHERE $field_name = '$value';";
+                } else {
+                    $sql = "UPDATE $table SET $field_name = $default WHERE FIND_IN_SET('$value', $field_name) > 0;";
+                }
                 $this->modx->exec($sql);
             }
         }

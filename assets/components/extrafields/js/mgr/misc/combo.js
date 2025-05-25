@@ -180,6 +180,7 @@ ExtraFields.combo.Types = function(config) {
         [_('ef_field_type_listbox_int'),'listbox-int'],
         [_('ef_field_type_listbox_multiple'),'listbox-multiple'],
         [_('ef_field_type_enumfield'),'enumfield'],
+        [_('ef_field_type_setfield'),'setfield'],
         [_('ef_field_type_resourcelist'),'resourcelist'],
         [_('ef_field_type_combo_boolean'),'combo-boolean'],
         [_('ef_field_type_numberfield'),'numberfield'],

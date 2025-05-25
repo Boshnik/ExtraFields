@@ -44,6 +44,10 @@ trait HelpProcessor
             'dbtype' => 'enum',
             'phptype' => 'string',
         ],
+        'setfield' => [
+            'dbtype' => 'set',
+            'phptype' => 'string',
+        ],
         'numberfield' => [
             'dbtype' => 'int',
             'precision' => '1',
@@ -156,13 +160,15 @@ trait HelpProcessor
         $meta = $this->fieldmeta[$object->field_type] ?? $this->fieldmeta['textfield'];
 
         $type = $meta['dbtype'];
-        if (isset($meta['precision'])) {
-            $type .= "({$meta['precision']})";
-        }
-        if ($object->field_type === 'enumfield') {
+        if (in_array($object->field_type, ['enumfield', 'setfield'])) {
+            $type = strtoupper($type);
             $precision = explode(',', $object->precision);
             $enumValues = "'" . implode("', '", $precision) . "'";
-            $type = "ENUM($enumValues)";
+            $meta['precision'] = $enumValues;
+        }
+
+        if (isset($meta['precision'])) {
+            $type .= "({$meta['precision']})";
         }
 
         $null = $object->field_null ? 'NULL' : 'NOT NULL';

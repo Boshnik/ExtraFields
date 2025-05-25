@@ -9,6 +9,7 @@ $_lang['ef_field_type_listbox'] = 'Выпадающий список';
 $_lang['ef_field_type_listbox_int'] = 'Выпадающий список (числовые значения)';
 $_lang['ef_field_type_listbox_multiple'] = 'Выпадающий список (мультивыбор)';
 $_lang['ef_field_type_enumfield'] = 'ENUM поле';
+$_lang['ef_field_type_setfield'] = 'SET поле';
 $_lang['ef_field_type_resourcelist'] = 'Список ресурсов';
 //$_lang['ef_field_type_readyblocks'] = 'Готовые блоки';
 $_lang['ef_field_type_combo_boolean'] = 'Список Да/Нет';

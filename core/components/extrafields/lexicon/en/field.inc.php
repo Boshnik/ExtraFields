@@ -9,6 +9,7 @@ $_lang['ef_field_type_listbox'] = 'Listbox';
 $_lang['ef_field_type_listbox_int'] = 'Listbox (int values)';
 $_lang['ef_field_type_listbox_multiple'] = 'Listbox (multiple)';
 $_lang['ef_field_type_enumfield'] = 'ENUM field';
+$_lang['ef_field_type_setfield'] = 'SET field';
 $_lang['ef_field_type_resourcelist'] = 'Resource list';
 //$_lang['ef_field_type_readyblocks'] = 'Готовые блоки';
 $_lang['ef_field_type_combo_boolean'] = 'Yes/No list';

@@ -163,6 +163,7 @@ Ext.extend(ExtraFields.window.CreateField, ExtraFields.window.Default, {
                 }
                 break;
             case 'enumfield':
+            case 'setfield':
                 precision.show().setDisabled(false);
                 precision_desc.show();
                 break;

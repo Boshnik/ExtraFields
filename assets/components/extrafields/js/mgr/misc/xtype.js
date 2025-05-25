@@ -58,6 +58,7 @@ ExtraFields.utils.getXtype = function (field) {
             xtype.data = field.values;
             break;
 
+        case 'setfield':
         case 'listbox-multiple':
             xtype.xtype = 'ef-combo-listbox-multiple';
             if (field.values.indexOf('++') === 0) {
