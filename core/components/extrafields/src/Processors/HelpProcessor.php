@@ -4,8 +4,7 @@ namespace Boshnik\ExtraFields\Processors;
 
 trait HelpProcessor
 {
-
-    public $fieldmeta = [
+    public array $fieldmeta = [
         'textfield' => [
             'dbtype' => 'varchar',
             'precision' => 250,
@@ -39,6 +38,10 @@ trait HelpProcessor
         ],
         'listbox-multiple' => [
             'dbtype' => 'text',
+            'phptype' => 'string',
+        ],
+        'enumfield' => [
+            'dbtype' => 'enum',
             'phptype' => 'string',
         ],
         'numberfield' => [
@@ -81,7 +84,7 @@ trait HelpProcessor
      * @param $object
      * @param $className
      */
-    public function createTableColumn($object)
+    public function createTableColumn($object): void
     {
         if ($sql = $this->getSQL($object)) {
             $this->modx->exec($sql);
@@ -93,7 +96,7 @@ trait HelpProcessor
      * Update a column in a table
      * @param $object
      */
-    public function updateTableColumn($object)
+    public function updateTableColumn($object): void
     {
         if ($sql = $this->getSQL($object, 'update')) {
             $this->modx->exec($sql);
@@ -105,36 +108,32 @@ trait HelpProcessor
      * Remove a column in a table
      * @param $object
      */
-    public function removeTableColumn($object)
+    public function removeTableColumn($object): void
     {
         if ($sql = $this->getSQL($object, 'remove')) {
             $this->modx->exec($sql);
         }
     }
 
-    public function updateIndex($object)
+    public function updateIndex($object): void
     {
         $sql = $this->getSQL($object, 'check_index');
         $result = $this->modx->query($sql);
 
-        $sql = null;
-
         if ($result && $result->fetch(\PDO::FETCH_ASSOC)) {
             if (!$object->field_index) {
                 $sql = $this->getSQL($object, 'remove_index');
+                $this->modx->exec($sql);
             }
         } else {
             if ($object->field_index) {
                 $sql = $this->getSQL($object, 'add_index');
+                $this->modx->exec($sql);
             }
-        }
-
-        if ($sql) {
-            $this->modx->exec($sql);
         }
     }
 
-    public function removeIndex($object)
+    public function removeIndex($object): void
     {
         $sql = $this->getSQL($object, 'check_index');
         $result = $this->modx->query($sql);
@@ -147,9 +146,9 @@ trait HelpProcessor
     /**
      * @param $object
      * @param string $mode
-     * @return false|string
+     * @return string
      */
-    public function getSQL($object, $mode = 'create')
+    public function getSQL($object, $mode = 'create'): string
     {
         $table = $this->modx->getTableName($object->class_name);
         $name = $object->field_name;
@@ -160,8 +159,14 @@ trait HelpProcessor
         if (isset($meta['precision'])) {
             $type .= "({$meta['precision']})";
         }
+        if ($object->field_type === 'enumfield') {
+            $precision = explode(',', $object->precision);
+            $enumValues = "'" . implode("', '", $precision) . "'";
+            $type = "ENUM($enumValues)";
+        }
+
         $null = $object->field_null ? 'NULL' : 'NOT NULL';
-        $default = (empty($object->field_default) && $object->field_default !== '0') ? "" : " DEFAULT '$object->field_default'";
+        $default = (empty($object->field_default) && $object->field_default !== '0') ? "" : "DEFAULT '$object->field_default'";
 
         if (!empty($object->old_name) && $object->field_name !== $object->old_name) {
             $mode = 'rename';
@@ -169,29 +174,29 @@ trait HelpProcessor
 
         switch ($mode) {
             case 'create':
-                $sql = "ALTER TABLE {$table} ADD `{$name}` {$type} {$null}{$default};";
+                $sql = "ALTER TABLE $table ADD `$name` $type $null $default;";
                 break;
             case 'update':
-                $sql = "ALTER TABLE {$table} MODIFY COLUMN `{$name}` {$type} {$null}{$default};";
+                $sql = "ALTER TABLE $table MODIFY COLUMN `$name` $type $null $default;";
                 break;
             case 'rename':
-                $sql = "ALTER TABLE {$table} CHANGE COLUMN `{$object->old_name}` `{$name}` {$type} {$null}{$default};";
+                $sql = "ALTER TABLE $table CHANGE COLUMN `$object->old_name` `$name` $type $null $default;";
                 break;
             case 'remove':
-                $sql = "ALTER TABLE {$table} DROP COLUMN`{$name}`;";
+                $sql = "ALTER TABLE $table DROP COLUMN`$name`;";
                 break;
             case 'check_index':
-                $sql = "SHOW INDEX FROM {$table} WHERE Key_name = 'idx_{$name}';";
+                $sql = "SHOW INDEX FROM $table WHERE Key_name = 'idx_$name';";
                 break;
             case 'add_index':
-                $sql = "ALTER TABLE {$table} ADD INDEX `idx_{$name}` ($name);";
+                $sql = "ALTER TABLE $table ADD INDEX `idx_$name` ($name);";
                 break;
             case 'remove_index':
-                $sql = "ALTER TABLE {$table} DROP INDEX `idx_{$name}`;";
+                $sql = "ALTER TABLE $table DROP INDEX `idx_$name`;";
                 break;
         }
 
-        return $sql;
+        return trim($sql ?? '');
     }
 
 
@@ -262,29 +267,42 @@ trait HelpProcessor
     }
 
 
-    public function validFieldType($properties)
+    public function validFieldType($properties): void
     {
         [
             'field_type' => $field_type,
-            'field_default' => $field_default
+            'field_default' => $field_default,
+            'precision' => $precision
         ] = $properties;
-        if (in_array($field_type, ['xcheckbox', 'combo-boolean'])) {
-            if (!in_array($field_default, ['0', '1'])) {
-                $this->modx->error->addField('field_default', $this->modx->lexicon('ef_field_default_error_combo'));
-            }
-        }
 
-        if (in_array($field_type, ['numberfield'])) {
-            if (!is_numeric($field_default)) {
-                $this->modx->error->addField('field_default', $this->modx->lexicon('ef_field_default_error_numberfield'));
-            }
+        switch($field_type) {
+            case 'enumfield':
+                if (empty($precision)) {
+                    $this->modx->error->addField('precision', $this->modx->lexicon('ef_field_empty'));
+                }
+                if (!empty($field_default)) {
+                    $values = explode(',', $precision);
+                    if (!in_array($field_default, $values)) {
+                        $this->modx->error->addField('field_default', $this->modx->lexicon('ef_field_default_error_enum'));
+                    }
+                }
+                break;
+            case 'xcheckbox':
+            case 'combo-boolean':
+                if (!in_array($field_default, ['0', '1'])) {
+                    $this->modx->error->addField('field_default', $this->modx->lexicon('ef_field_default_error_combo'));
+                }
+                break;
+            case 'numberfield':
+                if (!is_numeric($field_default)) {
+                    $this->modx->error->addField('field_default', $this->modx->lexicon('ef_field_default_error_numberfield'));
+                }
+                break;
+            case 'xdatetime':
+                if (!empty($field_default) && !preg_match("/^[0-9]{4}-[0-9]{2}-[0-9]{2}$/", $field_default)) {
+                    $this->modx->error->addField('field_default', $this->modx->lexicon('ef_field_default_error_date'));
+                }
+                break;
         }
-
-        if (in_array($field_type, ['xdatetime']) && !empty($field_default)) {
-            if (!preg_match("/^[0-9]{4}-[0-9]{2}-[0-9]{2}$/", $field_default)) {
-                $this->modx->error->addField('field_default', $this->modx->lexicon('ef_field_default_error_date'));
-            }
-        }
-
     }
 }

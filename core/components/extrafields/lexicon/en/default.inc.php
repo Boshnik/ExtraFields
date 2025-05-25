@@ -48,6 +48,7 @@ $_lang['ef_field_width_desc'] = '0 to 100';
 $_lang['ef_field_values'] = 'Possible values';
 $_lang['ef_field_values_desc'] = 'Options separated by ||, e.g. Cat||Dog or White==#ffffff||Black==#000000';
 $_lang['ef_field_values_int_desc'] = 'Options separated by ||, e.g. 1|||2|||3 or White==1|||Black==2|||Gray==3<br>It\'s important that the values are numeric, because in MySQL the type of field int';
+$_lang['ef_field_precision_desc'] = 'Options separated by a comma, e.g. value1,value2,value3';
 $_lang['ef_field_xtype'] = 'xtype field';
 $_lang['ef_field_xtype_desc'] = 'Field List - https://bobsguides.com/xtype-list.html';
 $_lang['ef_field_default'] = 'Default value';

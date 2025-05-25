@@ -48,6 +48,7 @@ $_lang['ef_field_width_desc'] = 'От 0 до 100';
 $_lang['ef_field_values'] = 'Возможные значения';
 $_lang['ef_field_values_desc'] = 'Варианты, разделенные ||, например Кошка||Собака или Белый==#ffffff||Черный==#000000';
 $_lang['ef_field_values_int_desc'] = 'Варианты, разделенные ||, например 1||2||3 или Белый==1||Черный==2||Серый==3<br>Важно, чтобы значения были числовыми, т.к. в MySQL тип поля int';
+$_lang['ef_field_precision_desc'] = 'Варианты, разделённые запятой, например значение1,значение2,значение3';
 $_lang['ef_field_xtype'] = 'Xtype поле';
 $_lang['ef_field_xtype_desc'] = 'Список полей - https://bobsguides.com/xtype-list.html';
 $_lang['ef_field_default'] = 'Значение по умолчанию';

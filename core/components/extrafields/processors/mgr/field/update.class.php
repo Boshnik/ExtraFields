@@ -10,13 +10,10 @@ class efFieldUpdateProcessor extends modObjectUpdateProcessor
     public $objectType = 'ef_field';
     public $languageTopics = ['extrafields'];
 
-
-    /**
-     * @return bool
-     */
     public function beforeSet()
     {
         $this->object->set('old_name', $this->object->field_name);
+        $this->object->set('old_precision', $this->object->precision);
 
         $id = (int) $this->properties['id'];
         $name = trim($this->properties['field_name']);
@@ -39,12 +36,21 @@ class efFieldUpdateProcessor extends modObjectUpdateProcessor
         return parent::beforeSet();
     }
 
-
-    /**
-     * @return bool
-     */
     public function afterSave()
     {
+        if ($this->object->field_type === 'enumfield') {
+            $oldEnum = explode(',', $this->object->old_precision);
+            $newEnum = explode(',', $this->object->precision);
+            $deletedValues = array_diff($oldEnum, $newEnum);
+            $table = $this->modx->getTableName($this->object->class_name);
+            $field_name = $this->object->field_name;
+            $default = $this->object->field_null ? 'NULL' : "'{$this->object->field_default}'";
+            foreach ($deletedValues as $value) {
+                $sql = "UPDATE $table SET $field_name = $default WHERE $field_name = '$value'";
+                $this->modx->exec($sql);
+            }
+        }
+
         $this->updateTableColumn($this->object);
         $this->updateIndex($this->object);
 

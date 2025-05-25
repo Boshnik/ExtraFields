@@ -22,7 +22,6 @@ ExtraFields.combo.Search = function (config) {
     this.addEvents('clear', 'search');
 };
 Ext.extend(ExtraFields.combo.Search, Ext.form.TwinTriggerField, {
-
     initComponent: function () {
         Ext.form.TwinTriggerField.superclass.initComponent.call(this);
         this.triggerConfig = {
@@ -75,7 +74,7 @@ ExtraFields.combo.Browser = function (config) {
             config.openTo = '/' + config.openTo;
         }
         if (!/$\//.test(config.openTo)) {
-            var tmp = config.openTo.split('/');
+            let tmp = config.openTo.split('/');
             delete tmp[tmp.length - 1];
             tmp = tmp.join('/');
             config.openTo = tmp.substr(1)
@@ -97,7 +96,7 @@ Ext.extend(ExtraFields.combo.Browser, Ext.form.TriggerField, {
             return false;
         }
 
-        var browser = MODx.load({
+        let browser = MODx.load({
             xtype: 'modx-browser',
             id: Ext.id(),
             multiple: true,
@@ -144,7 +143,7 @@ Ext.reg('ef-combo-browser', ExtraFields.combo.Browser);
 ExtraFields.combo.TableClass = function(config) {
     config = config || {};
 
-    var data = [
+    let data = [
         [_('ef_class_name_modResource'),'modResource'],
         [_('ef_class_name_modUserProfile'),'modUserProfile'],
     ];
@@ -174,12 +173,13 @@ Ext.reg('ef-combo-table-class',ExtraFields.combo.TableClass);
 ExtraFields.combo.Types = function(config) {
     config = config || {};
 
-    var data = [
+    let data = [
         [_('ef_field_type_textfield'),'textfield'],
         [_('ef_field_type_textarea'),'textarea'],
         [_('ef_field_type_listbox'),'listbox'],
         [_('ef_field_type_listbox_int'),'listbox-int'],
         [_('ef_field_type_listbox_multiple'),'listbox-multiple'],
+        [_('ef_field_type_enumfield'),'enumfield'],
         [_('ef_field_type_resourcelist'),'resourcelist'],
         [_('ef_field_type_combo_boolean'),'combo-boolean'],
         [_('ef_field_type_numberfield'),'numberfield'],
@@ -197,7 +197,7 @@ ExtraFields.combo.Types = function(config) {
 
     if (MODx.loadRTE) data.splice(2,0,[_('ef_field_type_richtext'),'richtext']);
 
-    var ace = (typeof(MODx.ux) != 'undefined' && typeof(MODx.ux.Ace) == 'function') ? 1 : 0;
+    const ace = (typeof(MODx.ux) != 'undefined' && typeof(MODx.ux.Ace) == 'function') ? 1 : 0;
     if (ace) data.splice((MODx.loadRTE ? 3 : 2),0,[_('ef_field_type_texteditor'), 'modx-texteditor']);
 
     // TODO
@@ -226,17 +226,15 @@ ExtraFields.combo.Types = function(config) {
 Ext.extend(ExtraFields.combo.Types, MODx.combo.ComboBox);
 Ext.reg('ef-combo-field-types',ExtraFields.combo.Types);
 
-
 ExtraFields.combo.Listbox = function(config) {
-
-    var store = [];
+    let store = [];
     if (config.all) {
         store.push([
             _('all'), ''
         ])
     }
     if (!Ext.isEmpty(config.values)) {
-        var all = Object.values(config.values);
+        let all = Object.values(config.values);
         all.forEach(function (value){
             store.push([
                 value['name'],
@@ -244,9 +242,9 @@ ExtraFields.combo.Listbox = function(config) {
             ]);
         })
     } else if (!Ext.isEmpty(config.data)) {
-        var all = config.data.split('||');
+        let all = config.data.split('||');
         all.forEach(function (value) {
-            var val = value.split('==');
+            let val = value.split('==');
             store.push([
                 val[0],
                 val[1] || val[0]
@@ -275,11 +273,11 @@ Ext.reg('ef-combo-listbox',ExtraFields.combo.Listbox);
 ExtraFields.combo.ListboxMulti = function (config) {
     config = config || {};
 
-    var store = [];
+    let store = [];
     if (!Ext.isEmpty(config.data)) {
-        var all = config.data.split('||');
+        let all = config.data.split('||');
         all.forEach(function (value) {
-            var val = value.split('==');
+            let val = value.split('==');
             store.push([
                 val[0],
                 val[1] || val[0]

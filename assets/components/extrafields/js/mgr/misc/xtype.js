@@ -48,6 +48,7 @@ ExtraFields.utils.getXtype = function (field) {
             };
             break;
 
+        case 'enumfield':
         case 'listbox':
         case 'listbox-int':
             xtype.xtype = 'ef-combo-listbox';

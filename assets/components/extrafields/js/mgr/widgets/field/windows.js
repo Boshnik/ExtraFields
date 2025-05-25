@@ -59,6 +59,10 @@ Ext.extend(ExtraFields.window.CreateField, ExtraFields.window.Default, {
                     width: 100,
                     allowBlank: false,
                     listeners: {
+                        afterrender: {
+                            fn: this.changeFields,
+                            scope: this,
+                        },
                         select: {
                             fn: this.changeFields,
                             scope: this,
@@ -74,6 +78,21 @@ Ext.extend(ExtraFields.window.CreateField, ExtraFields.window.Default, {
                     allowBlank: true,
                 }]
             }]
+        }, {
+            xtype: 'textarea',
+            fieldLabel: _('ef_field_values'),
+            name: 'precision',
+            id: config.id + '-precision',
+            anchor: '100%',
+            width: 100,
+            hidden: true,
+            allowBlank: false,
+        }, {
+            xtype: 'label',
+            id: config.id + '-precision-desc',
+            cls: 'desc-under',
+            text: _('ef_field_precision_desc'),
+            hidden: true,
         }, {
             xtype: 'checkboxgroup',
             columns: 2,
@@ -120,11 +139,16 @@ Ext.extend(ExtraFields.window.CreateField, ExtraFields.window.Default, {
     changeFields: function (combo) {
         let field_null = Ext.getCmp(this.id + '-field-null');
         let field_default = Ext.getCmp(this.id + '-field-default');
+        let precision = Ext.getCmp(this.id + '-precision');
+        let precision_desc = Ext.getCmp(this.id + '-precision-desc');
 
         field_default.setDisabled(false);
         if (field_null) {
             field_null.setDisabled(false).setValue(1);
         }
+
+        precision.hide().setDisabled(true);
+        precision_desc.hide();
 
         switch (combo.value) {
             case 'textarea':
@@ -137,12 +161,16 @@ Ext.extend(ExtraFields.window.CreateField, ExtraFields.window.Default, {
                 if (field_null) {
                     field_null.setDisabled(true).setValue(0);
                 }
+                break;
+            case 'enumfield':
+                precision.show().setDisabled(false);
+                precision_desc.show();
+                break;
         }
     },
 
 });
 Ext.reg('ef-field-window-create', ExtraFields.window.CreateField);
-
 
 ExtraFields.window.UpdateField = function (config) {
     config = config || {};
