@@ -44,7 +44,7 @@ class ExtraFields
      * The version
      * @var string $version
      */
-    public $version = '2.0.6-pl';
+    public $version = '2.0.7-pl';
 
     /**
      * The class config

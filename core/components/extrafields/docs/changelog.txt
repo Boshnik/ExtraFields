@@ -2,6 +2,8 @@
 ==============
  - Added new field type: ENUM
  - Added new field type: SET
+ - fix check user group on user page (@lexsmil) [#16]
+ - fix get user group (@lexsmil) [#16]
 
 2.0.6-pl
 ==============
