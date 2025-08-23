@@ -226,21 +226,13 @@ trait HelpProcessor
      */
     public function validationField($name, $class_name = 'modResource')
     {
-        $tables = [$class_name];
-        if ($class_name == 'modUserProfile') {
-            $tables = [\modUser::class, \modUserProfile::class];
-        }
-
         if (!preg_match("/^[\w\d\_]*$/", $name)) {
             $this->modx->error->addField('name', $this->modx->lexicon("ef_field_err_name_cyrillic"));
         }
 
-        $columns = [];
-        foreach ($tables as $table) {
-            $q = $this->modx->prepare("DESCRIBE " . $this->modx->getTableName($table));
-            $q->execute();
-            $columns += $q->fetchAll(\PDO::FETCH_COLUMN);
-        }
+        $q = $this->modx->prepare("DESCRIBE " . $this->modx->getTableName($class_name));
+        $q->execute();
+        $columns = $q->fetchAll(\PDO::FETCH_COLUMN);
 
         if (in_array($name, $columns)) {
             $this->modx->error->addField('name', $this->modx->lexicon("ef_field_err_name_reserved"));

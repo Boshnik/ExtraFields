@@ -5,9 +5,6 @@ namespace Boshnik\ExtraFields\Events;
 use Boshnik\ExtraFields\Processors\QueryProcessor;
 use Boshnik\ExtraFields\Processors\HelpProcessor;
 
-/**
- * class OnMODXInit
- */
 class OnMODXInit extends Event
 {
     use QueryProcessor;
@@ -15,11 +12,13 @@ class OnMODXInit extends Event
 
     public function run()
     {
-
         $rows = [
             [
                 'className' => $this->modxversion === '3' ? \MODX\Revolution\modResource::class : \modResource::class,
                 'fields' => $this->getFields()
+            ], [
+                'className' => $this->modxversion === '3' ? \MODX\Revolution\modUser::class : \modUser::class,
+                'fields' => $this->getFields('modUser')
             ], [
                 'className' => $this->modxversion === '3' ? \MODX\Revolution\modUserProfile::class : \modUserProfile::class,
                 'fields' => $this->getFields('modUserProfile')

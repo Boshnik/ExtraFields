@@ -9,10 +9,11 @@ $_lang['extrafields_intro_msg'] = 'Вы можете выделять сразу
 
 $_lang['ef_docs'] = 'Документация';
 $_lang['ef_class_name'] = 'Таблица';
-$_lang['ef_class_name_modResource'] = 'Ресурс';
-$_lang['ef_class_name_modUserProfile'] = 'Пользователь';
-$_lang['ef_class_name_pbBlockValue'] = 'PageBlocks (Block)';
-$_lang['ef_class_name_pbTableValue'] = 'PageBlocks (Table)';
+$_lang['ef_class_name_modResource'] = 'Ресурс (modResource)';
+$_lang['ef_class_name_modUser'] = 'Пользователь (modUser)';
+$_lang['ef_class_name_modUserProfile'] = 'Профиль (modUserProfile)';
+$_lang['ef_class_name_pbBlockValue'] = 'PageBlocks (pbBlockValue)';
+$_lang['ef_class_name_pbTableValue'] = 'PageBlocks (pbTableValue)';
 
 $_lang['ef_row_create'] = 'Создать';
 $_lang['ef_row_update'] = 'Изменить';

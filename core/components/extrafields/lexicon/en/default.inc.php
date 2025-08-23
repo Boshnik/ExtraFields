@@ -9,10 +9,11 @@ $_lang['extrafields_intro_msg'] = 'You can select multiple fields at once using 
 
 $_lang['ef_docs'] = 'Documentation';
 $_lang['ef_class_name'] = 'Table';
-$_lang['ef_class_name_modResource'] = 'Resource';
-$_lang['ef_class_name_modUserProfile'] = 'User';
-$_lang['ef_class_name_pbBlockValue'] = 'PageBlocks (Block)';
-$_lang['ef_class_name_pbTableValue'] = 'PageBlocks (Table)';
+$_lang['ef_class_name_modResource'] = 'Resource (modResource)';
+$_lang['ef_class_name_modUser'] = 'User (modUser)';
+$_lang['ef_class_name_modUserProfile'] = 'Profile (modUserProfile)';
+$_lang['ef_class_name_pbBlockValue'] = 'PageBlocks (pbBlockValue)';
+$_lang['ef_class_name_pbTableValue'] = 'PageBlocks (pbTableValue)';
 
 $_lang['ef_row_create'] = 'Create';
 $_lang['ef_row_update'] = 'Change';

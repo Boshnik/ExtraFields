@@ -145,6 +145,7 @@ ExtraFields.combo.TableClass = function(config) {
 
     let data = [
         [_('ef_class_name_modResource'),'modResource'],
+        [_('ef_class_name_modUser'),'modUser'],
         [_('ef_class_name_modUserProfile'),'modUserProfile'],
     ];
 
